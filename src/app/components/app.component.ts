@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { DataService } from './data.service';
-import { Message } from './message.model';
+import { DataService } from '../services/data.service';
+import { Message } from '../models/message.model';
 
 @Component({
   selector: 'app-root',

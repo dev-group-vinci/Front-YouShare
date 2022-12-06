@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
-import { DataService } from './data.service';
+import { DataService } from '../services/data.service';
 
 @NgModule({
   declarations: [

@@ -1,6 +1,6 @@
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Message } from './message.model';
+import { Message } from '../models/message.model';
 
 const httpOptions : any    = {
   headers: new HttpHeaders({
