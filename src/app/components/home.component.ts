@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../services/data.service';
 import { Message } from '../models/message.model';
+import { Video } from '../models/video.model';
 
 @Component({
   selector: 'home-root',
@@ -9,6 +10,23 @@ import { Message } from '../models/message.model';
 })
 export class HomeComponent implements OnInit {
   message$: Message = new Message();
+  videos$: Video[] = [
+    { id: 1, 
+      url: "https://www.youtube.com/watch?v=E0l22mjPLuM",
+      text: "HAHA",
+      state: "published"
+    },
+    { id: 2, 
+      url: "https://www.youtube.com/watch?v=eBK7WDLBFd0",
+      text: "LOL",
+      state: "published"
+    },
+    { id: 3, 
+      url: "https://www.youtube.com/watch?v=BDaUNr3unU0&t=4s",
+      text: "FUNNY",
+      state: "published"
+    }
+  ]
   constructor(private dataService: DataService) {}
 
   ngOnInit() {

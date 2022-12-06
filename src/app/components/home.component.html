@@ -14,3 +14,7 @@
     <button>Partager</button>
   </form>
 </div>
+<div *ngFor="let video of videos$">
+  <h1>{{ video.text }}</h1>
+  <h1>{{ video.url }}</h1>
+</div>
