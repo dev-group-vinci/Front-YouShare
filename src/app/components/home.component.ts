@@ -14,4 +14,9 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     return this.dataService.getMessages().subscribe(data => this.message$ = data);
   }
+
+  getValues(val) {
+    console.warn(val);
+    //TODO Send to backend
+  }
 }
