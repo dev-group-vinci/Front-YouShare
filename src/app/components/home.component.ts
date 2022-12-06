@@ -3,11 +3,11 @@ import { DataService } from '../services/data.service';
 import { Message } from '../models/message.model';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  selector: 'home-root',
+  templateUrl: 'home.component.html',
+  //styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
+export class HomeComponent implements OnInit {
   message$: Message = new Message();
   constructor(private dataService: DataService) {}
 

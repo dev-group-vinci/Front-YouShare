@@ -1,19 +1,19 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { AppComponent } from './app.component';
+import { HomeComponent } from './components/home.component';
 import { HttpClientModule } from '@angular/common/http';
-import { DataService } from '../services/data.service';
+import { DataService } from './services/data.service';
 
 @NgModule({
   declarations: [
-    AppComponent
+    HomeComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule
   ],
   providers: [DataService],
-  bootstrap: [AppComponent]
+  bootstrap: [HomeComponent]
 })
 export class AppModule { }
