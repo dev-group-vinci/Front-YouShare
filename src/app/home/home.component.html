@@ -1,14 +1,19 @@
 <div>
-  <h1>{{ message$.Message }}</h1>
+  {{ message$.Message }}
 </div>
 <div>
-  <h1>Que voulez vous partager ?</h1>
-  <form #simpleForm="ngForm" (ngSubmit)="getValues(simpleForm.value)">
+  <img class="logo" src="../../assets/images/YouShareLogoTextNoir.png" alt="Logo">
+</div>
+<div class="videoFormDiv">
+  <form #simpleForm="ngForm" (ngSubmit)="getValues(simpleForm.value)" class="videoForm">
+    <h1 class="videoFormH1">Que voulez vous partager ?</h1>
+    <div class="formcontainer">
     <label>Lien : </label>
-    <input type="text" ngModel name="url" placeholder="Ton lien ..."><br>
+    <input class="videoFormInput" type="text" ngModel name="url" placeholder="Ton lien ..."><br>
     <label>Commentaire : </label>
-    <input type="text" ngModel name="text" placeholder="Ton commentaire ..."><br>
-    <button>Partager</button>
+    <input class="videoFormInput" type="text" ngModel name="text" placeholder="Ton commentaire ..."><br>
+    <button class="videoFormButton">Partager</button>
+  </div>
   </form>
 </div>
 <div *ngFor="let video of videos$">
