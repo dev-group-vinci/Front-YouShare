@@ -40,6 +40,8 @@
                                 </div>
                             </div>
                             <small *ngIf="registerForm.controls['password'].dirty && registerForm.hasError('required', 'password')" class="text-danger">* Mot de passe obligatoire</small>
+                            <small *ngIf="registerForm.controls['password'].dirty && registerForm.hasError('minlength', 'password')" class="text-danger">* Votre mot de passe doit contenir 6 caractères minimum</small>
+                            <small *ngIf="registerForm.controls['password'].dirty && registerForm.hasError('passwordStrength', 'password')" class="text-danger">* Votre mot de pase doit contenir au minimum une minuscule, une majuscule et un chiffre</small>
                             <div class="form-group pt-3">
                                 <span class="fa fa-lock p-2 icon"></span>
                                 <label for="passwordConfirmationInput" class="form-label">Confirmez votre mot de passe :</label>
@@ -49,11 +51,11 @@
                                 </div>
                             </div>
                             <small *ngIf="registerForm.controls['passwordConfirmation'].dirty && registerForm.hasError('required', 'passwordConfirmation')" class="text-danger">* Confirmation de votre mot de passe obligatoire</small>
-                            <small *ngIf="registerForm.controls['passwordConfirmation'].dirty && registerForm.hasError('MustMatch', 'passwordConfirmation') != null" class="text-danger">* Les mots de passe entr&eacute;s ne sont pas les m&ecirc;mes</small>
+                            <small *ngIf="registerForm.controls['passwordConfirmation'].dirty && registerForm.hasError('matching', 'passwordConfirmation')" class="text-danger">* Les mots de passe entr&eacute;s ne sont pas les m&ecirc;mes</small>
                             <div class="form-inline fr mt-4">
                                 <span class="font-weight-blod">D&eacute;j&agrave; inscris ? <a id="forget" routerLink="/login"> Connectez-vous !</a> </span>
                             </div>
-                            <button (click)="onSubmit()" type="submit" class="btn btn-primary btn-block mt-4 w-100">S'inscrire</button>
+                            <button (click)="onRegister()" type="submit" class="btn btn-primary btn-block mt-4 w-100">S'inscrire</button>
                         </form>
                     </div>
                 </div>

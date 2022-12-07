@@ -1,6 +1,10 @@
 import { Component } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { Router, RouterModule } from '@angular/router';
 import ValidateForm from 'src/app/helpers/validateform';
+import { matchValidator } from 'src/app/helpers/validatePasswordMatch';
+import { createPasswordStrengthValidator } from 'src/app/helpers/validatePasswordStrength';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -13,7 +17,7 @@ export class RegisterComponent {
   eyeIcon: string = "fa-eye-slash";
   registerForm!: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private auth: AuthService, private router: Router) {
 
   }
 
@@ -21,11 +25,9 @@ export class RegisterComponent {
     this.registerForm = this.fb.group({
       username: ['', Validators.required],
       email: ['', Validators.compose([Validators.required, Validators.email])],
-      password: ['', Validators.required],
-      passwordConfirmation: ['', Validators.compose([Validators.required])],
-    }), {
-      validators: this.MustMatch('password', 'passwordConfirmation')
-    }
+      password: ['', [Validators.required, matchValidator('passwordConfirmation', true), Validators.minLength(6), createPasswordStrengthValidator()]],
+      passwordConfirmation: ['', Validators.compose([Validators.required, matchValidator('password')])],
+    })
   }
 
   hideShowPass() {
@@ -34,13 +36,24 @@ export class RegisterComponent {
     this.show ? this.type = "text" : this.type = "password";
   }
 
-  get f(){
+  get f() {
     return this.registerForm.controls;
   }
 
-  onSubmit() {
+  onRegister() {
     if (this.registerForm.valid) {
       // Register user
+      this.auth.register(this.registerForm.value)
+      .subscribe({
+        next:(res)=>{
+          alert(res.message);
+          this.registerForm.reset();
+          this.router.navigate(['login']);
+        },
+        error:(err)=>{
+          alert(err?.error.message);
+        }
+      })
     } else {
       // throw error message
       ValidateForm.validateAllFormFields(this.registerForm);
@@ -49,25 +62,27 @@ export class RegisterComponent {
 
   MustMatch(password: string, passwordConfirmation: string) {
     console.log("must  match");
-    
+
     return (formGroup: FormGroup) => {
+      console.log(formGroup.controls[password]);
+      console.log(formGroup.controls[passwordConfirmation]);
       const passwordControl = formGroup.controls[password];
       const passwordConfirmationControl = formGroup.controls[passwordConfirmation];
 
       if (passwordConfirmationControl.errors && !passwordConfirmationControl.errors['MustMatch']) {
         console.log("other");
-        
+
         return;
       }
       if (passwordControl.value !== passwordConfirmationControl.value) {
         console.log("!==");
-        
+
         console.log(passwordControl.value)
         console.log(passwordConfirmationControl.value)
         passwordConfirmationControl.setErrors({ MustMatch: true });
       } else {
         console.log("null");
-        
+
         passwordConfirmationControl.setErrors(null);
       }
     }
@@ -83,7 +98,7 @@ export class RegisterComponent {
         ? null
         : { isMatching: false };
     };
-}
+  }
 
 
 }

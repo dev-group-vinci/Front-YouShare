@@ -76,4 +76,8 @@ input[type='text'], input[type='password'] {
     display: inline-block;
 }
 
+small {
+    display: block;
+}
+
 
