@@ -1,1 +1,57 @@
-<p>register works!</p>
+<div class="outer">
+    <div class="container">
+        <div class="row">
+            <div class="offset-md-2 col-lg-5 col-md-7 offset-lg-4 offert-md-3">
+                <div class="panel border bg-white">
+                    <div class="panel-heading">
+                        <h3 class="pt-3 font-weight-bold">Inscription</h3>
+                    </div>
+                    <div class="panel-body p-3">
+                        <form>
+                            <div class="form-group pt-3">
+                                <span class="fa fa-user p-2 icon"></span>
+                                <label for="usernameInput" class="form-label">Nom d'utilisateur :</label>
+                                <div class="input-field">
+                                    <input type="text" placeholder="Nom d'utilisateur" id="usernameInput" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group pt-3">
+                                <span class="fa fa-at p-2"></span>
+                                <label for="emailInput" class="form-label">Email :</label>
+                                <div class="input-field">
+                                    <input type="text" placeholder="Email" id="emailInput" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group pt-3">
+                                <span class="fa fa-file-image-o p-2"></span>
+                                <label for="profilePictureInput" class="form-label">Photo de profil :</label>
+                                <input type="file" id="profilePictureInput" class="input-file">
+                                <label for="profilePictureInput" class="btn btn-primary">Choisissez votre photo de profil</label>
+                            </div>
+                            <div class="form-group pt-3">
+                                <span class="fa fa-lock p-2 icon"></span>
+                                <label for="passwordInput" class="form-label">Mot de passe :</label>
+                                <div class="input-field">
+                                    <input [type]="type" placeholder="Mot de passe" id="passwordInput" class="form-control">
+                                    <span (click)="hideShowPass()" class="fa {{eyeIcon}} icon " ></span>
+                                </div>
+                            </div>
+                            <div class="form-group pt-3">
+                                <span class="fa fa-lock p-2 icon"></span>
+                                <label for="passwordInput" class="form-label">Confirmez votre mot de passe :</label>
+                                <div class="input-field">
+                                    <input [type]="type" placeholder="Confirmez votre mot de passe" id="passwordInput" class="form-control">
+                                    <span (click)="hideShowPass()" class="fa {{eyeIcon}} icon " ></span>
+                                </div>
+                            </div>
+                            <div class="form-inline fr mt-4">
+                                <span class="font-weight-blod">D&eacute;j&agrave; inscris ? <a id="forget" routerLink="/login"> Connectez-vous !</a> </span>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block mt-4 w-100">S'inscrire</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
