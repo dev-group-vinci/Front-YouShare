@@ -1,14 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { DataService } from '../services/data.service';
+import { Component } from '@angular/core';
 import { Message } from '../models/message.model';
 import { Video } from '../models/video.model';
+import { DataService } from '../services/data.service';
 
 @Component({
-  selector: 'home-root',
-  templateUrl: 'home.component.html',
-  //styleUrls: ['./app.component.css']
+  selector: 'app-home',
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent {
+  
   message$: Message = new Message();
   videos$: Video[] = [
     { id: 1, 
@@ -37,4 +38,5 @@ export class HomeComponent implements OnInit {
     console.warn(val);
     //TODO Send to backend
   }
+  
 }
