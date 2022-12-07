@@ -6,7 +6,7 @@
 </div>
 <div class="videoFormDiv">
   <form #simpleForm="ngForm" (ngSubmit)="getValues(simpleForm.value)" class="videoForm">
-    <h1 class="videoFormH1">Que voulez vous partager ?</h1>
+    <h4 class="titreform">Que voulez vous partager ?</h4>
     <div class="formcontainer">
     <label>Lien : </label>
     <input class="videoFormInput" type="text" ngModel name="url" placeholder="Ton lien ..."><br>
@@ -17,6 +17,11 @@
   </form>
 </div>
 <div *ngFor="let video of videos$">
-  <h1>{{ video.text }}</h1>
-  <h1>{{ video.url }}</h1>
+  <div class="videoDiv">
+    <img class="pp" src="../../assets/images/homme.jpg" alt="Photo de profil">
+    <h1>{{ video.text }}</h1>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/wUQbchYY80U" title="YouTube video player" 
+      frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+    </iframe>
+  </div>
 </div>
