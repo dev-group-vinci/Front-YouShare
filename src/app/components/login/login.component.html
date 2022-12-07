@@ -7,26 +7,28 @@
                         <h3 class="pt-3 font-weight-bold">Connection</h3>
                     </div>
                     <div class="panel-body p-3">
-                        <form>
+                        <form [formGroup]="loginForm">
                             <div class="form-group pt-3">
                                 <span class="fa fa-user p-2 icon"></span>
                                 <label for="usernameInput" class="form-label">Nom d'utilisateur :</label>
-                                <div class="input-field">
-                                    <input type="text" placeholder="Nom d'utilisateur" id="usernameInput" class="form-control">
+                                <div class="input-field" [class.error]="loginForm.controls['username'].dirty && loginForm.hasError('required', 'username')">
+                                    <input formControlName="username" type="text" placeholder="Nom d'utilisateur" id="usernameInput" class="form-control">
                                 </div>
                             </div>
+                            <small *ngIf="loginForm.controls['username'].dirty && loginForm.hasError('required', 'username')" class="text-danger">* Nom d'utilisteur obligatoire</small>
                             <div class="form-group pt-3">
                                 <span class="fa fa-lock p-2 icon"></span>
                                 <label for="passwordInput" class="form-label">Mot de passe :</label>
-                                <div class="input-field">
-                                    <input [type]="type" placeholder="Mot de passe" id="passwordInput" class="form-control">
+                                <div class="input-field" [class.error]="loginForm.controls['password'].dirty && loginForm.hasError('required', 'password')">
+                                    <input formControlName="password" [type]="type" placeholder="Mot de passe" id="passwordInput" class="form-control">
                                     <span (click)="hideShowPass()" class="fa {{eyeIcon}} icon " ></span>
                                 </div>
                             </div>
+                            <small *ngIf="loginForm.controls['password'].dirty && loginForm.hasError('required', 'password')" class="text-danger">* Mot de passe obligatoire</small>
                             <div class="form-inline fr mt-4">
                                 <a id="forget" class="font-weight-blod">Mot de passe oubli&eacute; ?</a>
                             </div>
-                            <button type="submit" class="btn btn-primary btn-block mt-4 w-100">Se connecter</button>
+                            <button (click)="onSubmit()" type="submit" class="btn btn-primary btn-block mt-4 w-100">Se connecter</button>
                             <div class="text-center pt-4 text-muted">
                                Pas encore de compte ? <a id="forget" routerLink="/register"> Inscrivez-vous !</a>
                             </div>
