@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { ObservableInput, takeUntil } from 'rxjs';
+import { YoutubeService } from 'src/app/services/youtube.service';
 import { Message } from '../../app/models/message.model';
 import { Video } from '../../app/models/video.model';
 import { DataService } from '../../app/services/data.service';
@@ -30,8 +33,10 @@ export class HomeComponent {
   ];
   apiLoaded = false;
   videoId = 'QIZ9aZD6vs0';
+  videos: any[];
+  unsubscribe$: ObservableInput<any>;
 
-  constructor(private dataService: DataService) {}
+  constructor(private spinner: NgxSpinnerService, private youTubeService: YoutubeService, private dataService: DataService) {}
 
   ngOnInit() {
     this.dataService.getMessages().subscribe(data => this.message$ = data);
@@ -42,11 +47,24 @@ export class HomeComponent {
       document.body.appendChild(tag);
       this.apiLoaded = true;
     }
+
   }
 
   getValues(val) {
     console.warn(val);
     //TODO Send to backend
+  }
+
+  getTitle(id: string) {
+    this.spinner.show()
+    setTimeout(()=> {this.spinner.hide()},3000)
+    this.videos = [];
+    this.youTubeService.getVideoById(id).subscribe(list => {
+      for (let item of list['items']) {
+        console.log(item);
+        this.videos.push(item);
+      }
+    });
   }
   
 }
