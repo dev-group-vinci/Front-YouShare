@@ -26,12 +26,6 @@
                             <small *ngIf="registerForm.controls['email'].dirty && registerForm.hasError('required', 'email')" class="text-danger">* Email obligatoire</small>
                             <small *ngIf="registerForm.controls['email'].dirty && registerForm.hasError('email', 'email')" class="text-danger">* Veuillez entrer une email valide</small>
                             <div class="form-group pt-3">
-                                <span class="fa fa-file-image-o p-2"></span>
-                                <label for="profilePictureInput" class="form-label">Photo de profil :</label>
-                                <input type="file" id="profilePictureInput" class="input-file">
-                                <label for="profilePictureInput" class="btn btn-primary">Choisissez votre photo de profil</label>
-                            </div>
-                            <div class="form-group pt-3">
                                 <span class="fa fa-lock p-2 icon"></span>
                                 <label for="passwordInput" class="form-label">Mot de passe :</label>
                                 <div class="input-field" [class.error]="registerForm.controls['password'].dirty && registerForm.hasError('required', 'password')">
