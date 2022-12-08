@@ -8,6 +8,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
+import { NgToastModule } from 'ng-angular-popup';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { RegisterComponent } from './register/register.component';
     AppRoutingModule,
     ReactiveFormsModule,
     FormsModule,
+    NgToastModule,
   ],
   providers: [DataService],
   bootstrap: [AppComponent]

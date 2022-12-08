@@ -5,6 +5,7 @@ import ValidateForm from 'src/app/helpers/validateform';
 import { matchValidator } from 'src/app/helpers/validatePasswordMatch';
 import { createPasswordStrengthValidator } from 'src/app/helpers/validatePasswordStrength';
 import { AuthService } from 'src/app/services/auth.service';
+import { NgToastService } from 'ng-angular-popup';
 
 @Component({
   selector: 'app-register',
@@ -17,7 +18,12 @@ export class RegisterComponent {
   eyeIcon: string = "fa-eye-slash";
   registerForm!: FormGroup;
 
-  constructor(private fb: FormBuilder, private auth: AuthService, private router: Router) {
+  constructor(
+    private fb: FormBuilder, 
+    private auth: AuthService, 
+    private router: Router,
+    private toast: NgToastService
+  ) {
 
   }
 
@@ -46,13 +52,13 @@ export class RegisterComponent {
       this.auth.register(this.registerForm.value)
       .subscribe({
         next:(res)=>{
-          alert(res.message);
+          this.toast.success({detail:"SUCCESS", summary: res.message, duration: 5000});
           this.registerForm.reset();
           this.router.navigate(['login']);
         },
         error:(err)=>{
-          alert(err?.error.message);
-        }
+          this.toast.error({detail:"ERROR", summary: "Il y a eu un problème !", duration: 5000});
+         }
       })
     } else {
       // throw error message
