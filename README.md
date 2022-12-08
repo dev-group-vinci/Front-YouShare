@@ -31,7 +31,7 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 ## Eliott's commands
 
 npm install
-
 npm install -g @angular/cli
+npm install @angular/youtube-player
 
 ng serve -o
