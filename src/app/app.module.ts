@@ -8,6 +8,7 @@ import { LoginComponent } from './login/login.component'
 import { RegisterComponent } from './register/register.component';
 import { DataService } from './services/data.service';
 import { HomeComponent } from './home/home.component';
+import { YouTubePlayerModule } from '@angular/youtube-player';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { HomeComponent } from './home/home.component';
     HttpClientModule,
     AppRoutingModule,
     FormsModule,
+    YouTubePlayerModule,
   ],
   providers: [DataService],
   bootstrap: [AppComponent]

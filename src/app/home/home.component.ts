@@ -13,25 +13,35 @@ export class HomeComponent {
   message$: Message = new Message();
   videos$: Video[] = [
     { id: 1, 
-      url: "https://www.youtube.com/watch?v=E0l22mjPLuM",
+      url: "fk99pry6nY8",
       text: "HAHA",
       state: "published"
     },
     { id: 2, 
-      url: "https://www.youtube.com/watch?v=eBK7WDLBFd0",
+      url: "Y58kN2CmFwA",
       text: "LOL",
       state: "published"
     },
     { id: 3, 
-      url: "https://www.youtube.com/watch?v=BDaUNr3unU0&t=4s",
+      url: "QIZ9aZD6vs0",
       text: "FUNNY",
       state: "published"
     }
-  ]
+  ];
+  apiLoaded = false;
+  videoId = 'QIZ9aZD6vs0';
+
   constructor(private dataService: DataService) {}
 
   ngOnInit() {
-    return this.dataService.getMessages().subscribe(data => this.message$ = data);
+    this.dataService.getMessages().subscribe(data => this.message$ = data);
+
+    if (!this.apiLoaded) {
+      const tag = document.createElement('script');
+      tag.src = 'https://www.youtube.com/iframe_api';
+      document.body.appendChild(tag);
+      this.apiLoaded = true;
+    }
   }
 
   getValues(val) {
