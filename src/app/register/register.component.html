@@ -52,10 +52,10 @@
                             </div>
                             <small *ngIf="registerForm.controls['passwordConfirmation'].dirty && registerForm.hasError('required', 'passwordConfirmation')" class="text-danger">* Confirmation de votre mot de passe obligatoire</small>
                             <small *ngIf="registerForm.controls['passwordConfirmation'].dirty && registerForm.hasError('matching', 'passwordConfirmation')" class="text-danger">* Les mots de passe entr&eacute;s ne sont pas les m&ecirc;mes</small>
-                            <div class="form-inline fr mt-4">
-                                <span class="font-weight-blod">D&eacute;j&agrave; inscris ? <a id="forget" routerLink="/login"> Connectez-vous !</a> </span>
-                            </div>
                             <button (click)="onRegister()" type="submit" class="btn btn-primary btn-block mt-4 w-100">S'inscrire</button>
+                            <div class="text-center pt-4 text-muted">
+                                D&eacute;j&agrave; inscris ? <a id="forget" routerLink="/login"> Connectez-vous !</a>
+                            </div>
                         </form>
                     </div>
                 </div>
