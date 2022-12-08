@@ -9,6 +9,8 @@ const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch:'full' },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
+  { path: '**',   redirectTo: '/', pathMatch: 'full' }, //{ path: '**', component: PageNotFoundComponent }, TODO on peut changer si on veut 
+
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
 ];
 
