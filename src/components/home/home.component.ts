@@ -66,10 +66,10 @@ export class HomeComponent {
         this.videos.push(item);
       }
     });
+  }
 
   logout(){
     this.auth.logout();
-
   }
   
 }
