@@ -10,6 +10,7 @@ import { HomeComponent } from '../components/home/home.component';
 import { RegisterComponent } from '../components/register/register.component';
 import { NgToastModule } from 'ng-angular-popup';
 import { YouTubePlayerModule } from '@angular/youtube-player';
+import { NgxSpinnerModule } from "ngx-spinner";
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { YouTubePlayerModule } from '@angular/youtube-player';
     FormsModule,
     YouTubePlayerModule,
     NgToastModule,
+    NgxSpinnerModule,
   ],
   providers: [DataService],
   bootstrap: [AppComponent]
