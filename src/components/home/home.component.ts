@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { Message } from '../models/message.model';
-import { Video } from '../models/video.model';
-import { DataService } from '../services/data.service';
+import { Message } from '../../app/models/message.model';
+import { Video } from '../../app/models/video.model';
+import { DataService } from '../../app/services/data.service';
 
 @Component({
   selector: 'app-home',
