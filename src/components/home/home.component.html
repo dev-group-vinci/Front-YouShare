@@ -1,60 +1,85 @@
-<div>
-  {{ message$.Message }}
-</div>
-<div>
-  <img class="logo" src="../../assets/images/YouShareLogoTextNoir.png" alt="Logo">
-</div>
-<div class="videoFormDiv">
-  <form #simpleForm="ngForm" (ngSubmit)="getValues(simpleForm.value)" class="videoForm">
-    <h4 class="titreform">Que voulez vous partager ?</h4>
-    <div class="formcontainer">
-    <label>Lien : </label>
-    <input class="videoFormInput" type="text" ngModel name="url" placeholder="Ton lien ..."><br>
-    <label>Commentaire : </label>
-    <input class="videoFormInput" type="text" ngModel name="text" placeholder="Ton commentaire ..."><br>
-    <button class="videoFormButton">Partager</button>
-  </div>
-  </form>
-</div>
-<div *ngFor="let video of videos$">
-  <div class="videoDiv">
-    <img class="pp" src="../../assets/images/homme.jpg" alt="Photo de profil">
-    <h1>{{ video.text }}</h1>
-    <div class="text-center">
-      <!--<iframe width="560" height="315" src="https://www.youtube.com/embed/wUQbchYY80U" title="YouTube video player" 
-        frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
-      </iframe>
-      -->
-      <youtube-player [videoId]="video.url"> </youtube-player>
-    </div>
-    <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-      <div class="btn-group me-2" role="group" aria-label="First group">
-        10<button type="button" class="btn btn-danger">Like</button>
+<div class="outer">
+  <div class="row">
+    <div class="col-sm">
+
+      <div class="log mt-3">
+        <img class="logo-img" src="../../assets/images/YouShareLogoTextNoir.png" alt="Logo">
       </div>
-      <div class="btn-group me-2" role="group" aria-label="Second group">
-        12<button type="button" class="btn btn-danger">Comment</button>
-      </div>
-      <div class="btn-group" role="group" aria-label="Third group">
-        14<button type="button" class="btn btn-danger">Share</button>
+      <div>
+        {{ message$.Message }}
       </div>
     </div>
-  </div>
-</div>
 
-<div *ngFor="let video of videos" class="col-xl-3 col-md-6 mb-4">
-  <div class="card border-0 shadow vh-50">
-  <a href="https://www.youtube.com/watch?v={{video.id.videoId}}" target="_blank">
-  <img [src]="video.snippet.thumbnails.medium.url" class="card-img-top" alt="..."></a>
-  <p>hey</p>
-  <div class="card-body text-center">
-  <h5 class="card-title mb-0">
-  <a href="https://www.youtube.com/watch?v={{video.id.videoId}}">{{video.snippet.title}}
-  </a></h5>
-  <div class="card-text text-black-50">{{video.snippet.description.slice(0, 100)}}</div>
-  <p class="card-text">{{video.snippet.description}}</p>
-  </div>
-  </div>
-  </div>
-  <p>hey</p>
+    <div class="col-sm m-5">
+      <div class="">
+        <div class="panel border bg-white">
+          <div class="panel-heading">
+            <h3 class="pt-3 font-weight-bold">Que voulez vous partager ?</h3>
+          </div>
+          <div class="panel-body p-3">
+            <form #simpleForm="ngForm" (ngSubmit)="getValues(simpleForm.value)">
+              <div class="form-group pt-3">
+                <span class="fa fa-link p-2 icon"></span>
+                <label class="form-label">Lien : </label>
+                <div class="input-field">
+                  <input class="form-control" type="text" ngModel name="url" placeholder="Ton lien ...">
+                </div>
+              </div>
+              <div class="form-group pt-3">
+                <span class="fa fa-file-text-o p-2 icon"></span>
+                <label class="form-label">Commentaire : </label>
+                <div class="input-field">
+                  <input class="videoFormInput" type="text" ngModel name="text" placeholder="Ton commentaire ...">
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary btn-block mt-4 w-100">Partager</button>
+            </form>
+          </div>
 
+        </div>
+      </div>
 
+      <div *ngFor="let video of videos$">
+        <div class="panel border bg-white">
+          <div class="panel-heading mt-3">
+            <div class="row">
+              <div class="col col-lg-2">
+                <img class="pp" src="../../assets/images/homme.jpg" alt="Photo de profil">
+              </div>
+              <div class="col-md-auto">
+                <h1>{{ video.text }}</h1>
+              </div>
+            </div>
+          </div>
+          <div class="panel-body p-3">
+            <div class="form-group pt-3">
+              <youtube-player [videoId]="video.url"> </youtube-player>
+            </div>
+            <div class="form-group pt-3">
+              <div class="row">
+                <div class="col-sm">
+                  <span>10<i class="fa fa-heart fa-clickable fa-interact"></i></span>
+                </div>
+                <div class="col-sm">
+                  <span>12<i class="fa fa-comment fa-clickable fa-interact"></i></span>
+                </div>
+                <div class="col-sm">
+                  <span>14<i class="fa fa-share fa-clickable fa-interact"></i></span>
+                </div>
+              </div>
+            </div>
+            <div class="form-inline fr mt-4">
+              <a id="forget" class="font-weight-blod">Cette vidéo est inapropriée ? </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm">
+      <div class="pull-right mt-3 me-2">
+        <button (click)="logout()" class="btn-danger btn">Se d&eacute;connecter</button>
+      </div>
+      
+    </div>
+  </div>

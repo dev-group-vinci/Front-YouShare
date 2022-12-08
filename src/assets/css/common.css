@@ -1,5 +1,4 @@
 .outer {
-    height: 100vh;
     background: linear-gradient(to bottom, #fff, red) no-repeat;
 }
 
@@ -28,6 +27,23 @@ a:hover {
 
 .fa {
     color: #0d6efd;
+}
+
+.fa-clickable{
+    cursor: pointer;
+}
+
+.nb-interactions {
+    font-size: x-large;
+}
+
+.fa-interact {
+    margin-left: 2%;
+    font-size: x-large;
+}
+
+.fa-interact:hover {
+    color: red;
 }
 
 .input-field {

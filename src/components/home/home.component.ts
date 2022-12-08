@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ObservableInput, takeUntil } from 'rxjs';
 import { YoutubeService } from 'src/app/services/youtube.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { Message } from '../../app/models/message.model';
 import { Video } from '../../app/models/video.model';
 import { DataService } from '../../app/services/data.service';
@@ -36,7 +37,7 @@ export class HomeComponent {
   videos: any[];
   unsubscribe$: ObservableInput<any>;
 
-  constructor(private spinner: NgxSpinnerService, private youTubeService: YoutubeService, private dataService: DataService) {}
+  constructor(private spinner: NgxSpinnerService, private youTubeService: YoutubeService, private dataService: DataService, private auth: AuthService,) {}
 
   ngOnInit() {
     this.dataService.getMessages().subscribe(data => this.message$ = data);
@@ -65,6 +66,10 @@ export class HomeComponent {
         this.videos.push(item);
       }
     });
+
+  logout(){
+    this.auth.logout();
+
   }
   
 }
