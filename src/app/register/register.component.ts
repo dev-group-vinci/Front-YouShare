@@ -52,7 +52,7 @@ export class RegisterComponent {
       this.auth.register(this.registerForm.value)
       .subscribe({
         next:(res)=>{
-          this.toast.success({detail:"SUCCESS", summary: res.message, duration: 5000});
+          this.toast.success({detail:"SUCCESS", summary: "Vous êtes connecté !", duration: 5000});
           this.registerForm.reset();
           this.router.navigate(['login']);
         },

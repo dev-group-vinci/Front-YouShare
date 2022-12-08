@@ -47,8 +47,8 @@ export class LoginComponent {
         next:(res)=>{
           this.toast.success({detail:"SUCCESS", summary: res.message, duration: 5000});
           this.loginForm.reset();
-          //todo : put page
-          this.router.navigate(['']);
+          this.auth.storeToken(res.token);
+          this.router.navigate(['home']);
         },
         error:(err)=>{
           this.toast.error({detail:"ERROR", summary: "Il y a eu un problème !", duration: 5000});
