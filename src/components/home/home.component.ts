@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthService } from 'src/app/services/auth.service';
 import { Message } from '../../app/models/message.model';
 import { Video } from '../../app/models/video.model';
 import { DataService } from '../../app/services/data.service';
@@ -31,7 +32,10 @@ export class HomeComponent {
   apiLoaded = false;
   videoId = 'QIZ9aZD6vs0';
 
-  constructor(private dataService: DataService) {}
+  constructor(
+    private dataService: DataService, 
+    private auth: AuthService,
+    ) {}
 
   ngOnInit() {
     this.dataService.getMessages().subscribe(data => this.message$ = data);
@@ -47,6 +51,10 @@ export class HomeComponent {
   getValues(val) {
     console.warn(val);
     //TODO Send to backend
+  }
+
+  logout(){
+    this.auth.logout();
   }
   
 }
