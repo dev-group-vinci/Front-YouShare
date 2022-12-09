@@ -34,5 +34,6 @@ npm install
 npm install -g @angular/cli
 npm install @angular/youtube-player
 npm i ng-angular-popup --force
+npm install --save --legacy-peer-deps
 
 ng serve -o

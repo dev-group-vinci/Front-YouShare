@@ -65,46 +65,4 @@ export class RegisterComponent {
       ValidateForm.validateAllFormFields(this.registerForm);
     }
   }
-
-  MustMatch(password: string, passwordConfirmation: string) {
-    console.log("must  match");
-
-    return (formGroup: FormGroup) => {
-      console.log(formGroup.controls[password]);
-      console.log(formGroup.controls[passwordConfirmation]);
-      const passwordControl = formGroup.controls[password];
-      const passwordConfirmationControl = formGroup.controls[passwordConfirmation];
-
-      if (passwordConfirmationControl.errors && !passwordConfirmationControl.errors['MustMatch']) {
-        console.log("other");
-
-        return;
-      }
-      if (passwordControl.value !== passwordConfirmationControl.value) {
-        console.log("!==");
-
-        console.log(passwordControl.value)
-        console.log(passwordConfirmationControl.value)
-        passwordConfirmationControl.setErrors({ MustMatch: true });
-      } else {
-        console.log("null");
-
-        passwordConfirmationControl.setErrors(null);
-      }
-    }
-  }
-
-  public static matchValues(
-    matchTo: string // name of the control to match to
-  ): (AbstractControl) => ValidationErrors | null {
-    return (control: AbstractControl): ValidationErrors | null => {
-      return !!control.parent &&
-        !!control.parent.value &&
-        control.value === control.parent.controls[matchTo].value
-        ? null
-        : { isMatching: false };
-    };
-  }
-
-
 }

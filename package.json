@@ -24,6 +24,7 @@
     "@angular/youtube-player": "^15.0.2",
     "express": "^4.18.2",
     "ng-angular-popup": "^0.2.0",
+    "ngx-spinner": "^14.0.0",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "typescript": "~4.8.2",

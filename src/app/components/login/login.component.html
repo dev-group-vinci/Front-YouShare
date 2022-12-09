@@ -1,7 +1,7 @@
 <div class="outer">
     <div class="container">
         <div class="row">
-            <div class="offset-md-2 col-lg-5 col-md-7 offset-lg-4 offert-md-3">
+            <div class="col-md-6 offset-md-3">
                 <div class="panel border bg-white">
                     <div class="panel-heading">
                         <h3 class="pt-3 font-weight-bold">Connection</h3>
@@ -21,7 +21,7 @@
                                 <label for="passwordInput" class="form-label">Mot de passe :</label>
                                 <div class="input-field" [class.error]="loginForm.controls['password'].dirty && loginForm.hasError('required', 'password')">
                                     <input formControlName="password" [type]="type" placeholder="Mot de passe" id="passwordInput" class="form-control">
-                                    <span (click)="hideShowPass()" class="fa {{eyeIcon}} icon " ></span>
+                                    <span (click)="hideShowPass()" class="fa {{eyeIcon}} fa-fa-clickable " ></span>
                                 </div>
                             </div>
                             <small *ngIf="loginForm.controls['password'].dirty && loginForm.hasError('required', 'password')" class="text-danger">* Mot de passe obligatoire</small>
