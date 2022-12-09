@@ -3,10 +3,16 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ObservableInput, takeUntil } from 'rxjs';
 import { YoutubeService } from 'src/app/services/youtube.service';
 import { AuthService } from 'src/app/services/auth.service';
+<<<<<<< HEAD:src/components/home/home.component.ts
 import { Message } from '../../app/models/message.model';
 import { Video } from '../../app/models/video.model';
 import { VideoWithTitle } from 'src/app/models/videotitle.model';
 import { DataService } from '../../app/services/data.service';
+=======
+import { Message } from '../../models/message.model';
+import { Video } from '../../models/video.model';
+import { DataService } from '../../services/data.service';
+>>>>>>> 397618b26a01a27bb250f3fc6dde60f405db7c59:src/app/components/home/home.component.ts
 
 @Component({
   selector: 'app-home',
@@ -42,7 +48,12 @@ export class HomeComponent {
   titles: string[];
   unsubscribe$: ObservableInput<any>;
 
-  constructor(private spinner: NgxSpinnerService, private youTubeService: YoutubeService, private dataService: DataService, private auth: AuthService,) {}
+  constructor(
+    private spinner: NgxSpinnerService, 
+    private youTubeService: YoutubeService, 
+    private dataService: DataService, 
+    private auth: AuthService,
+  ) {}
 
   ngOnInit() {
     this.dataService.getMessages().subscribe(data => this.message$ = data);
