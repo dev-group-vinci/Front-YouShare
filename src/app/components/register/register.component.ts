@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
-import { Router, RouterModule } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import ValidateForm from 'src/app/helpers/validateform';
 import { matchValidator } from 'src/app/helpers/validatePasswordMatch';
 import { createPasswordStrengthValidator } from 'src/app/helpers/validatePasswordStrength';
@@ -19,8 +19,8 @@ export class RegisterComponent {
   registerForm!: FormGroup;
 
   constructor(
-    private fb: FormBuilder, 
-    private auth: AuthService, 
+    private fb: FormBuilder,
+    private auth: AuthService,
     private router: Router,
     private toast: NgToastService
   ) {
@@ -30,7 +30,7 @@ export class RegisterComponent {
   ngOnInit(): void {
     this.registerForm = this.fb.group({
       username: ['', Validators.required],
-      email: ['', Validators.compose([Validators.required, Validators.email])],
+      email: ['', Validators.compose([Validators.required, Validators.pattern("^\\S+@\\S+\\.\\S+$")])],
       password: ['', [Validators.required, matchValidator('passwordConfirmation', true), Validators.minLength(6), createPasswordStrengthValidator()]],
       passwordConfirmation: ['', Validators.compose([Validators.required, matchValidator('password')])],
     })
@@ -52,12 +52,14 @@ export class RegisterComponent {
       this.auth.register(this.registerForm.value)
       .subscribe({
         next:(res)=>{
-          this.toast.success({detail:"SUCCESS", summary: "Vous êtes connecté !", duration: 5000});
+          this.toast.success({detail:"SUCCESS", summary: "Vous êtes inscrit !", duration: 5000});
           this.registerForm.reset();
           this.router.navigate(['login']);
         },
         error:(err)=>{
-          this.toast.error({detail:"ERROR", summary: "Il y a eu un problème !", duration: 5000});
+          console.log(err)
+          if(err.statusText == 'Conflict') this.toast.error({detail:"ERROR", summary: "Le nom d'utilisateur ou l'adresse email est déjà utilisé !", duration: 5000});
+          else this.toast.error({detail:"ERROR", summary: "Il y a eu un problème !", duration: 5000, type:""});
          }
       })
     } else {

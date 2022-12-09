@@ -24,7 +24,7 @@
                                 </div>
                             </div>
                             <small *ngIf="registerForm.controls['email'].dirty && registerForm.hasError('required', 'email')" class="text-danger">* Email obligatoire</small>
-                            <small *ngIf="registerForm.controls['email'].dirty && registerForm.hasError('email', 'email')" class="text-danger">* Veuillez entrer une email valide</small>
+                            <small *ngIf="registerForm.controls['email'].dirty && registerForm.hasError('pattern', 'email')" class="text-danger">* Veuillez entrer une email valide</small>
                             <div class="form-group pt-3">
                                 <span class="fa fa-lock p-2 icon"></span>
                                 <label for="passwordInput" class="form-label">Mot de passe :</label>
