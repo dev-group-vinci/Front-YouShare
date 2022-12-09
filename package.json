@@ -48,6 +48,10 @@
     "ng-angular-popup": {
       "@angular/common": "$@angular/common",
       "@angular/core": "$@angular/core"
+    },
+    "ngx-spinner": {
+      "@angular/common": "$@angular/common",
+      "@angular/core": "$@angular/core"
     }
   },
   "engines": {
