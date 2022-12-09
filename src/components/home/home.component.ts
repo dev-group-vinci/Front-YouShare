@@ -5,6 +5,7 @@ import { YoutubeService } from 'src/app/services/youtube.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { Message } from '../../app/models/message.model';
 import { Video } from '../../app/models/video.model';
+import { VideoWithTitle } from 'src/app/models/videotitle.model';
 import { DataService } from '../../app/services/data.service';
 
 @Component({
@@ -35,6 +36,7 @@ export class HomeComponent {
   apiLoaded = false;
   videoId = 'QIZ9aZD6vs0';
   videos: any[];
+  titles: string[];
   unsubscribe$: ObservableInput<any>;
 
   constructor(private spinner: NgxSpinnerService, private youTubeService: YoutubeService, private dataService: DataService, private auth: AuthService,) {}
@@ -42,12 +44,25 @@ export class HomeComponent {
   ngOnInit() {
     this.dataService.getMessages().subscribe(data => this.message$ = data);
 
+    this.videos$.forEach( (v) => {
+      this.spinner.show()
+      setTimeout(()=> {this.spinner.hide()},3000)
+      this.videos = [];
+      this.youTubeService.getVideoById(v.url).subscribe(list => {
+        for (let item of list['items']) {
+          this.videos.push(item);
+          console.log(item);
+        }
+      });
+    });
+
     if (!this.apiLoaded) {
       const tag = document.createElement('script');
       tag.src = 'https://www.youtube.com/iframe_api';
       document.body.appendChild(tag);
       this.apiLoaded = true;
     }
+
 
   }
 

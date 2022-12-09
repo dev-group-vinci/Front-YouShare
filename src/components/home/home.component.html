@@ -77,6 +77,9 @@
           </div>
         </div>
       </div>
+      <div *ngFor="let video of videos" class="col-xl-3 col-md-6 mb-4">
+        {{video.snippet.title}}
+      </div>
     </div>
 
     <div class="col-sm">
