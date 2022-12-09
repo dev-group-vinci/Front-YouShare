@@ -3,16 +3,10 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ObservableInput, takeUntil } from 'rxjs';
 import { YoutubeService } from 'src/app/services/youtube.service';
 import { AuthService } from 'src/app/services/auth.service';
-<<<<<<< HEAD:src/components/home/home.component.ts
-import { Message } from '../../app/models/message.model';
-import { Video } from '../../app/models/video.model';
+import { Message } from 'src/app/models/message.model';
+import { Video } from 'src/app/models/video.model';
 import { VideoWithTitle } from 'src/app/models/videotitle.model';
-import { DataService } from '../../app/services/data.service';
-=======
-import { Message } from '../../models/message.model';
-import { Video } from '../../models/video.model';
-import { DataService } from '../../services/data.service';
->>>>>>> 397618b26a01a27bb250f3fc6dde60f405db7c59:src/app/components/home/home.component.ts
+import { DataService } from 'src/app/services/data.service';
 
 @Component({
   selector: 'app-home',
