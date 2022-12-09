@@ -1,12 +1,19 @@
 .outer {
     background: linear-gradient(to bottom, #fff, red) no-repeat;
+    min-height: 100vh;
 }
 
 .panel {
     min-height: 380px;
     box-shadow: 20px 20px 80px rgb(218, 218, 218);
     border-radius: 12px;
-    margin-top: 25%;
+}
+
+.small-panel {
+    min-height: 100px;
+    box-shadow: 20px 20px 80px rgb(218, 218, 218);
+    border-radius: 12px;
+    margin-top: 0px;
 }
 
 .panel-heading {
@@ -94,6 +101,24 @@ input[type='text'], input[type='password'] {
 
 small {
     display: block;
+}
+
+/** PROFILE PICTURE **/
+.pp {
+    width: 75px;
+    height: 50px;
+    display: flex;
+    justify-content: left;
+    clip-path:ellipse(33% 50%);
+    margin-left: 5%;
+    margin-top: 5%;
+}
+
+/** LOGO **/
+.logo-img {
+    width: 50%;
+    display: flex;
+    justify-content: left;
 }
 
 
