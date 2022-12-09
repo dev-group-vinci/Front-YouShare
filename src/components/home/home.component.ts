@@ -16,21 +16,24 @@ import { DataService } from '../../app/services/data.service';
 export class HomeComponent {
   
   message$: Message = new Message();
-  videos$: Video[] = [
+  videos$: VideoWithTitle[] = [
     { id: 1, 
       url: "fk99pry6nY8",
       text: "HAHA",
-      state: "published"
+      state: "published",
+      title: "",
     },
     { id: 2, 
       url: "Y58kN2CmFwA",
       text: "LOL",
-      state: "published"
+      state: "published",
+      title: "",
     },
     { id: 3, 
       url: "QIZ9aZD6vs0",
       text: "FUNNY",
-      state: "published"
+      state: "published",
+      title: "",
     }
   ];
   apiLoaded = false;
@@ -44,6 +47,7 @@ export class HomeComponent {
   ngOnInit() {
     this.dataService.getMessages().subscribe(data => this.message$ = data);
 
+
     this.videos$.forEach( (v) => {
       this.spinner.show()
       setTimeout(()=> {this.spinner.hide()},3000)
@@ -52,6 +56,8 @@ export class HomeComponent {
         for (let item of list['items']) {
           this.videos.push(item);
           console.log(item);
+          console.log(item.snippet.title);
+          v.title = item.snippet.title;
         }
       });
     });

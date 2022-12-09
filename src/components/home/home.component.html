@@ -49,8 +49,8 @@
               <div class="col-md-auto">
                 <h1>{{ video.text }}</h1>
               </div>
-              <div>
-                <h1></h1>
+              <div class="col-md-auto">
+                <h1>{{ video.title }}</h1>
               </div>
             </div>
           </div>
@@ -77,9 +77,10 @@
           </div>
         </div>
       </div>
-      <div *ngFor="let video of videos" class="col-xl-3 col-md-6 mb-4">
+      <!--<div *ngFor="let video of videos" class="col-xl-3 col-md-6 mb-4">
         {{video.snippet.title}}
       </div>
+      -->
     </div>
 
     <div class="col-sm">
