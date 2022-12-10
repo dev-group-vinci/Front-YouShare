@@ -7,6 +7,7 @@ import { Message } from 'src/app/models/message.model';
 import { Video } from 'src/app/models/video.model';
 import { VideoWithTitle } from 'src/app/models/videotitle.model';
 import { DataService } from 'src/app/services/data.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-home',
@@ -47,6 +48,7 @@ export class HomeComponent {
     private youTubeService: YoutubeService, 
     private dataService: DataService, 
     private auth: AuthService,
+    private userService: UserService,
   ) {}
 
   ngOnInit() {
@@ -97,6 +99,10 @@ export class HomeComponent {
 
   logout(){
     this.auth.logout();
+  }
+
+  getPicture(idUser: number){
+    return this.userService.getPicture(1)
   }
   
 }
