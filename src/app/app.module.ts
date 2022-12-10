@@ -12,6 +12,7 @@ import { NgToastModule } from 'ng-angular-popup';
 import { YouTubePlayerModule } from '@angular/youtube-player';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { ProfileComponent } from './components/profile/profile.component';
+import { FriendlistComponent } from './components/friendlist/friendlist.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { ProfileComponent } from './components/profile/profile.component';
     HomeComponent,
     LoginComponent,
     RegisterComponent,
-    ProfileComponent
+    ProfileComponent,
+    FriendlistComponent
   ],
   imports: [
     BrowserModule,
