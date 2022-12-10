@@ -35,7 +35,7 @@
                             </div>
                             <small *ngIf="registerForm.controls['password'].dirty && registerForm.hasError('required', 'password')" class="text-danger">* Mot de passe obligatoire</small>
                             <small *ngIf="registerForm.controls['password'].dirty && registerForm.hasError('minlength', 'password')" class="text-danger">* Votre mot de passe doit contenir 6 caractères minimum</small>
-                            <small *ngIf="registerForm.controls['password'].dirty && registerForm.hasError('passwordStrength', 'password')" class="text-danger">* Votre mot de pase doit contenir au minimum une minuscule, une majuscule et un chiffre</small>
+                            <small *ngIf="registerForm.controls['password'].dirty && registerForm.hasError('passwordStrength', 'password')" class="text-danger">* Votre mot de passe doit contenir au minimum une minuscule, une majuscule, un chiffre et un caractère spécial</small>
                             <div class="form-group pt-3">
                                 <span class="fa fa-lock p-2 icon"></span>
                                 <label for="passwordConfirmationInput" class="form-label">Confirmez votre mot de passe :</label>
