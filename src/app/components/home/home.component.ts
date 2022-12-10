@@ -15,22 +15,22 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
-  
+
   message$: Message = new Message();
   videos$: VideoWithTitle[] = [
-    { id: 1, 
+    { id: 1,
       url: "fk99pry6nY8",
       text: "HAHA",
       state: "published",
       title: "",
     },
-    { id: 2, 
+    { id: 2,
       url: "Y58kN2CmFwA",
       text: "LOL",
       state: "published",
       title: "",
     },
-    { id: 3, 
+    { id: 3,
       url: "QIZ9aZD6vs0",
       text: "FUNNY",
       state: "published",
@@ -44,15 +44,15 @@ export class HomeComponent {
   unsubscribe$: ObservableInput<any>;
 
   constructor(
-    private spinner: NgxSpinnerService, 
-    private youTubeService: YoutubeService, 
-    private dataService: DataService, 
+    private spinner: NgxSpinnerService,
+    private youTubeService: YoutubeService,
+    private dataService: DataService,
     private auth: AuthService,
     private userService: UserService,
   ) {}
 
   ngOnInit() {
-    this.dataService.getMessages().subscribe(data => this.message$ = data);
+    //this.dataService.getMessages().subscribe(data => this.message$ = data);
 
 
     
