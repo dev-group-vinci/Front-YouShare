@@ -19,7 +19,7 @@
                             <div class="form-group pt-3">
                                 <span class="fa fa-at p-2"></span>
                                 <label for="emailInput" class="form-label">Email :</label>
-                                <div class="input-field" [class.error]="registerForm.controls['email'].dirty && registerForm.hasError('required', 'email')">
+                                <div class="input-field" [class.error]="registerForm.controls['email'].dirty && (registerForm.hasError('required', 'email') || registerForm.hasError('pattern', 'email'))">
                                     <input formControlName="email" type="text" placeholder="Email" id="emailInput" class="form-control">
                                 </div>
                             </div>
