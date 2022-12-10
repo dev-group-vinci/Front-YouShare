@@ -53,6 +53,7 @@ export class HomeComponent {
     this.dataService.getMessages().subscribe(data => this.message$ = data);
 
 
+    
     this.videos$.forEach( (v) => {
       this.spinner.show()
       setTimeout(()=> {this.spinner.hide()},3000)
