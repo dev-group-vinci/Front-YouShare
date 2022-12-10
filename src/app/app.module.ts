@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { DataService } from './services/data.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './components/login/login.component';
@@ -12,6 +12,7 @@ import { NgToastModule } from 'ng-angular-popup';
 import { YouTubePlayerModule } from '@angular/youtube-player';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { ProfileComponent } from './components/profile/profile.component';
+import {TokenInterceptor} from "./services/token.interceptor";
 
 @NgModule({
   declarations: [
@@ -31,7 +32,14 @@ import { ProfileComponent } from './components/profile/profile.component';
     NgToastModule,
     NgxSpinnerModule,
   ],
-  providers: [DataService],
+  providers: [
+    DataService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
