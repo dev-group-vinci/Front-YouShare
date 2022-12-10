@@ -1,7 +1,6 @@
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Message } from '../models/message.model';
-import { environment } from 'src/environments/environment.dev';
 
 const httpOptions : any    = {
   headers: new HttpHeaders({
@@ -16,12 +15,11 @@ const httpOptions : any    = {
   providedIn: 'root'
 })
 export class DataService {
-  apiUrl = environment.apiUrl;
   //apiUrl = 'https://jsonplaceholder.typicode.com/users';
 
   constructor(private _http: HttpClient) { }
 
   getMessages() {    
-    return this._http.get<Message>(`${this.apiUrl}json`);
+    return this._http.get<Message>("api/json");
   }
 }

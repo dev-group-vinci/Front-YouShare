@@ -6,18 +6,20 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:8080/json';
+  private apiUrl = "oiu"//process.env["BACK_URL"];
+
   constructor(
     private _http: HttpClient, 
     private router: Router,
     ) { }
 
   register(userObj: any) {
-    return this._http.post<any>(`${this.apiUrl}register`, userObj);
+    return this._http.post<any>("api/register", userObj);
   }
 
   login(loginObj: any) {
-    return this._http.post<any>(`${this.apiUrl}login`, loginObj);
+    console.log("OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO   "+this.apiUrl);
+    return this._http.post<any>(`${this.apiUrl}users/login`, loginObj);
   }
 
   logout(){
