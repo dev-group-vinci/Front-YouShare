@@ -6,6 +6,7 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { FriendRequestsComponent } from './components/friend-requests/friend-requests.component';
+import {AddFriendComponent} from "./components/add-friend/add-friend.component";
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch:'full' },
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},
   { path: 'friendrequests', component: FriendRequestsComponent, canActivate: [AuthGuard]},
+  { path: 'addfriend', component: AddFriendComponent, canActivate: [AuthGuard]},
   { path: '**',   redirectTo: 'home', pathMatch: 'full' }, //{ path: '**', component: PageNotFoundComponent }, TODO on peut changer si on veut
 ];
 
