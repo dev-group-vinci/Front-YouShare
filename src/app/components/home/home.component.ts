@@ -7,6 +7,11 @@ import { Message } from 'src/app/models/message.model';
 import { Video } from 'src/app/models/video.model';
 import { VideoWithTitle } from 'src/app/models/videotitle.model';
 import { DataService } from 'src/app/services/data.service';
+import { PostService } from 'src/app/services/post.service';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { NgToastService } from 'ng-angular-popup';
+import ValidateForm from 'src/app/helpers/validateform';
+
 
 @Component({
   selector: 'app-home',
@@ -41,19 +46,21 @@ export class HomeComponent {
   videos: any[];
   titles: string[];
   unsubscribe$: ObservableInput<any>;
+  postsForm!: FormGroup;
 
   constructor(
     private spinner: NgxSpinnerService, 
     private youTubeService: YoutubeService, 
     private dataService: DataService, 
     private auth: AuthService,
+    private posts: PostService,
+    private fb: FormBuilder,
+    private toast: NgToastService,
   ) {}
 
   ngOnInit() {
     this.dataService.getMessages().subscribe(data => this.message$ = data);
 
-
-    
     this.videos$.forEach( (v) => {
       this.spinner.show()
       setTimeout(()=> {this.spinner.hide()},3000)
@@ -61,8 +68,6 @@ export class HomeComponent {
       this.youTubeService.getVideoById(v.url).subscribe(list => {
         for (let item of list['items']) {
           this.videos.push(item);
-          console.log(item);
-          console.log(item.snippet.title);
           v.title = item.snippet.title;
         }
       });
@@ -75,12 +80,14 @@ export class HomeComponent {
       this.apiLoaded = true;
     }
 
-
+    this.postsForm = this.fb.group({
+      url: ['', Validators.required],
+      text: ['', Validators.required]
+    })
   }
 
   getValues(val) {
-    console.warn(val);
-    //TODO Send to backend
+    return val;
   }
 
   getTitle(id: string) {
@@ -98,5 +105,24 @@ export class HomeComponent {
   logout(){
     this.auth.logout();
   }
+
+  addPost(){
+
+    if(this.postsForm.valid) {
+      this.posts.addPost(this.postsForm.value)
+      .subscribe({
+        next:(res)=>{
+          this.toast.success({detail:"SUCCESS", summary: "Correctement ajouté", duration: 5000});
+          this.postsForm.reset();
+        },
+        error:(err)=>{
+          this.toast.error({detail:"ERROR", summary: "Il y a eu un problème !", duration: 5000});
+        }
+      })
+    } else {
+      ValidateForm.validateAllFormFields(this.postsForm)
+    }
+  }
+  
   
 }

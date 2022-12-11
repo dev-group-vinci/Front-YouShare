@@ -24,4 +24,6 @@ export class DataService {
   getMessages() {    
     return this._http.get<Message>(`${this.apiUrl}json`);
   }
+
+  
 }
