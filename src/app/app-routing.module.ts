@@ -13,7 +13,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},
-  { path: 'friendlist', component: FriendRequestsComponent, canActivate: [AuthGuard]},
+  { path: 'friendrequests', component: FriendRequestsComponent, canActivate: [AuthGuard]},
   { path: '**',   redirectTo: 'home', pathMatch: 'full' }, //{ path: '**', component: PageNotFoundComponent }, TODO on peut changer si on veut
 ];
 
