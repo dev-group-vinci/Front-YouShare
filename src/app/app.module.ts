@@ -14,6 +14,7 @@ import { NgxSpinnerModule } from "ngx-spinner";
 import { ProfileComponent } from './components/profile/profile.component';
 import { FriendlistComponent } from './components/friendlist/friendlist.component';
 import {TokenInterceptor} from "./services/token.interceptor";
+import { NavigationMenuComponent } from './components/navigation-menu/navigation-menu.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import {TokenInterceptor} from "./services/token.interceptor";
     LoginComponent,
     RegisterComponent,
     ProfileComponent,
-    FriendlistComponent
+    FriendlistComponent,
+    NavigationMenuComponent,
   ],
   imports: [
     BrowserModule,
