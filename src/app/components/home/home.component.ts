@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { ObservableInput, takeUntil } from 'rxjs';
+import { ObservableInput, Subscription, takeUntil } from 'rxjs';
 import { YoutubeService } from 'src/app/services/youtube.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { Message } from 'src/app/models/message.model';
 import { Video } from 'src/app/models/video.model';
-import { VideoWithTitle } from 'src/app/models/videotitle.model';
+import { VideoShow } from 'src/app/models/videotitle.model';
 import { DataService } from 'src/app/services/data.service';
 import { PostService } from 'src/app/services/post.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
@@ -21,24 +21,33 @@ import ValidateForm from 'src/app/helpers/validateform';
 export class HomeComponent {
 
   message$: Message = new Message();
-  videos$: VideoWithTitle[] = [
+  videos$: VideoShow[] = [
     { id: 1,
       url: "fk99pry6nY8",
       text: "HAHA",
       state: "published",
       title: "",
+      likes: -1,
+      comments: -1,
+      shares: -1,
     },
     { id: 2,
       url: "Y58kN2CmFwA",
       text: "LOL",
       state: "published",
       title: "",
+      likes: -1,
+      comments: -1,
+      shares: -1,
     },
     { id: 3,
       url: "QIZ9aZD6vs0",
       text: "FUNNY",
       state: "published",
       title: "",
+      likes: -1,
+      comments: -1,
+      shares: -1,
     }
   ];
   apiLoaded = false;
@@ -47,6 +56,7 @@ export class HomeComponent {
   titles: string[];
   unsubscribe$: ObservableInput<any>;
   postsForm!: FormGroup;
+  currentPageSub :Subscription;
 
   constructor(
     private spinner: NgxSpinnerService,
@@ -62,6 +72,8 @@ export class HomeComponent {
     //this.dataService.getMessages().subscribe(data => this.message$ = data);
 
     this.videos$.forEach( (v) => {
+
+      //Recover Title Youtube
       this.spinner.show()
       setTimeout(()=> {this.spinner.hide()},3000)
       this.videos = [];
@@ -71,8 +83,30 @@ export class HomeComponent {
           v.title = item.snippet.title;
         }
       });
-    });
 
+      //Recover Number Likes
+      this.currentPageSub = this.posts.getNumberLikes(v.id).subscribe(
+        (page: number) => {
+          v.likes=page;
+        }
+      )
+
+      //Recover Number Comments
+      this.currentPageSub = this.posts.getNumberComments(v.id).subscribe(
+        (page: number) => {
+          v.likes=page;
+        }
+      )
+
+      //Recover Number Shares
+      this.currentPageSub = this.posts.getNumberShares(v.id).subscribe(
+        (page: number) => {
+          v.likes=page;
+        }
+      )
+    });    
+
+    //Load Youtube iframe
     if (!this.apiLoaded) {
       const tag = document.createElement('script');
       tag.src = 'https://www.youtube.com/iframe_api';
@@ -80,6 +114,7 @@ export class HomeComponent {
       this.apiLoaded = true;
     }
 
+    //Create the form
     this.postsForm = this.fb.group({
       url: ['', Validators.required],
       text: ['', Validators.required]

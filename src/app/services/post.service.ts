@@ -22,4 +22,15 @@ export class PostService {
     return this._http.post<any>(`${this.apiUrl}posts`, newForm);
   }
 
+  getNumberLikes(id_post: number) {
+    return this._http.get<any>(`${this.apiUrl}posts/${id_post}/likes/`);
+  }
+
+  getNumberComments(id_post: number) {
+    return this._http.get<any>(`${this.apiUrl}posts/${id_post}/comments/`);
+  }
+
+  getNumberShares(id_post: number) {
+    return this._http.get<any>(`${this.apiUrl}posts/${id_post}/shares/`);
+  }
 }
