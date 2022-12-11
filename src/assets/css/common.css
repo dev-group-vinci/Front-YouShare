@@ -117,6 +117,7 @@ small {
 /** LOGO **/
 .logo-img {
     width: 85%;
+    cursor: pointer;
 }
 
 
