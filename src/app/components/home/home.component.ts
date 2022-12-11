@@ -124,5 +124,17 @@ export class HomeComponent {
     }
   }
   
+  addLike(){
+    console.log("Test1");
+    this.posts.addLike(1).subscribe({
+      next:(res)=>{
+        this.toast.success({detail:"SUCCESS", summary: "Like ajouté", duration: 5000});
+      },
+      error:(err)=>{
+        this.toast.error({detail:"ERROR", summary: "Il y a eu un problème !", duration: 5000});
+      }
+    })
+
+  }
   
 }

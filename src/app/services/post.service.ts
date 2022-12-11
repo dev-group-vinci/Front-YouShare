@@ -22,9 +22,22 @@ export class PostService {
     
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      'Authorization': `${localStorage.getItem('token')}`
+      'Authorization': `Bearer ${localStorage.getItem('token')}`
     });
     const requestOptions = { headers: headers};
-    return this._http.post<any>(`${this.apiUrl}posts`, requestOptions, newForm);
+    //return this._http.post<any>(`${this.apiUrl}posts`, requestOptions, newForm);
+    return this._http.post<any>(`${this.apiUrl}posts`, newForm);
   }
+
+  addLike(id_post: number) {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('token')}`
+    });
+    const requestOptions = { headers: headers};
+    console.log("Test2");
+    return this._http.post<any>(`${this.apiUrl}posts/${id_post}/likes/`, requestOptions);
+  }
+
+  
 }
