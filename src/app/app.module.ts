@@ -12,6 +12,7 @@ import { NgToastModule } from 'ng-angular-popup';
 import { YouTubePlayerModule } from '@angular/youtube-player';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { ProfileComponent } from './components/profile/profile.component';
+import { FriendlistComponent } from './components/friendlist/friendlist.component';
 import {TokenInterceptor} from "./services/token.interceptor";
 
 @NgModule({
@@ -20,7 +21,8 @@ import {TokenInterceptor} from "./services/token.interceptor";
     HomeComponent,
     LoginComponent,
     RegisterComponent,
-    ProfileComponent
+    ProfileComponent,
+    FriendlistComponent
   ],
   imports: [
     BrowserModule,
