@@ -6,11 +6,11 @@ import {FormBuilder, FormGroup} from "@angular/forms";
 import {User} from "../../models/user.model";
 
 @Component({
-  selector: 'app-friendlist',
-  templateUrl: './friendlist.component.html',
-  styleUrls: ['./friendlist.component.css']
+  selector: 'app-friend-requests',
+  templateUrl: './friend-requests.component.html',
+  styleUrls: ['./friend-requests.component.css']
 })
-export class FriendlistComponent {
+export class FriendRequestsComponent {
 
   friendsForm!: FormGroup;
   user$: User;

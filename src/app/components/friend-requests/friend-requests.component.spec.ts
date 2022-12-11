@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FriendlistComponent } from './friendlist.component';
+import { FriendRequestsComponent } from './friend-requests.component';
 
-describe('FriendlistComponent', () => {
-  let component: FriendlistComponent;
-  let fixture: ComponentFixture<FriendlistComponent>;
+describe('FriendRequestsComponent', () => {
+  let component: FriendRequestsComponent;
+  let fixture: ComponentFixture<FriendRequestsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ FriendlistComponent ]
+      declarations: [ FriendRequestsComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(FriendlistComponent);
+    fixture = TestBed.createComponent(FriendRequestsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
