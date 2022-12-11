@@ -16,6 +16,7 @@ import { FriendRequestsComponent } from './components/friend-requests/friend-req
 import {TokenInterceptor} from "./services/token.interceptor";
 import { NavigationMenuComponent } from './components/navigation-menu/navigation-menu.component';
 import { FriendsListComponent } from './components/friends-list/friends-list.component';
+import { AddFriendComponent } from './components/add-friend/add-friend.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { FriendsListComponent } from './components/friends-list/friends-list.com
     FriendRequestsComponent,
     NavigationMenuComponent,
     FriendsListComponent,
+    AddFriendComponent,
   ],
   imports: [
     BrowserModule,
