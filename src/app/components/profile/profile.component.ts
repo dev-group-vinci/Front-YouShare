@@ -1,13 +1,24 @@
-import { Component } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, RequiredValidator, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
-import { NgxSpinnerService } from 'ngx-spinner';
-import { AuthService } from 'src/app/services/auth.service';
-import { DataService } from 'src/app/services/data.service';
-import { YoutubeService } from 'src/app/services/youtube.service';
-import { matchValidator } from 'src/app/helpers/validatePasswordMatch';
-import { createPasswordStrengthValidator } from 'src/app/helpers/validatePasswordStrength';
+import {Component} from '@angular/core';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  RequiredValidator,
+  ValidationErrors,
+  ValidatorFn,
+  Validators
+} from '@angular/forms';
+import {NgxSpinnerService} from 'ngx-spinner';
+import {AuthService} from 'src/app/services/auth.service';
+import {DataService} from 'src/app/services/data.service';
+import {YoutubeService} from 'src/app/services/youtube.service';
+import {matchValidator} from 'src/app/helpers/validatePasswordMatch';
+import {createPasswordStrengthValidator} from 'src/app/helpers/validatePasswordStrength';
 import ValidateForm from 'src/app/helpers/validateform';
-import { Router } from '@angular/router';
+import {Router} from '@angular/router';
+import {NgToastService} from "ng-angular-popup";
+import {User} from "../../models/user.model";
+import {AppComponent} from "../../app.component";
 
 @Component({
   selector: 'app-profile',
@@ -20,22 +31,38 @@ export class ProfileComponent {
   eyeIcon: string = "fa-eye-slash";
   profileForm!: FormGroup;
 
+  user$: User;
+
   constructor(
-    private fb: FormBuilder, 
-    private router: Router,
-    private spinner: NgxSpinnerService, 
-    private youTubeService: YoutubeService, 
-    private dataService: DataService, 
-    private auth: AuthService,
-  ) {}
+      private fb: FormBuilder,
+      private router: Router,
+      private spinner: NgxSpinnerService,
+      private youTubeService: YoutubeService,
+      private dataService: DataService,
+      private data: DataService,
+      private toast: NgToastService,
+      private auth: AuthService
+  ) {
+  }
 
   ngOnInit(): void {
     this.profileForm = this.fb.group({
       username: [''],
-      email: ['',Validators.email],
+      biography: ['', Validators.maxLength(200)],
+      email: ['', Validators.pattern("^\\S+@\\S+\\.\\S+$")],
       oldPassword: ['', Validators.required],
       password: ['', [matchValidator('passwordConfirmation', true), Validators.minLength(6), createPasswordStrengthValidator()]],
       passwordConfirmation: ['', Validators.compose([matchValidator('password')])],
+    })
+    this.data.getUserLoggedIn().subscribe({
+      next: (res) => {
+        this.user$ = new User(res);
+        this.profileForm.patchValue({
+          username: this.user$.username,
+          biography: this.user$.biography,
+          email: this.user$.email
+        });
+      }
     })
   }
 
@@ -48,16 +75,31 @@ export class ProfileComponent {
   onModify() {
     if (this.profileForm.valid) {
       // Modify user
-      this.auth.register(this.profileForm.value)
+      console.log("profile", this.profileForm.value)
+      this.dataService.updateUser(this.profileForm.value)
       .subscribe({
-        next:(res)=>{
-          // to do : display success
-          this.profileForm.reset();
-          this.router.navigate(['/']);
+        next: (res) => {
+          this.toast.success({
+            detail: "SUCCESS",
+            summary: "Votre profil a été modifié !",
+            duration: 5000
+          });
+          this.router.navigate(['profile']);
         },
-        error:(err)=>{
-          // to do : display error
-         }
+        error: (err) => {
+          console.log(err)
+          if (err.statusText == 'Conflict') this.toast.error({
+            detail: "ERROR",
+            summary: "Le nom d'utilisateur ou l'adresse email n'est pas disponible !",
+            duration: 5000
+          });
+          else this.toast.error({
+            detail: "ERROR",
+            summary: "Il y a eu un problème !",
+            duration: 5000,
+            type: ""
+          });
+        }
       })
     } else {
       // throw error message
@@ -65,7 +107,7 @@ export class ProfileComponent {
     }
   }
 
-  logout(){
+  logout() {
     this.auth.logout();
   }
 }

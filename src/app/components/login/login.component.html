@@ -21,7 +21,7 @@
                                 <label for="passwordInput" class="form-label">Mot de passe :</label>
                                 <div class="input-field" [class.error]="loginForm.controls['password'].dirty && loginForm.hasError('required', 'password')">
                                     <input formControlName="password" [type]="type" placeholder="Mot de passe" id="passwordInput" class="form-control">
-                                    <span (click)="hideShowPass()" class="fa {{eyeIcon}} fa-fa-clickable " ></span>
+                                    <span (click)="hideShowPass()" class="fa {{eyeIcon}} fa-clickable " ></span>
                                 </div>
                             </div>
                             <small *ngIf="loginForm.controls['password'].dirty && loginForm.hasError('required', 'password')" class="text-danger">* Mot de passe obligatoire</small>
