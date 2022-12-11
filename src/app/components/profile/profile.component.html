@@ -1,9 +1,7 @@
 <div class="outer">
     <div class="row">
-        <div class="col-sm-3">
-            <div class="log mt-3 margin-top">
-                <img class="logo-img" src="../../assets/images/YouShareLogoTextNoir.png" alt="Logo">
-            </div>
+        <div class="col-sm-2">
+          <app-navigation-menu></app-navigation-menu>
         </div>
 
         <div class="col-sm-7">
@@ -126,23 +124,8 @@
             </div>
         </div>
 
-        <div class="col-sm-2 margin-top">
-            <div class="pull-right me-2 row">
-                <div class="small-panel border bg-white">
-                    <div class="row mt-4">
-                        <div class="col-sm-3">
-                            <img class="pp" src="../../assets/images/homme.jpg" alt="Photo de profil">
-                        </div>
-                        <div class="col-sm-6">
-                            <h4 *ngIf="user$">{{ user$.username }}</h4>
-                        </div>
-                    </div>
-                </div>
-                <a id="forget" routerLink="/profile" class="btn btn-primary btn-block mb-2 mt-3">Modifier mon profil</a>
-                <a id="forget" routerLink="/profile" class="btn btn-primary btn-block mb-2">Ajouter des amis</a>
-                <a id="forget" routerLink="/friendlist" class="btn btn-primary btn-block mb-2">Voir mes demandes d'amis</a>
-                <button (click)="logout()" class="btn btn-danger btn-block mb-2">Se d&eacute;connecter</button>
-            </div>
-
+        <div class="col-sm-3 margin-top">
+          <app-friends-list></app-friends-list>
         </div>
     </div>
+</div>
