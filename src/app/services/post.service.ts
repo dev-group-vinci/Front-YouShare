@@ -19,13 +19,7 @@ export class PostService {
     newForm.id_url = postObj.url;
     newForm.text = postObj.text;
     
-    //TODO enlever Header
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `${localStorage.getItem('token')}`
-    });
-    const requestOptions = { headers: headers};
-    return this._http.post<any>(`${this.apiUrl}posts`, newForm, requestOptions);
+    return this._http.post<any>(`${this.apiUrl}posts`, newForm);
   }
 
 }
