@@ -5,7 +5,7 @@ import { YoutubeService } from 'src/app/services/youtube.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { Message } from 'src/app/models/message.model';
 import { Video } from 'src/app/models/video.model';
-import { VideoShow } from 'src/app/models/videotitle.model';
+import { VideoShow } from 'src/app/models/videoshow.model';
 import { DataService } from 'src/app/services/data.service';
 import { PostService } from 'src/app/services/post.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
@@ -28,8 +28,9 @@ export class HomeComponent {
       state: "published",
       title: "",
       likes: -1,
-      comments: -1,
+      numberComments: -1,
       shares: -1,
+      comments: [],
     },
     { id: 2,
       url: "Y58kN2CmFwA",
@@ -37,8 +38,10 @@ export class HomeComponent {
       state: "published",
       title: "",
       likes: -1,
-      comments: -1,
+      numberComments: -1,
       shares: -1,
+      comments: [],
+
     },
     { id: 3,
       url: "QIZ9aZD6vs0",
@@ -46,8 +49,10 @@ export class HomeComponent {
       state: "published",
       title: "",
       likes: -1,
-      comments: -1,
+      numberComments: -1,
       shares: -1,
+      comments: [],
+
     }
   ];
   apiLoaded = false;
@@ -83,25 +88,33 @@ export class HomeComponent {
           v.title = item.snippet.title;
         }
       });
-
+      
+      console.log("OK")
       //Recover Number Likes
-      this.currentPageSub = this.posts.getNumberLikes(v.id).subscribe(
-        (page: number) => {
-          v.likes=page;
+      this.posts.getNumberLikes(v.id).subscribe({
+        next: (res) => {
+          v.likes = res,
+          console.log("Likes " + res)
+        },
+        error: (err) => {
+          console.log(err)
         }
-      )
+      })
 
-      //Recover Number Comments
-      this.currentPageSub = this.posts.getNumberComments(v.id).subscribe(
-        (page: number) => {
-          v.likes=page;
+      //Recover Comments
+      this.posts.getComments(v.id).subscribe({
+        next: (res) =>{
+          v.comments = res;
+          v.numberComments = res.length;
         }
-      )
+      })
+
+      console.log(v);
 
       //Recover Number Shares
       this.currentPageSub = this.posts.getNumberShares(v.id).subscribe(
         (page: number) => {
-          v.likes=page;
+          v.shares=page;
         }
       )
     });    
@@ -147,7 +160,7 @@ export class HomeComponent {
       this.posts.addPost(this.postsForm.value)
       .subscribe({
         next:(res)=>{
-          this.toast.success({detail:"SUCCESS", summary: "Correctement ajouté", duration: 5000});
+          this.toast.success({detail:"SUCCESS", summary: "Post ajouté", duration: 5000});
           this.postsForm.reset();
         },
         error:(err)=>{
@@ -157,6 +170,17 @@ export class HomeComponent {
     } else {
       ValidateForm.validateAllFormFields(this.postsForm)
     }
+  }
+
+  addLike(id_post: number) {
+    this.posts.addLike(id_post).subscribe({
+      next:(res)=>{
+        this.toast.success({detail:"SUCCESS", summary: "Like ajouté", duration: 5000});
+      },
+      error:(err)=>{
+        this.toast.error({detail:"ERROR", summary: "Il y a eu un problème avec le like !", duration: 5000});
+      }
+    })
   }
   
 }

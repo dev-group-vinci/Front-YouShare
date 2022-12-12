@@ -22,12 +22,17 @@ export class PostService {
     return this._http.post<any>(`${this.apiUrl}posts`, newForm);
   }
 
-  getNumberLikes(id_post: number) {
-    return this._http.get<any>(`${this.apiUrl}posts/${id_post}/likes/`);
+  addLike(id_post: number) {
+    return this._http.post<any>(`${this.apiUrl}posts/${id_post}/likes/`, null);
   }
 
-  getNumberComments(id_post: number) {
-    return this._http.get<any>(`${this.apiUrl}posts/${id_post}/comments/`);
+  getNumberLikes(id_post: number) {
+    console.log(this._http.get<number>(`${this.apiUrl}posts/${id_post}/likes/`))
+    return this._http.get<number>(`${this.apiUrl}posts/${id_post}/likes`);
+  }
+
+  getComments(id_post: number) {
+    return this._http.get<Comment[]>(`${this.apiUrl}posts/${id_post}/comments/`);
   }
 
   getNumberShares(id_post: number) {
