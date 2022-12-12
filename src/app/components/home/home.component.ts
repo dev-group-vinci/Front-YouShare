@@ -58,6 +58,7 @@ export class HomeComponent {
   unsubscribe$: ObservableInput<any>;
   postsForm!: FormGroup;
   currentPageSub :Subscription;
+  pictureUrl: string;
 
   constructor(
     private spinner: NgxSpinnerService,
@@ -71,7 +72,13 @@ export class HomeComponent {
   ) {}
 
   ngOnInit() {
-    //this.dataService.getMessages().subscribe(data => this.message$ = data);
+    // get the url of the picture
+    this.userService.getPicture(1).subscribe(
+      (picture) => {
+        console.log("PPPPPPPPPPPPPPPP  " + picture.url);
+        this.pictureUrl = picture.url;
+      }
+    )
 
     this.videos$.forEach( (v) => {
 
@@ -160,14 +167,4 @@ export class HomeComponent {
       ValidateForm.validateAllFormFields(this.postsForm)
     }
   }
-  
-  getPicture(idUser: number){
-    this.userService.getPicture(1).subscribe({
-      next(picture){
-        console.log("PPPPPPPPPPPPPPPP  " + picture);
-        return picture.url;
-      }})
-
-  }
-  
 }
