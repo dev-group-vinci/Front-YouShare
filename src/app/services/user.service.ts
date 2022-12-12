@@ -16,7 +16,7 @@ export class UserService {
 
   getPicture(id: number) {
     let temp = this._http.get<Picture>(`${this.apiUrl}users/1/picture`);
-    console.log(temp);
+    console.log("YYYYYYYYYYYY" + temp);
     
     return temp;
   }

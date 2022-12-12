@@ -102,7 +102,12 @@ export class HomeComponent {
   }
 
   getPicture(idUser: number){
-    return this.userService.getPicture(1)
+    this.userService.getPicture(1).subscribe({
+      next(picture){
+        console.log("PPPPPPPPPPPPPPPP  " + picture);
+        return picture.url;
+      }})
+
   }
   
 }
