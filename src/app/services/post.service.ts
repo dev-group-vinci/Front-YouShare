@@ -27,7 +27,6 @@ export class PostService {
   }
 
   getNumberLikes(id_post: number) {
-    console.log(this._http.get<number>(`${this.apiUrl}posts/${id_post}/likes/`))
     return this._http.get<number>(`${this.apiUrl}posts/${id_post}/likes`);
   }
 
@@ -36,6 +35,6 @@ export class PostService {
   }
 
   getNumberShares(id_post: number) {
-    return this._http.get<any>(`${this.apiUrl}posts/${id_post}/shares/`);
+    return this._http.get<number>(`${this.apiUrl}posts/${id_post}/shares`);
   }
 }

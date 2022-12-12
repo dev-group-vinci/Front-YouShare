@@ -102,8 +102,7 @@ export class HomeComponent {
       //Recover Number Likes
       this.posts.getNumberLikes(v.id).subscribe({
         next: (res) => {
-          v.likes = res,
-          console.log("Likes " + res)
+          v.likes = res
         },
         error: (err) => {
           console.log(err)
@@ -118,14 +117,15 @@ export class HomeComponent {
         }
       })
 
-      console.log(v);
-
       //Recover Number Shares
-      this.currentPageSub = this.posts.getNumberShares(v.id).subscribe(
-        (page: number) => {
-          v.shares=page;
+      this.posts.getNumberShares(v.id).subscribe({
+        next: (res) => {
+          v.shares = res
+        },
+        error: (err) => {
+          console.log(err)
         }
-      )
+      })
     });    
 
     //Load Youtube iframe
