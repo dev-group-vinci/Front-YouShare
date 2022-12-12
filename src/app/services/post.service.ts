@@ -23,7 +23,7 @@ export class PostService {
   }
 
   addLike(id_post: number) {
-    return this._http.post<any>(`${this.apiUrl}posts/${id_post}/likes/`, null);
+    return this._http.post<any>(`${this.apiUrl}posts/${id_post}/likes`, null);
   }
 
   getNumberLikes(id_post: number) {
