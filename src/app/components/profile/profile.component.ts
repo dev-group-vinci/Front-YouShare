@@ -126,4 +126,20 @@ export class ProfileComponent {
   logout() {
     this.auth.logout();
   }
+
+  uploadPicture(event) {
+    console.log("PPPPPPPPPPPPPPPPPPPPP");
+    console.log(event);
+    
+    let fileType = event.target.files[0].type;
+    if (fileType.match(/image\/*/)) {
+      let reader = new FileReader();
+      reader.readAsDataURL(event.target.files[0]);
+      reader.onload = (event: any) => {
+        //this.url = event.target.result;
+      };
+    } else {
+      window.alert('Please select correct image format');
+    }
+  }
 }

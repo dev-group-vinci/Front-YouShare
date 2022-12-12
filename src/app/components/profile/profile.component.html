@@ -10,6 +10,20 @@
                     <div class="panel-heading">
                         <h3 class="pt-3 font-weight-bold">Modification du profil</h3>
                     </div>
+
+                    <!-- TODO Eliott j'ai mis l'upload du fichier picture en dehors du form pour tester si ça fonctionne  -->
+                    <div >
+                        <input
+                          type="file"
+                          id="picture"
+                          style="display:none"
+                          accept="image/*"
+                          (change)="uploadPicture($event)"
+                        />
+                        <label for="picture">Upload Image</label>
+                      </div>
+                      
+
                     <div class="panel-body p-3">
                         <form [formGroup]="profileForm" >
                             <!-- USERNAME -->
