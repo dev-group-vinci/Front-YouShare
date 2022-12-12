@@ -12,6 +12,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { NgToastService } from 'ng-angular-popup';
 import ValidateForm from 'src/app/helpers/validateform';
 
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-home',
@@ -62,6 +63,7 @@ export class HomeComponent {
   unsubscribe$: ObservableInput<any>;
   postsForm!: FormGroup;
   currentPageSub :Subscription;
+  pictureUrl: string;
 
   constructor(
     private spinner: NgxSpinnerService,
@@ -71,10 +73,17 @@ export class HomeComponent {
     private posts: PostService,
     private fb: FormBuilder,
     private toast: NgToastService,
+    private userService: UserService,
   ) {}
 
   ngOnInit() {
-    //this.dataService.getMessages().subscribe(data => this.message$ = data);
+    // get the url of the picture
+    this.userService.getPicture(1).subscribe(
+      (picture) => {
+        console.log("PPPPPPPPPPPPPPPP  " + picture.url);
+        this.pictureUrl = picture.url;
+      }
+    )
 
     this.videos$.forEach( (v) => {
 
@@ -182,5 +191,4 @@ export class HomeComponent {
       }
     })
   }
-  
 }

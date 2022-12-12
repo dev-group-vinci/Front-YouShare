@@ -50,9 +50,9 @@ export class ProfileComponent {
       username: [''],
       biography: ['', Validators.maxLength(200)],
       email: ['', Validators.pattern("^\\S+@\\S+\\.\\S+$")],
-      oldPassword: ['', Validators.required],
-      password: ['', [matchValidator('passwordConfirmation', true), Validators.minLength(6), createPasswordStrengthValidator()]],
-      passwordConfirmation: ['', Validators.compose([matchValidator('password')])],
+      password: ['', Validators.required],
+      new_password: ['', [matchValidator('passwordConfirmation', true), Validators.minLength(6), createPasswordStrengthValidator()]],
+      new_password_confirmation: ['', Validators.compose([matchValidator('password')])],
     })
     this.data.getUserLoggedIn().subscribe({
       next: (res) => {
@@ -75,6 +75,16 @@ export class ProfileComponent {
   onModify() {
     if (this.profileForm.valid) {
       // Modify user
+
+      if(this.profileForm.value['new_password'] == '') {
+        this.profileForm.patchValue({
+          new_password: this.profileForm.value['password'],
+          new_password_confirmation: this.profileForm.value['password'],
+        });
+      }
+      if(this.profileForm.value['biography'] == null){
+        this.profileForm.patchValue({biography: ""});
+      }
       console.log("profile", this.profileForm.value)
       this.dataService.updateUser(this.profileForm.value)
       .subscribe({
@@ -83,6 +93,12 @@ export class ProfileComponent {
             detail: "SUCCESS",
             summary: "Votre profil a été modifié !",
             duration: 5000
+          });
+          this.profileForm.reset();
+          this.profileForm.patchValue({
+            username: this.user$.username,
+            biography: this.user$.biography,
+            email: this.user$.email
           });
           this.router.navigate(['profile']);
         },
