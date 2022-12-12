@@ -1,9 +1,7 @@
 <div class="outer">
     <div class="row">
-        <div class="col-sm-3">
-            <div class="log mt-3 margin-top">
-                <img class="logo-img" src="../../assets/images/YouShareLogoTextNoir.png" alt="Logo">
-            </div>
+        <div class="col-sm-2">
+          <app-navigation-menu></app-navigation-menu>
         </div>
 
         <div class="col-sm-7">
@@ -47,37 +45,37 @@
                             <!-- PASSWORD -->
                             <div class="form-group pt-3">
                                 <span class="fa fa-lock p-2 icon"></span>
-                                <label for="passwordInput" class="form-label">Nouveau mot de passe :</label>
+                                <label for="newPasswordInput" class="form-label">Nouveau mot de passe :</label>
+                                <div class="input-field" [class.error]="profileForm.controls['new_password'].dirty && profileForm.hasError('required', 'new_password')">
+                                    <input formControlName="new_password" [type]="type" placeholder="Mot de passe" id="newPasswordInput" class="form-control">
+                                    <span (click)="hideShowPass()" class="fa {{eyeIcon}} fa-clickable" ></span>
+                                </div>
+                            </div>
+                            <small *ngIf="profileForm.controls['new_password'].dirty && profileForm.hasError('required', 'new_password')" class="text-danger">* Mot de passe obligatoire</small>
+                            <small *ngIf="profileForm.controls['new_password'].dirty && profileForm.hasError('minlength', 'new_password')" class="text-danger">* Votre mot de passe doit contenir 6 caractères minimum</small>
+                            <small *ngIf="profileForm.controls['new_password'].dirty && profileForm.hasError('passwordStrength', 'new_password')" class="text-danger">* Votre mot de pase doit contenir au minimum une minuscule, une majuscule et un chiffre</small>
+
+                            <div class="form-group pt-3">
+                                <span class="fa fa-lock p-2 icon"></span>
+                                <label for="newPasswordConfirmationInput" class="form-label">Confirmez votre mot de passe :</label>
+                                <div class="input-field" [class.error]="profileForm.controls['new_password_confirmation'].dirty && profileForm.hasError('required', 'new_password_confirmation')">
+                                    <input formControlName="new_password_confirmation" [type]="type" placeholder="Confirmez votre mot de passe" id="newPasswordConfirmationInput" class="form-control">
+                                    <span (click)="hideShowPass()" class="fa {{eyeIcon}} fa-clickable " ></span>
+                                </div>
+                            </div>
+                            <small *ngIf="profileForm.controls['new_password_confirmation'].dirty && profileForm.hasError('required', 'new_password_confirmation')" class="text-danger">* Confirmation de votre mot de passe obligatoire</small>
+                            <small *ngIf="profileForm.controls['new_password_confirmation'].dirty && profileForm.hasError('matching', 'new_password_confirmation')" class="text-danger">* Les mots de passe entr&eacute;s ne sont pas les m&ecirc;mes</small>
+
+                            <!-- PASSWORD REQUIRED -->
+                            <div class="form-group pt-3">
+                                <span class="fa fa-lock p-2 icon"></span>
+                                <label for="passwordInput" class="form-label">Mot de passe actuel requis pour enregistrer les modifications :</label>
                                 <div class="input-field" [class.error]="profileForm.controls['password'].dirty && profileForm.hasError('required', 'password')">
                                     <input formControlName="password" [type]="type" placeholder="Mot de passe" id="passwordInput" class="form-control">
                                     <span (click)="hideShowPass()" class="fa {{eyeIcon}} fa-clickable" ></span>
                                 </div>
                             </div>
                             <small *ngIf="profileForm.controls['password'].dirty && profileForm.hasError('required', 'password')" class="text-danger">* Mot de passe obligatoire</small>
-                            <small *ngIf="profileForm.controls['password'].dirty && profileForm.hasError('minlength', 'password')" class="text-danger">* Votre mot de passe doit contenir 6 caractères minimum</small>
-                            <small *ngIf="profileForm.controls['password'].dirty && profileForm.hasError('passwordStrength', 'password')" class="text-danger">* Votre mot de pase doit contenir au minimum une minuscule, une majuscule et un chiffre</small>
-
-                            <div class="form-group pt-3">
-                                <span class="fa fa-lock p-2 icon"></span>
-                                <label for="passwordConfirmationInput" class="form-label">Confirmez votre mot de passe :</label>
-                                <div class="input-field" [class.error]="profileForm.controls['passwordConfirmation'].dirty && profileForm.hasError('required', 'passwordConfirmation')">
-                                    <input formControlName="passwordConfirmation" [type]="type" placeholder="Confirmez votre mot de passe" id="passwordConfirmationInput" class="form-control">
-                                    <span (click)="hideShowPass()" class="fa {{eyeIcon}} fa-clickable " ></span>
-                                </div>
-                            </div>
-                            <small *ngIf="profileForm.controls['passwordConfirmation'].dirty && profileForm.hasError('required', 'passwordConfirmation')" class="text-danger">* Confirmation de votre mot de passe obligatoire</small>
-                            <small *ngIf="profileForm.controls['passwordConfirmation'].dirty && profileForm.hasError('matching', 'passwordConfirmation')" class="text-danger">* Les mots de passe entr&eacute;s ne sont pas les m&ecirc;mes</small>
-
-                            <!-- PASWORD REQUIRED -->
-                            <div class="form-group pt-3">
-                                <span class="fa fa-lock p-2 icon"></span>
-                                <label for="oldPasswordInput" class="form-label">Mot de passe actuel requis pour enregistrer les modifications :</label>
-                                <div class="input-field" [class.error]="profileForm.controls['oldPassword'].dirty && profileForm.hasError('required', 'oldPassword')">
-                                    <input formControlName="oldPassword" [type]="type" placeholder="Mot de passe" id="oldPasswordInput" class="form-control">
-                                    <span (click)="hideShowPass()" class="fa {{eyeIcon}} fa-clickable" ></span>
-                                </div>
-                            </div>
-                            <small *ngIf="profileForm.controls['oldPassword'].dirty && profileForm.hasError('required', 'oldPassword')" class="text-danger">* Mot de passe obligatoire</small>
 
                             <button (click)="onModify()" type="submit" class="btn btn-primary btn-block mt-4 w-100">Modifier mon profil</button>
                         </form>
@@ -126,23 +124,8 @@
             </div>
         </div>
 
-        <div class="col-sm-2 margin-top">
-            <div class="pull-right me-2 row">
-                <div class="small-panel border bg-white">
-                    <div class="row mt-4">
-                        <div class="col-sm-3">
-                            <img class="pp" src="../../assets/images/homme.jpg" alt="Photo de profil">
-                        </div>
-                        <div class="col-sm-6">
-                            <h4 *ngIf="user$">{{ user$.username }}</h4>
-                        </div>
-                    </div>
-                </div>
-                <a id="forget" routerLink="/profile" class="btn btn-primary btn-block mb-2 mt-3">Modifier mon profil</a>
-                <a id="forget" routerLink="/profile" class="btn btn-primary btn-block mb-2">Ajouter des amis</a>
-                <a id="forget" routerLink="/profile" class="btn btn-primary btn-block mb-2">Voir mes demandes d'amis</a>
-                <button (click)="logout()" class="btn btn-danger btn-block mb-2">Se d&eacute;connecter</button>
-            </div>
-
+        <div class="col-sm-3 margin-top">
+          <app-friends-list></app-friends-list>
         </div>
     </div>
+</div>

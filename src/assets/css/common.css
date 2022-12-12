@@ -116,9 +116,8 @@ small {
 
 /** LOGO **/
 .logo-img {
-    width: 50%;
-    display: flex;
-    justify-content: left;
+    width: 85%;
+    cursor: pointer;
 }
 
 
