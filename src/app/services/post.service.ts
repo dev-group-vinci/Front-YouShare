@@ -25,9 +25,17 @@ export class PostService {
   addLike(id_post: number) {
     return this._http.post<number>(`${this.apiUrl}posts/${id_post}/likes`, null);
   }
+  
+  addShare(id_post: number) {
+    return this._http.post<number>(`${this.apiUrl}posts/${id_post}/shares`, null);
+  }
 
   deleteLike(id_post: number) {
     return this._http.delete<number>(`${this.apiUrl}posts/${id_post}/likes`);
+  }
+
+  deleteShare(id_post: number) {
+    return this._http.delete<number>(`${this.apiUrl}posts/${id_post}/shares`);
   }
 
   getNumberLikes(id_post: number) {

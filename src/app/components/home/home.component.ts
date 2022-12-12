@@ -32,6 +32,7 @@ export class HomeComponent {
       liked: true,
       numberComments: -1,
       shares: -1,
+      shared: false,
       comments: [],
     },
     { id: 2,
@@ -43,6 +44,7 @@ export class HomeComponent {
       liked: false,
       numberComments: -1,
       shares: -1,
+      shared: false,
       comments: [],
 
     },
@@ -55,6 +57,7 @@ export class HomeComponent {
       liked: false,
       numberComments: -1,
       shares: -1,
+      shared: false,
       comments: [],
 
     }
@@ -202,6 +205,24 @@ export class HomeComponent {
     })
   }
 
+  addShare(id_post: number) {
+    this.posts.addShare(id_post).subscribe({
+      next:(res)=>{
+        this.toast.success({detail:"SUCCESS", summary: "Share ajouté", duration: 5000});
+        //Update Number Share & Logo
+        this.videos$.forEach((v) => {
+          if(v.id == id_post) {
+            v.shares = res;
+            v.shared = true;
+          }
+        });
+      },
+      error:(err)=>{
+        this.toast.error({detail:"ERROR", summary: "Il y a eu un problème avec le share !", duration: 5000});
+      }
+    })
+  }
+
   deleteLike(id_post: number) {
     this.posts.deleteLike(id_post).subscribe({
       next:(res)=>{
@@ -216,6 +237,24 @@ export class HomeComponent {
       },
       error:(err)=>{
         this.toast.error({detail:"ERROR", summary: "Le Like n'a pas pu être supprimé", duration: 5000});
+      }
+    })
+  }
+
+  deleteShare(id_post: number) {
+    this.posts.deleteShare(id_post).subscribe({
+      next:(res)=>{
+        this.toast.success({detail:"SUCCESS", summary: "Share supprimé", duration: 5000});
+        //Update Number Share & Logo
+        this.videos$.forEach((v) => {
+          if(v.id == id_post) {
+            v.shares = res;
+            v.shared = false;
+          }
+        });
+      },
+      error:(err)=>{
+        this.toast.error({detail:"ERROR", summary: "Il y a eu un problème avec le share !", duration: 5000});
       }
     })
   }

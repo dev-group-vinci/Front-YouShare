@@ -91,10 +91,10 @@
                   <span>{{ video.numberComments }}<i class="fa fa-comment fa-clickable fa-interact"></i></span>
                 </div>
                 <div class="col-sm">
-                  <span
-                    >{{ video.shares
-                    }}<i class="fa fa-share fa-clickable fa-interact"></i
-                  ></span>
+                  <span>{{ video.shares}}
+                    <i [attr.hidden]="video.shared ? '' : null" (click)="addShare(video.id)" class="fa fa-share fa-clickable fa-interact"></i>
+                    <i [attr.hidden]="!video.shared ? '' : null" (click)="deleteShare(video.id)" class="fa fa-share fa-clickable fa-interact" style='color: red'></i>
+                  </span>
                 </div>
               </div>
             </div>

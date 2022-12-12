@@ -9,5 +9,6 @@ export class VideoShow {
     liked: boolean;
     numberComments: number;
     shares: number;
+    shared: boolean;
     comments: Comment[];
 }
