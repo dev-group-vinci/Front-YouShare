@@ -36,4 +36,22 @@ export class DataService {
   updateUser(userObj: any){
     return this._http.put<any>(`${this.apiUrl}users`, userObj);
   }
+
+  getFriends(){
+    return this._http.get<User[]>(`${this.apiUrl}friends`);
+  }
+
+  getFriendRequests(){
+    return this._http.get<User[]>(`${this.apiUrl}friends/requests`);
+  }
+
+  acceptFriendRequest(idUser) {
+    // @ts-ignore
+    this._http.post(`${this.apiUrl}friends/${idUser}/accept`);
+  }
+
+  refuseFriendRequest(idUser) {
+    // @ts-ignore
+    this._http.post(`${this.apiUrl}friends/${idUser}/refuse`);
+  }
 }

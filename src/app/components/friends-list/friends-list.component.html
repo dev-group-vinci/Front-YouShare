@@ -5,11 +5,14 @@
     </div>
     <div class="panel-body p-3">
       <table class="w-100">
-        <tr class="small-panel">
-          <td class="col-sm-2 text-center"><img class="pp" src="../../assets/images/homme.jpg" alt="Photo utilisateur"></td>
-          <td class="col-sm-4"><h5 class="align-middle">Rayan</h5></td>
-          <td class="col-sm-6 text-center"><button type="submit" class="btn btn-primary btn-block w-100 align-middle">Voir le profil</button></td>
-        </tr>
+        <small *ngIf="friends" class="text-center">Vos amis s'afficheront ici.</small>
+        <div *ngFor="let friend of friends">
+          <tr class="small-panel">
+            <td class="col-sm-2 text-center"><img class="pp" src="../../assets/images/homme.jpg" alt="Photo utilisateur"></td>
+            <td class="col-sm-4"><h5 class="align-middle">{{friend.username}}</h5></td>
+            <td class="col-sm-6 text-center"><button type="submit" class="btn btn-primary btn-block w-100 align-middle">Voir le profil</button></td>
+          </tr>
+        </div>
       </table>
     </div>
   </div>

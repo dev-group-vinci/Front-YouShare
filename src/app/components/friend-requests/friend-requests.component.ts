@@ -14,6 +14,7 @@ export class FriendRequestsComponent {
 
   friendsForm!: FormGroup;
   user$: User;
+  friendRequests: User[];
 
   constructor(
     private fb: FormBuilder,
@@ -27,10 +28,17 @@ export class FriendRequestsComponent {
       next: (res) => {
         this.user$ = new User(res);
       }
-    })
+    });
+    this.data.getFriendRequests().subscribe(response => {
+      this.friendRequests = response;
+    });
   }
 
-  logout(){
-    this.auth.logout();
+  accept(idUser){
+    this.data.acceptFriendRequest(idUser);
+  }
+
+  refuse(idUser){
+    this.data.refuseFriendRequest(idUser);
   }
 }
