@@ -1,10 +1,12 @@
 export class VideoShow {
+  [x: string]: any;
     id: number;
     url: string;
     text: string;
     state: string;
     title: string;
     likes: number;
-    comments: number;
+    numberComments: number;
     shares: number;
+    comments: Comment[];
 }
