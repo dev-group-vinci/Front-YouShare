@@ -6,6 +6,7 @@ export class VideoShow {
     state: string;
     title: string;
     likes: number;
+    liked: boolean;
     numberComments: number;
     shares: number;
     comments: Comment[];

@@ -23,11 +23,14 @@ export class PostService {
   }
 
   addLike(id_post: number) {
-    return this._http.post<any>(`${this.apiUrl}posts/${id_post}/likes/`, null);
+    return this._http.post<number>(`${this.apiUrl}posts/${id_post}/likes`, null);
+  }
+
+  deleteLike(id_post: number) {
+    return this._http.delete<number>(`${this.apiUrl}posts/${id_post}/likes`);
   }
 
   getNumberLikes(id_post: number) {
-    console.log(this._http.get<number>(`${this.apiUrl}posts/${id_post}/likes/`))
     return this._http.get<number>(`${this.apiUrl}posts/${id_post}/likes`);
   }
 
@@ -36,6 +39,6 @@ export class PostService {
   }
 
   getNumberShares(id_post: number) {
-    return this._http.get<any>(`${this.apiUrl}posts/${id_post}/shares/`);
+    return this._http.get<number>(`${this.apiUrl}posts/${id_post}/shares`);
   }
 }

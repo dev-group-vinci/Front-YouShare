@@ -29,6 +29,7 @@ export class HomeComponent {
       state: "published",
       title: "",
       likes: -1,
+      liked: true,
       numberComments: -1,
       shares: -1,
       comments: [],
@@ -39,6 +40,7 @@ export class HomeComponent {
       state: "published",
       title: "",
       likes: -1,
+      liked: false,
       numberComments: -1,
       shares: -1,
       comments: [],
@@ -50,6 +52,7 @@ export class HomeComponent {
       state: "published",
       title: "",
       likes: -1,
+      liked: false,
       numberComments: -1,
       shares: -1,
       comments: [],
@@ -102,8 +105,7 @@ export class HomeComponent {
       //Recover Number Likes
       this.posts.getNumberLikes(v.id).subscribe({
         next: (res) => {
-          v.likes = res,
-          console.log("Likes " + res)
+          v.likes = res
         },
         error: (err) => {
           console.log(err)
@@ -118,14 +120,15 @@ export class HomeComponent {
         }
       })
 
-      console.log(v);
-
       //Recover Number Shares
-      this.currentPageSub = this.posts.getNumberShares(v.id).subscribe(
-        (page: number) => {
-          v.shares=page;
+      this.posts.getNumberShares(v.id).subscribe({
+        next: (res) => {
+          v.shares = res
+        },
+        error: (err) => {
+          console.log(err)
         }
-      )
+      })
     });    
 
     //Load Youtube iframe
@@ -185,9 +188,34 @@ export class HomeComponent {
     this.posts.addLike(id_post).subscribe({
       next:(res)=>{
         this.toast.success({detail:"SUCCESS", summary: "Like ajouté", duration: 5000});
+        //Update Number Like & Logo
+        this.videos$.forEach((v) => {
+          if(v.id == id_post) {
+            v.likes = res;
+            v.liked = true;
+          }
+        });
       },
       error:(err)=>{
         this.toast.error({detail:"ERROR", summary: "Il y a eu un problème avec le like !", duration: 5000});
+      }
+    })
+  }
+
+  deleteLike(id_post: number) {
+    this.posts.deleteLike(id_post).subscribe({
+      next:(res)=>{
+        this.toast.success({detail:"SUCCESS", summary: "Like supprimé", duration: 5000});
+        //Update Number Like & Logo
+        this.videos$.forEach((v) => {
+          if(v.id == id_post) {
+            v.likes = res;
+            v.liked = false;
+          }
+        });
+      },
+      error:(err)=>{
+        this.toast.error({detail:"ERROR", summary: "Le Like n'a pas pu être supprimé", duration: 5000});
       }
     })
   }
