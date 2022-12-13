@@ -20,6 +20,7 @@ import { UserService } from 'src/app/services/user.service';
 export class HomeComponent {
 
   videos$: VideoShow[] = [];
+
   apiLoaded = false;
   videos: any[];
   titles: string[];
@@ -40,6 +41,22 @@ export class HomeComponent {
   ) {}
 
   ngOnInit() {
+
+    // get the url of the picture of the user that posted this video
+    this.userService.getPicture(1) // TODO HArdcode
+    .subscribe({
+      next: (picture) => {
+        this.pictureUrl = picture.url;
+      },
+      error: (err) => {       
+        if (err.status == 404){
+          this.pictureUrl = "../../assets/images/default_user.png";
+        }
+      }
+  })
+
+
+    this.videos$.forEach( (v) => {
 
     //Get the news feed
     this.posts.getPosts().subscribe({
