@@ -1,7 +1,6 @@
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment.dev';
-import {User} from "../models/user.model";
 import {AuthService} from "./auth.service";
 
 const httpOptions : any    = {

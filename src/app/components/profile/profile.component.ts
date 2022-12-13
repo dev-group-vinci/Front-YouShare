@@ -1,11 +1,7 @@
 import {Component} from '@angular/core';
 import {
-  AbstractControl,
   FormBuilder,
   FormGroup,
-  RequiredValidator,
-  ValidationErrors,
-  ValidatorFn,
   Validators
 } from '@angular/forms';
 import {NgxSpinnerService} from 'ngx-spinner';
@@ -18,8 +14,8 @@ import ValidateForm from 'src/app/helpers/validateform';
 import {Router} from '@angular/router';
 import {NgToastService} from "ng-angular-popup";
 import {User} from "../../models/user.model";
+import {UserService} from "../../services/user.service";
 import {AppComponent} from "../../app.component";
-import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-profile',
@@ -40,10 +36,9 @@ export class ProfileComponent {
       private spinner: NgxSpinnerService,
       private youTubeService: YoutubeService,
       private dataService: DataService,
-      private data: DataService,
+      private userService: UserService,
       private toast: NgToastService,
       private auth: AuthService,
-      private userService: UserService,
   ) {
   }
 
@@ -56,7 +51,7 @@ export class ProfileComponent {
       new_password: ['', [matchValidator('passwordConfirmation', true), Validators.minLength(6), createPasswordStrengthValidator()]],
       new_password_confirmation: ['', Validators.compose([matchValidator('password')])],
     })
-    this.data.getUserLoggedIn().subscribe({
+    this.userService.getUserLoggedIn().subscribe({
       next: (res) => {
         this.user$ = new User(res);
         this.profileForm.patchValue({
@@ -87,7 +82,6 @@ export class ProfileComponent {
       if(this.profileForm.value['biography'] == null){
         this.profileForm.patchValue({biography: ""});
       }
-      console.log("profile", this.profileForm.value)
       this.dataService.updateUser(this.profileForm.value)
       .subscribe({
         next: (res) => {
@@ -105,7 +99,6 @@ export class ProfileComponent {
           this.router.navigate(['profile']);
         },
         error: (err) => {
-          console.log(err)
           if (err.statusText == 'Conflict') this.toast.error({
             detail: "ERROR",
             summary: "Le nom d'utilisateur ou l'adresse email n'est pas disponible !",
@@ -139,8 +132,8 @@ export class ProfileComponent {
       let answer = this.userService.uploadPicture(file);
       console.log("answerrrrrrrrrrrr");
       console.log(answer);
-      
-      
+
+
     } else {
       window.alert('Please select correct image format');
     }

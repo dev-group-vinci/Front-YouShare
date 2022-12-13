@@ -4,7 +4,7 @@
       <app-navigation-menu></app-navigation-menu>
     </div>
 
-    <div class="col-sm-7">
+    <div class="col-sm-7 container">
       <div class="">
         <div class="panel border bg-white margin-top">
           <div class="panel-heading">
@@ -88,7 +88,7 @@
                   </span>
                 </div>
                 <div class="col-sm">
-                  <span>{{ video.numberComments }}<i class="fa fa-comment fa-clickable fa-interact"></i></span>
+                  <span>{{ video.numberComments }}<i class="fa fa-comment fa-clickable fa-interact" (click)="setActivePost(video.id)"></i></span>
                 </div>
                 <div class="col-sm">
                   <span>{{ video.shares}}
@@ -99,9 +99,7 @@
               </div>
             </div>
             <div class="form-inline fr mt-4">
-              <a id="forget" class="font-weight-blod"
-                >Cette vidéo est inapropriée ?
-              </a>
+              <app-comments postId="{{video.id}}" *ngIf="displayComments(video.id)"></app-comments>
             </div>
           </div>
         </div>
@@ -110,10 +108,15 @@
         {{video.snippet.title}}
       </div>
       -->
+
     </div>
 
     <div class="col-sm-3 margin-top">
       <app-friends-list></app-friends-list>
     </div>
+  </div>
+
+  <div class="position-fixed" style="right: 10px; bottom: 10px;">
+    <a class="fa fa-arrow-circle-up fa-10x text-decoration-none" href="/home"></a>
   </div>
 </div>

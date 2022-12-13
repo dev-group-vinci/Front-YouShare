@@ -1,10 +1,8 @@
 import { Component } from '@angular/core';
 import {User} from "../../models/user.model";
 import {Router} from "@angular/router";
-import {DataService} from "../../services/data.service";
 import {AuthService} from "../../services/auth.service";
-import { UserService } from 'src/app/services/user.service';
-
+import {UserService} from "../../services/user.service";
 
 @Component({
   selector: 'app-navigation-menu',
@@ -17,14 +15,13 @@ export class NavigationMenuComponent {
 
   constructor(
     private router: Router,
-    private data: DataService,
-    private auth: AuthService,
-    private userService: UserService
+    private userService: UserService,
+    private auth: AuthService
   ) {
   }
 
   ngOnInit(): void {
-    this.data.getUserLoggedIn().subscribe({
+    this.userService.getUserLoggedIn().subscribe({
       next: (res) => {
         this.user$ = new User(res);
       }
@@ -42,7 +39,7 @@ export class NavigationMenuComponent {
         }
       }
     })
-    
+
 
   }
 

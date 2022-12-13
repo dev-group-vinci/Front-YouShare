@@ -1,3 +1,5 @@
+import {Comment} from "./comment.model";
+
 export class VideoShow {
   [x: string]: any;
     id: number;
@@ -14,4 +16,3 @@ export class VideoShow {
     comments: Comment[];
     user_picture: string;
   }
-

@@ -6,8 +6,8 @@ export class User {
       this[prop] = json[prop];
     }
   }
-
     id_user: number;
+    picture_url: string;
     username: string;
     role: string;
     email: string;

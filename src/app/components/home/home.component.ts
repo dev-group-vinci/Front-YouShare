@@ -1,15 +1,14 @@
 import { Component } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { ObservableInput, Subscription, takeUntil } from 'rxjs';
+import { ObservableInput, Subscription } from 'rxjs';
 import { YoutubeService } from 'src/app/services/youtube.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { VideoShow } from 'src/app/models/videoshow.model';
 import { DataService } from 'src/app/services/data.service';
 import { PostService } from 'src/app/services/post.service';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgToastService } from 'ng-angular-popup';
 import ValidateForm from 'src/app/helpers/validateform';
-
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -18,7 +17,7 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
-
+  activePost: number|null = null;
   videos$: VideoShow[] = [];
 
   apiLoaded = false;
@@ -118,11 +117,11 @@ export class HomeComponent {
 
           //Add to video list
           this.videos$.push(newVideo);
-    
+
         })
       }
     });
-        
+
 
     //Load Youtube iframe
     if (!this.apiLoaded) {
@@ -137,9 +136,8 @@ export class HomeComponent {
       url: ['', Validators.required],
       text: ['', Validators.required]
     })
+  };
 
-  }
-  
   getValues(val) {
     return val;
   }
@@ -193,6 +191,17 @@ export class HomeComponent {
         this.toast.error({detail:"ERROR", summary: "Il y a eu un problème avec le like !", duration: 5000});
       }
     })
+  }
+
+  setActivePost(idPost: number | null): void {
+    if(this.activePost) this.activePost = null;
+    else this.activePost = idPost;
+  }
+
+  displayComments(idPost: number){
+    if(this.activePost && this.activePost == idPost){
+      return true;
+    } else return false;
   }
 
   addShare(id_post: number) {
