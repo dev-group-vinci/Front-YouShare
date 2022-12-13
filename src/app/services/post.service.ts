@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import {environment} from "../../environments/environment.dev";
 import { HttpClient } from '@angular/common/http';
 import { NewPost } from '../models/newpost.model';
+import { Video } from '../models/video.model';
+
 import { Comment } from "../models/comment.model";
 import {Observable} from "rxjs";
 
@@ -65,5 +67,9 @@ export class PostService {
 
   getCommentById(idComment: number, idPost: number){
     return this._http.get<Comment>(`${this.apiUrl}posts/${idPost}/comments/${idComment}`);
+  }
+
+  getPosts() {
+    return this._http.get<Video[]>(`${this.apiUrl}posts`);
   }
 }

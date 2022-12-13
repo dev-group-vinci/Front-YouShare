@@ -11,6 +11,8 @@ import {UserService} from "../../services/user.service";
 })
 export class NavigationMenuComponent {
   user$: User;
+  pictureUrl: string;
+
   constructor(
     private router: Router,
     private userService: UserService,
@@ -24,6 +26,21 @@ export class NavigationMenuComponent {
         this.user$ = new User(res);
       }
     })
+
+    // get the url of the picture of the user
+    this.userService.getSelfPicture()
+    .subscribe({
+      next: (picture) => {
+        this.pictureUrl = picture.url;
+      },
+      error: (err) => {
+        if (err.status == 404){
+          this.pictureUrl = "../../assets/images/default_user.png";
+        }
+      }
+    })
+
+
   }
 
   logout() {

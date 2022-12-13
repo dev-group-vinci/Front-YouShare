@@ -1,6 +1,5 @@
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Message } from '../models/message.model';
 import { environment } from 'src/environments/environment.dev';
 import {AuthService} from "./auth.service";
 
@@ -18,14 +17,14 @@ const httpOptions : any    = {
 })
 export class DataService {
   apiUrl = environment.apiUrl;
-  //apiUrl = 'https://jsonplaceholder.typicode.com/users';
+
   constructor(
     private _http: HttpClient,
     private auth: AuthService,
   ) { }
 
-  getMessages() {
-    return this._http.get<Message>(`${this.apiUrl}json`);
+  getUserLoggedIn(){
+    return this._http.get<JSON>(`${this.apiUrl}users`)
   }
 
   updateUser(userObj: any){
