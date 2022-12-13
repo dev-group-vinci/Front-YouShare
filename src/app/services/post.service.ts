@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {environment} from "../../environments/environment.dev";
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { NewPost } from '../models/newpost.model';
+import { Video } from '../models/video.model';
 
 
 @Injectable({
@@ -48,5 +49,9 @@ export class PostService {
 
   getNumberShares(id_post: number) {
     return this._http.get<number>(`${this.apiUrl}posts/${id_post}/shares`);
+  }
+
+  getPosts() {
+    return this._http.get<Video[]>(`${this.apiUrl}posts`);
   }
 }

@@ -3,7 +3,6 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ObservableInput, Subscription, takeUntil } from 'rxjs';
 import { YoutubeService } from 'src/app/services/youtube.service';
 import { AuthService } from 'src/app/services/auth.service';
-import { Video } from 'src/app/models/video.model';
 import { VideoShow } from 'src/app/models/videoshow.model';
 import { DataService } from 'src/app/services/data.service';
 import { PostService } from 'src/app/services/post.service';
@@ -20,48 +19,9 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class HomeComponent {
 
-  videos$: VideoShow[] = [
-    { id: 1,
-      url: "fk99pry6nY8",
-      text: "HAHA",
-      state: "published",
-      title: "",
-      likes: -1,
-      liked: true,
-      numberComments: -1,
-      shares: -1,
-      shared: false,
-      comments: [],
-    },
-    { id: 2,
-      url: "Y58kN2CmFwA",
-      text: "LOL",
-      state: "published",
-      title: "",
-      likes: -1,
-      liked: false,
-      numberComments: -1,
-      shares: -1,
-      shared: false,
-      comments: [],
+  videos$: VideoShow[] = [];
 
-    },
-    { id: 3,
-      url: "QIZ9aZD6vs0",
-      text: "FUNNY",
-      state: "published",
-      title: "",
-      likes: -1,
-      liked: false,
-      numberComments: -1,
-      shares: -1,
-      shared: false,
-      comments: [],
-
-    }
-  ];
   apiLoaded = false;
-  videoId = 'QIZ9aZD6vs0';
   videos: any[];
   titles: string[];
   unsubscribe$: ObservableInput<any>;
@@ -81,6 +41,7 @@ export class HomeComponent {
   ) {}
 
   ngOnInit() {
+
     // get the url of the picture of the user that posted this video
     this.userService.getPicture(1) // TODO HArdcode
     .subscribe({
@@ -97,45 +58,66 @@ export class HomeComponent {
 
     this.videos$.forEach( (v) => {
 
-      //Recover Title Youtube
-      this.spinner.show()
-      setTimeout(()=> {this.spinner.hide()},3000)
-      this.videos = [];
-      this.youTubeService.getVideoById(v.url).subscribe(list => {
-        for (let item of list['items']) {
-          this.videos.push(item);
-          v.title = item.snippet.title;
-        }
-      });
-      
-      console.log("OK")
-      //Recover Number Likes
-      this.posts.getNumberLikes(v.id).subscribe({
-        next: (res) => {
-          v.likes = res
-        },
-        error: (err) => {
-          console.log(err)
-        }
-      })
+    //Get the news feed
+    this.posts.getPosts().subscribe({
+      next: (res) => {
+        res.forEach( (v) => {
+          let newVideo = new VideoShow();
+          newVideo.id = v.id_post;
+          newVideo.url = v.id_url;
+          newVideo.id_user = v.id_user;
+          newVideo.state = v.state;
+          newVideo.text = v.text;
 
-      //Recover Comments
-      this.posts.getComments(v.id).subscribe({
-        next: (res) =>{
-          v.comments = res;
-          v.numberComments = res.length;
-        }
-      })
+          console.log(newVideo);
 
-      //Recover Number Shares
-      this.posts.getNumberShares(v.id).subscribe({
-        next: (res) => {
-          v.shares = res
-        },
-        error: (err) => {
-          console.log(err)
-        }
-      })
+          //Get the url of the picture
+          this.userService.getPicture(v.id_user).subscribe(
+            (picture) => {
+              this.pictureUrl = picture.url;
+            }
+          )
+
+          //Recover Title Youtube
+          this.spinner.show()
+          setTimeout(()=> {this.spinner.hide()},3000)
+          this.videos = [];
+          this.youTubeService.getVideoById(v.id_url).subscribe(list => {
+            for (let item of list['items']) {
+              this.videos.push(item);
+              newVideo.title = item.snippet.title;
+            }
+          });
+
+          //Recover Number Likes
+          this.posts.getNumberLikes(v.id_post).subscribe({
+          next: (res) => {
+            newVideo.likes = res
+          },
+          error: (err) => {console.log(err)}
+          });
+
+          //Recover Comments
+          this.posts.getComments(v.id_post).subscribe({
+            next: (res) =>{
+              newVideo.comments = res;
+              newVideo.numberComments = res.length;
+            }
+          });
+
+          //Recover Number Shares
+          this.posts.getNumberShares(v.id_post).subscribe({
+            next: (res) => {
+              newVideo.shares = res
+            },
+            error: (err) => { console.log(err)}
+          });
+
+          //Add to video list
+          this.videos$.push(newVideo);
+        })
+        
+      },
     });    
 
     //Load Youtube iframe
@@ -163,7 +145,6 @@ export class HomeComponent {
     this.videos = [];
     this.youTubeService.getVideoById(id).subscribe(list => {
       for (let item of list['items']) {
-        console.log(item);
         this.videos.push(item);
       }
     });
