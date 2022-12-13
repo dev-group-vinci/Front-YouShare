@@ -19,6 +19,7 @@ import {Router} from '@angular/router';
 import {NgToastService} from "ng-angular-popup";
 import {User} from "../../models/user.model";
 import {AppComponent} from "../../app.component";
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-profile',
@@ -41,7 +42,8 @@ export class ProfileComponent {
       private dataService: DataService,
       private data: DataService,
       private toast: NgToastService,
-      private auth: AuthService
+      private auth: AuthService,
+      private userService: UserService,
   ) {
   }
 
@@ -125,5 +127,22 @@ export class ProfileComponent {
 
   logout() {
     this.auth.logout();
+  }
+
+  uploadPicture(event) {
+    console.log("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF");
+    let file = event.target.files[0]
+    console.log(file);
+    let fileType = file.type;
+    console.log(fileType);
+    if (fileType.match(/image\/*/)) {
+      let answer = this.userService.uploadPicture(file);
+      console.log("answerrrrrrrrrrrr");
+      console.log(answer);
+      
+      
+    } else {
+      window.alert('Please select correct image format');
+    }
   }
 }

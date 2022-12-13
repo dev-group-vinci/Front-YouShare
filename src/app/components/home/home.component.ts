@@ -83,13 +83,19 @@ export class HomeComponent {
   ) {}
 
   ngOnInit() {
-    // get the url of the picture
-    this.userService.getPicture(1).subscribe(
-      (picture) => {
-        console.log("PPPPPPPPPPPPPPPP  " + picture.url);
+    // get the url of the picture of the user that posted this video
+    this.userService.getPicture(1) // TODO HArdcode
+    .subscribe({
+      next: (picture) => {
         this.pictureUrl = picture.url;
+      },
+      error: (err) => {       
+        if (err.status == 404){
+          this.pictureUrl = "../../assets/images/default_user.png";
+        }
       }
-    )
+  })
+
 
     this.videos$.forEach( (v) => {
 
