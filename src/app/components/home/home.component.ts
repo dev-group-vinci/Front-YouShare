@@ -1,17 +1,14 @@
 import { Component } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { ObservableInput, Subscription, takeUntil } from 'rxjs';
+import { ObservableInput, Subscription } from 'rxjs';
 import { YoutubeService } from 'src/app/services/youtube.service';
 import { AuthService } from 'src/app/services/auth.service';
-import { Message } from 'src/app/models/message.model';
-import { Video } from 'src/app/models/video.model';
-import { VideoShow } from 'src/app/models/videotitle.model';
+import { VideoShow } from 'src/app/models/videoshow.model';
 import { DataService } from 'src/app/services/data.service';
 import { PostService } from 'src/app/services/post.service';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgToastService } from 'ng-angular-popup';
 import ValidateForm from 'src/app/helpers/validateform';
-
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -20,39 +17,10 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
+  activePost: number|null = null;
+  videos$: VideoShow[] = [];
 
-  message$: Message = new Message();
-  videos$: VideoShow[] = [
-    { id: 1,
-      url: "fk99pry6nY8",
-      text: "HAHA",
-      state: "published",
-      title: "",
-      likes: -1,
-      comments: -1,
-      shares: -1,
-    },
-    { id: 2,
-      url: "Y58kN2CmFwA",
-      text: "LOL",
-      state: "published",
-      title: "",
-      likes: -1,
-      comments: -1,
-      shares: -1,
-    },
-    { id: 3,
-      url: "QIZ9aZD6vs0",
-      text: "FUNNY",
-      state: "published",
-      title: "",
-      likes: -1,
-      comments: -1,
-      shares: -1,
-    }
-  ];
   apiLoaded = false;
-  videoId = 'QIZ9aZD6vs0';
   videos: any[];
   titles: string[];
   unsubscribe$: ObservableInput<any>;
@@ -72,48 +40,88 @@ export class HomeComponent {
   ) {}
 
   ngOnInit() {
-    // get the url of the picture
-    this.userService.getPicture(1).subscribe(
-      (picture) => {
-        console.log("PPPPPPPPPPPPPPPP  " + picture.url);
-        this.pictureUrl = picture.url;
+
+    //Get the news feed
+    this.posts.getPosts().subscribe({
+      next: (res) => {
+        res.forEach( (v) => {
+          let newVideo = new VideoShow();
+          newVideo.id = v.id_post;
+          newVideo.url = v.id_url;
+          newVideo.id_user = v.id_user;
+          newVideo.state = v.state;
+          newVideo.text = v.text;
+
+          //Get the url of the picture
+          this.userService.getPicture(v.id_user).subscribe({
+            next: (picture) => {
+              newVideo.user_picture = picture.url;
+            },
+            error: (err) => {
+              if (err.status == 404){
+                newVideo.user_picture = "../../assets/images/default_user.png";
+              }
+            }
+          })
+
+          //Recover Title Youtube
+          this.spinner.show()
+          setTimeout(()=> {this.spinner.hide()},3000)
+          this.videos = [];
+          this.youTubeService.getVideoById(v.id_url).subscribe(list => {
+            for (let item of list['items']) {
+              this.videos.push(item);
+              newVideo.title = item.snippet.title;
+            }
+          });
+
+          //Recover Number Likes
+          this.posts.getNumberLikes(v.id_post).subscribe({
+          next: (res) => {
+            newVideo.likes = res
+          },
+          error: (err) => {console.log(err)}
+          });
+
+          //Recover Is Liked
+          this.posts.isLiked(v.id_post).subscribe({
+            next: (res) => {
+              newVideo.liked = res;
+            },
+            error: (err) => {console.log(err)}
+          });
+
+          //Recover Comments
+          this.posts.getComments(v.id_post).subscribe({
+            next: (res) =>{
+              newVideo.comments = res;
+              newVideo.numberComments = res.length;
+            }
+          });
+
+          //Recover Number Shares
+          this.posts.getNumberShares(v.id_post).subscribe({
+            next: (res) => {
+              newVideo.shares = res
+            },
+            error: (err) => { console.log(err)}
+          });
+
+          //Recover Is Shared
+          this.posts.isShared(v.id_post).subscribe({
+            next: (res) => {
+              newVideo.shared = res;
+            },
+            error: (err) => {console.log(err)}
+          });
+
+          //Add to video list
+          this.videos$.push(newVideo);
+
+        })
       }
-    )
+    });
 
-    this.videos$.forEach( (v) => {
-
-      //Recover Title Youtube
-      this.spinner.show()
-      setTimeout(()=> {this.spinner.hide()},3000)
-      this.videos = [];
-      this.youTubeService.getVideoById(v.url).subscribe(list => {
-        for (let item of list['items']) {
-          this.videos.push(item);
-          v.title = item.snippet.title;
-        }
-      });
-
-      //Recover Number Likes
-      this.currentPageSub = this.posts.getNumberLikes(v.id).subscribe(
-        (page: number) => {
-          v.likes=page;
-        }
-      )
-
-      //Recover Number Comments
-      this.currentPageSub = this.posts.getNumberComments(v.id).subscribe(
-        (page: number) => {
-          v.likes=page;
-        }
-      )
-
-      //Recover Number Shares
-      this.currentPageSub = this.posts.getNumberShares(v.id).subscribe(
-        (page: number) => {
-          v.likes=page;
-        }
-      )
-    });    
 
     //Load Youtube iframe
     if (!this.apiLoaded) {
@@ -128,7 +136,7 @@ export class HomeComponent {
       url: ['', Validators.required],
       text: ['', Validators.required]
     })
-  }
+  };
 
   getValues(val) {
     return val;
@@ -140,7 +148,6 @@ export class HomeComponent {
     this.videos = [];
     this.youTubeService.getVideoById(id).subscribe(list => {
       for (let item of list['items']) {
-        console.log(item);
         this.videos.push(item);
       }
     });
@@ -156,7 +163,7 @@ export class HomeComponent {
       this.posts.addPost(this.postsForm.value)
       .subscribe({
         next:(res)=>{
-          this.toast.success({detail:"SUCCESS", summary: "Correctement ajouté", duration: 5000});
+          this.toast.success({detail:"SUCCESS", summary: "Post ajouté", duration: 5000});
           this.postsForm.reset();
         },
         error:(err)=>{
@@ -166,5 +173,88 @@ export class HomeComponent {
     } else {
       ValidateForm.validateAllFormFields(this.postsForm)
     }
+  }
+
+  addLike(id_post: number) {
+    this.posts.addLike(id_post).subscribe({
+      next:(res)=>{
+        this.toast.success({detail:"SUCCESS", summary: "Like ajouté", duration: 5000});
+        //Update Number Like & Logo
+        this.videos$.forEach((v) => {
+          if(v.id == id_post) {
+            v.likes = res;
+            v.liked = true;
+          }
+        });
+      },
+      error:(err)=>{
+        this.toast.error({detail:"ERROR", summary: "Il y a eu un problème avec le like !", duration: 5000});
+      }
+    })
+  }
+
+  setActivePost(idPost: number | null): void {
+    if(this.activePost) this.activePost = null;
+    else this.activePost = idPost;
+  }
+
+  displayComments(idPost: number){
+    if(this.activePost && this.activePost == idPost){
+      return true;
+    } else return false;
+  }
+
+  addShare(id_post: number) {
+    this.posts.addShare(id_post).subscribe({
+      next:(res)=>{
+        this.toast.success({detail:"SUCCESS", summary: "Share ajouté", duration: 5000});
+        //Update Number Share & Logo
+        this.videos$.forEach((v) => {
+          if(v.id == id_post) {
+            v.shares = res;
+            v.shared = true;
+          }
+        });
+      },
+      error:(err)=>{
+        this.toast.error({detail:"ERROR", summary: "Il y a eu un problème avec le share !", duration: 5000});
+      }
+    })
+  }
+
+  deleteLike(id_post: number) {
+    this.posts.deleteLike(id_post).subscribe({
+      next:(res)=>{
+        this.toast.success({detail:"SUCCESS", summary: "Like supprimé", duration: 5000});
+        //Update Number Like & Logo
+        this.videos$.forEach((v) => {
+          if(v.id == id_post) {
+            v.likes = res;
+            v.liked = false;
+          }
+        });
+      },
+      error:(err)=>{
+        this.toast.error({detail:"ERROR", summary: "Le Like n'a pas pu être supprimé", duration: 5000});
+      }
+    })
+  }
+
+  deleteShare(id_post: number) {
+    this.posts.deleteShare(id_post).subscribe({
+      next:(res)=>{
+        this.toast.success({detail:"SUCCESS", summary: "Share supprimé", duration: 5000});
+        //Update Number Share & Logo
+        this.videos$.forEach((v) => {
+          if(v.id == id_post) {
+            v.shares = res;
+            v.shared = false;
+          }
+        });
+      },
+      error:(err)=>{
+        this.toast.error({detail:"ERROR", summary: "Il y a eu un problème avec le share !", duration: 5000});
+      }
+    })
   }
 }

@@ -1,4 +1,4 @@
-<div class="mt-2">
+<div class="mt-2 sticky-top">
   <div class="log margin-top mb-2 ms-2">
     <a routerLink="/home"><img class="logo-img" src="../../assets/images/YouShareLogoTextNoir.png" alt="Logo"></a>
   </div>
@@ -6,7 +6,7 @@
     <div class="small-panel border bg-white">
       <div class="row mt-4">
         <div class="col-sm-3">
-          <img class="pp" src="../../assets/images/homme.jpg" alt="Photo de profil">
+          <img class="pp" src="{{ pictureUrl }}" alt="Photo de profil">
         </div>
         <div class="col-sm-6">
           <h4 *ngIf="user$">{{ user$.username }}</h4>

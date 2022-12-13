@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import {User} from "../../models/user.model";
 import {Router} from "@angular/router";
-import {DataService} from "../../services/data.service";
 import {AuthService} from "../../services/auth.service";
+import {UserService} from "../../services/user.service";
 
 @Component({
   selector: 'app-navigation-menu',
@@ -11,19 +11,36 @@ import {AuthService} from "../../services/auth.service";
 })
 export class NavigationMenuComponent {
   user$: User;
+  pictureUrl: string;
+
   constructor(
     private router: Router,
-    private data: DataService,
+    private userService: UserService,
     private auth: AuthService
   ) {
   }
 
   ngOnInit(): void {
-    this.data.getUserLoggedIn().subscribe({
+    this.userService.getUserLoggedIn().subscribe({
       next: (res) => {
         this.user$ = new User(res);
       }
     })
+
+    // get the url of the picture of the user
+    this.userService.getSelfPicture()
+    .subscribe({
+      next: (picture) => {
+        this.pictureUrl = picture.url;
+      },
+      error: (err) => {
+        if (err.status == 404){
+          this.pictureUrl = "../../assets/images/default_user.png";
+        }
+      }
+    })
+
+
   }
 
   logout() {
