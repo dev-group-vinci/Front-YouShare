@@ -3,7 +3,6 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ObservableInput, Subscription, takeUntil } from 'rxjs';
 import { YoutubeService } from 'src/app/services/youtube.service';
 import { AuthService } from 'src/app/services/auth.service';
-import { Message } from 'src/app/models/message.model';
 import { Video } from 'src/app/models/video.model';
 import { VideoShow } from 'src/app/models/videoshow.model';
 import { DataService } from 'src/app/services/data.service';
@@ -21,7 +20,6 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class HomeComponent {
 
-  message$: Message = new Message();
   videos$: VideoShow[] = [
     { id: 1,
       url: "fk99pry6nY8",
