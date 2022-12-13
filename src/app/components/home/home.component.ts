@@ -42,19 +42,6 @@ export class HomeComponent {
 
   ngOnInit() {
 
-    //Get the url of the picture of the user that posted this video
-    this.userService.getPicture(1) // TODO HArdcode
-    .subscribe({
-      next: (picture) => {
-        this.pictureUrl = picture.url;
-      },
-      error: (err) => {       
-        if (err.status == 404){
-          this.pictureUrl = "../../assets/images/default_user.png";
-        }
-      }
-    })
-
     //Get the news feed
     this.posts.getPosts().subscribe({
       next: (res) => {
@@ -67,11 +54,17 @@ export class HomeComponent {
           newVideo.text = v.text;
 
           //Get the url of the picture
-          this.userService.getPicture(v.id_user).subscribe(
-            (picture) => {
-              this.pictureUrl = picture.url;
+          this.userService.getPicture(v.id_user).subscribe({
+            next: (picture) => {
+              newVideo.user_picture = picture.url;
+            },
+            error: (err) => {
+              if (err.status == 404){
+                console.log("Test");
+                newVideo.user_picture = "../../assets/images/default_user.png";
+              }
             }
-          )
+          })
 
           //Recover Title Youtube
           this.spinner.show()

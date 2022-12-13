@@ -12,6 +12,6 @@ export class VideoShow {
     shares: number;
     shared: boolean;
     comments: Comment[];
-
+    user_picture: string;
   }
 
