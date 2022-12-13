@@ -2,6 +2,7 @@ export class VideoShow {
   [x: string]: any;
     id: number;
     url: string;
+    id_user: number;
     text: string;
     state: string;
     title: string;
@@ -11,4 +12,6 @@ export class VideoShow {
     shares: number;
     shared: boolean;
     comments: Comment[];
-}
+
+  }
+
