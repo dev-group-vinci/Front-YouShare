@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Comment} from "../../models/comment.model";
 import {User} from "../../models/user.model";
 import {UserService} from "../../services/user.service";
+import {PostService} from "../../services/post.service";
 
 @Component({
   selector: 'app-comment',
@@ -23,10 +24,12 @@ export class CommentComponent implements OnInit{
   }>();
   @Output() deleteComment = new EventEmitter<Comment>;
   replyId: string | null = null;
+  replyTo: User;
 
 
   constructor(
     private userService: UserService,
+    private postService: PostService,
   ) {
   }
 
@@ -37,10 +40,13 @@ export class CommentComponent implements OnInit{
     this.userService.getUserLoggedIn().subscribe({
       next: (res) => {
         this.user = new User(res);
-        this.canDelete = this.user.id_user == this.author.id_user && this.replies.length === 0;
+        this.canDelete = this.user.id_user == this.author.id_user && this.comment.state != 'deleted';
       }
     })
     this.replyId = (this.parentId ? this.parentId : this.comment.id_comment).toString();
+    this.postService.getCommentById(this.comment.id_comment, this.comment.id_post).subscribe((comment) => {
+      this.userService.getUserById(comment.id_user).subscribe((user) => this.replyTo = user);
+    });
   }
 
   isReplying(): boolean {

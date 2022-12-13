@@ -23,7 +23,7 @@ export class CommentsComponent implements OnInit {
   }
 
   addComment({text, parentId}: {text: string, parentId: null | string}): void {
-    this.post.createComment(text, Number(parentId), Number(this.postId)).subscribe((createdComment) => {
+    this.post.createComment(text, parentId, this.postId).subscribe((createdComment) => {
       this.comments = [...this.comments, createdComment];
       this.activeComment = null;
     });
@@ -41,9 +41,7 @@ export class CommentsComponent implements OnInit {
 
   deleteComment(comment: Comment){
     this.post.deleteComment(comment).subscribe(() => {
-      this.comments = this.comments.filter(
-        (c) => c.id_comment !== comment.id_comment
-      );
+      this.comments.filter((c) => c.id_comment === comment.id_comment)[0].text = "Commentaire supprimé";
     });
   }
 }

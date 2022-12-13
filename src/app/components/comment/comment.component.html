@@ -8,10 +8,16 @@
     </div>
   </div>
   <div class="comment-text" *ngIf="comment">
-    {{comment.text}}
+    <div *ngIf="comment.state == 'deleted'">
+      Ce commentaire a &eacute;t&eacute; supprim&eacute;
+    </div>
+    <div *ngIf="comment.state != 'deleted'">
+      <span *ngIf="replyTo" class="primary"> @{{replyTo.username}} </span>
+      {{comment.text}}
+    </div>
   </div>
   <div class="comment-actions mb-2">
-    <button class="btn btn-primary btn-block me-1" (click)="setActiveComment.emit(comment)">R&eacute;pondre</button>
+    <button class="btn btn-primary btn-block me-1" (click)="setActiveComment.emit(comment)" *ngIf="comment.state != 'deleted'">R&eacute;pondre</button>
     <button *ngIf="canDelete"
             class="btn btn-danger btn-block"
             (click)="deleteComment.emit(comment)"

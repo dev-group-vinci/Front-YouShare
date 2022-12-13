@@ -27,8 +27,10 @@ export class HomeComponent {
       state: "published",
       title: "",
       likes: -1,
+      liked: true,
       numberComments: -1,
       shares: -1,
+      shared: false,
       comments: [],
     },
     { id: 2,
@@ -37,8 +39,10 @@ export class HomeComponent {
       state: "published",
       title: "",
       likes: -1,
+      liked: false,
       numberComments: -1,
       shares: -1,
+      shared: false,
       comments: [],
 
     },
@@ -48,8 +52,10 @@ export class HomeComponent {
       state: "published",
       title: "",
       likes: -1,
+      liked: false,
       numberComments: -1,
       shares: -1,
+      shared: false,
       comments: [],
 
     }
@@ -86,7 +92,9 @@ export class HomeComponent {
 
       //Recover Title Youtube
       this.spinner.show()
-      setTimeout(()=> {this.spinner.hide()},3000)
+      setTimeout(() => {
+        this.spinner.hide()
+      }, 3000)
       this.videos = [];
       this.youTubeService.getVideoById(v.url).subscribe(list => {
         for (let item of list['items']) {
@@ -107,7 +115,7 @@ export class HomeComponent {
 
       //Recover Comments
       this.posts.getComments(v.id).subscribe({
-        next: (res) =>{
+        next: (res) => {
           v.comments = res;
           v.numberComments = res.length;
         }
@@ -115,11 +123,14 @@ export class HomeComponent {
 
 
       //Recover Number Shares
-      this.currentPageSub = this.posts.getNumberShares(v.id).subscribe(
-        (page: number) => {
-          v.shares=page;
+      this.posts.getNumberShares(v.id).subscribe({
+        next: (res) => {
+          v.shares = res
+        },
+        error: (err) => {
+          console.log(err)
         }
-      )
+      });
     });
 
     //Load Youtube iframe
@@ -135,7 +146,7 @@ export class HomeComponent {
       url: ['', Validators.required],
       text: ['', Validators.required]
     })
-  }
+  };
 
   getValues(val) {
     return val;
@@ -147,6 +158,7 @@ export class HomeComponent {
     this.videos = [];
     this.youTubeService.getVideoById(id).subscribe(list => {
       for (let item of list['items']) {
+        console.log(item);
         this.videos.push(item);
       }
     });
@@ -178,6 +190,13 @@ export class HomeComponent {
     this.posts.addLike(id_post).subscribe({
       next:(res)=>{
         this.toast.success({detail:"SUCCESS", summary: "Like ajouté", duration: 5000});
+        //Update Number Like & Logo
+        this.videos$.forEach((v) => {
+          if(v.id == id_post) {
+            v.likes = res;
+            v.liked = true;
+          }
+        });
       },
       error:(err)=>{
         this.toast.error({detail:"ERROR", summary: "Il y a eu un problème avec le like !", duration: 5000});
@@ -186,12 +205,67 @@ export class HomeComponent {
   }
 
   setActivePost(idPost: number | null): void {
-    this.activePost = idPost;
+    if(this.activePost) this.activePost = null;
+    else this.activePost = idPost;
   }
 
   displayComments(idPost: number){
     if(this.activePost && this.activePost == idPost){
       return true;
     } else return false;
+  }
+
+  addShare(id_post: number) {
+    this.posts.addShare(id_post).subscribe({
+      next:(res)=>{
+        this.toast.success({detail:"SUCCESS", summary: "Share ajouté", duration: 5000});
+        //Update Number Share & Logo
+        this.videos$.forEach((v) => {
+          if(v.id == id_post) {
+            v.shares = res;
+            v.shared = true;
+          }
+        });
+      },
+      error:(err)=>{
+        this.toast.error({detail:"ERROR", summary: "Il y a eu un problème avec le share !", duration: 5000});
+      }
+    })
+  }
+
+  deleteLike(id_post: number) {
+    this.posts.deleteLike(id_post).subscribe({
+      next:(res)=>{
+        this.toast.success({detail:"SUCCESS", summary: "Like supprimé", duration: 5000});
+        //Update Number Like & Logo
+        this.videos$.forEach((v) => {
+          if(v.id == id_post) {
+            v.likes = res;
+            v.liked = false;
+          }
+        });
+      },
+      error:(err)=>{
+        this.toast.error({detail:"ERROR", summary: "Le Like n'a pas pu être supprimé", duration: 5000});
+      }
+    })
+  }
+
+  deleteShare(id_post: number) {
+    this.posts.deleteShare(id_post).subscribe({
+      next:(res)=>{
+        this.toast.success({detail:"SUCCESS", summary: "Share supprimé", duration: 5000});
+        //Update Number Share & Logo
+        this.videos$.forEach((v) => {
+          if(v.id == id_post) {
+            v.shares = res;
+            v.shared = false;
+          }
+        });
+      },
+      error:(err)=>{
+        this.toast.error({detail:"ERROR", summary: "Il y a eu un problème avec le share !", duration: 5000});
+      }
+    })
   }
 }

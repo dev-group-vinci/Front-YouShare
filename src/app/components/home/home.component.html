@@ -4,7 +4,7 @@
       <app-navigation-menu></app-navigation-menu>
     </div>
 
-    <div class="col-sm-7">
+    <div class="col-sm-7 container">
       <div class="">
         <div class="panel border bg-white margin-top">
           <div class="panel-heading">
@@ -82,16 +82,19 @@
             <div class="form-group pt-3">
               <div class="row">
                 <div class="col-sm">
-                  <span>{{ video.likes }}<i (click)="addLike(video.id)" class="fa fa-heart fa-clickable fa-interact"></i></span>
+                  <span>{{ video.likes }}
+                    <i [attr.hidden]="video.liked ? '' : null" (click)="addLike(video.id)" class="fa fa-heart-o fa-clickable fa-interact"></i>
+                    <i [attr.hidden]="!video.liked ? '' : null"(click)="deleteLike(video.id)" class="fa fa-heart fa-clickable fa-interact"></i>
+                  </span>
                 </div>
                 <div class="col-sm">
                   <span>{{ video.numberComments }}<i class="fa fa-comment fa-clickable fa-interact" (click)="setActivePost(video.id)"></i></span>
                 </div>
                 <div class="col-sm">
-                  <span
-                    >{{ video.shares
-                    }}<i class="fa fa-share fa-clickable fa-interact"></i
-                  ></span>
+                  <span>{{ video.shares}}
+                    <i [attr.hidden]="video.shared ? '' : null" (click)="addShare(video.id)" class="fa fa-share fa-clickable fa-interact"></i>
+                    <i [attr.hidden]="!video.shared ? '' : null" (click)="deleteShare(video.id)" class="fa fa-share fa-clickable fa-interact" style='color: red'></i>
+                  </span>
                 </div>
               </div>
             </div>
@@ -105,10 +108,15 @@
         {{video.snippet.title}}
       </div>
       -->
+
     </div>
 
     <div class="col-sm-3 margin-top">
       <app-friends-list></app-friends-list>
     </div>
+  </div>
+
+  <div class="position-fixed" style="right: 10px; bottom: 10px;">
+    <a class="fa fa-arrow-circle-up fa-10x text-decoration-none" href="/home"></a>
   </div>
 </div>
