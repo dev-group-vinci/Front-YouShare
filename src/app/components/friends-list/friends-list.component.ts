@@ -9,7 +9,7 @@ import {Observable} from "rxjs";
   styleUrls: ['./friends-list.component.css']
 })
 export class FriendsListComponent {
-  friends: User[];
+  friends: User[] = [];
 
   constructor(
     private data: DataService

@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {User} from "../../models/user.model";
 import {UserService} from "../../services/user.service";
+import {DataService} from "../../services/data.service";
 
 @Component({
   selector: 'app-friend-requests',
@@ -21,6 +22,7 @@ export class FriendRequestsComponent {
     private router: Router,
     private userService: UserService,
     private auth: AuthService,
+    private data: DataService
   ) {}
 
   ngOnInit(): void {
@@ -35,6 +37,7 @@ export class FriendRequestsComponent {
   }
 
   accept(idUser){
+    console.log(idUser)
     this.data.acceptFriendRequest(idUser);
   }
 

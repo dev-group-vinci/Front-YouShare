@@ -4,13 +4,13 @@
       <h3 class="pt-3 font-weight-bold">Mes amis</h3>
     </div>
     <div class="panel-body p-3">
-      <table class="w-100">
-        <small *ngIf="friends" class="text-center">Vos amis s'afficheront ici.</small>
-        <div *ngFor="let friend of friends">
+      <table class="w-100" *ngIf="friends">
+        <small *ngIf="friends.length == 0" class="text-center">Vos amis s'afficheront ici.</small>
+        <div *ngFor="let friend of friends" class="mb-2 align-middle">
           <tr class="small-panel">
             <td class="col-sm-2 text-center"><img class="pp" src="../../assets/images/homme.jpg" alt="Photo utilisateur"></td>
             <td class="col-sm-4"><h5 class="align-middle">{{friend.username}}</h5></td>
-            <td class="col-sm-6 text-center"><button type="submit" class="btn btn-primary btn-block w-100 align-middle">Voir le profil</button></td>
+            <td class="col-sm-6 text-center"><button type="submit" class="btn btn-primary btn-block w-100">Voir le profil</button></td>
           </tr>
         </div>
       </table>
