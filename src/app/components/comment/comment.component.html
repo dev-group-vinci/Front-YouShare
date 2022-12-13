@@ -1,0 +1,39 @@
+<div class="small-panel mb-2">
+  <div class="row mt-4 mb-2">
+    <div class="col-sm-1" *ngIf="author">
+      <img class="pp" src="../../assets/images/homme.jpg" alt="Photo de profil">
+    </div>
+    <div class="col-sm-7 comment-author align-middle" *ngIf="author">
+      {{author.username}}
+    </div>
+  </div>
+  <div class="comment-text" *ngIf="comment">
+    {{comment.text}}
+  </div>
+  <div class="comment-actions mb-2">
+    <button class="btn btn-primary btn-block me-1" (click)="setActiveComment.emit(comment)">R&eacute;pondre</button>
+    <button *ngIf="canDelete"
+            class="btn btn-danger btn-block"
+            (click)="deleteComment.emit(comment)"
+    >Supprimer</button>
+  </div>
+  <app-comment-form *ngIf="isReplying()"
+                    submitLabel="Répondre"
+                    (handleSubmit)="addComment.emit({text: $event, parentId: replyId})"
+                    [hasCancelButton]="true"
+                    (handleCancel)="setActiveComment.emit(null)"
+  ></app-comment-form>
+  <div class="replies small-panel ms-5 mb-1" *ngIf="replies.length > 0">
+    <app-comment
+      *ngFor="let reply of replies"
+      [comment]="reply"
+      (setActiveComment)="setActiveComment.emit($event)"
+      [activeComment]="activeComment"
+      (addComment)="addComment.emit($event)"
+      [parentId]="comment.id_comment"
+      [replies]="[]"
+      (deleteComment)="deleteComment.emit($event)"
+    ></app-comment>
+  </div>
+</div>
+

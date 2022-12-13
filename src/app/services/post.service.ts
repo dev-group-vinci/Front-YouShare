@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import {environment} from "../../environments/environment.dev";
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { NewPost } from '../models/newpost.model';
-
+import { Comment } from "../models/comment.model";
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,7 @@ export class PostService {
     var newForm = new NewPost();
     newForm.id_url = postObj.url;
     newForm.text = postObj.text;
-    
+
     return this._http.post<any>(`${this.apiUrl}posts`, newForm);
   }
 
@@ -37,5 +38,18 @@ export class PostService {
 
   getNumberShares(id_post: number) {
     return this._http.get<any>(`${this.apiUrl}posts/${id_post}/shares/`);
+  }
+
+  createComment(text: string, parentId: number | null, postId: number) : Observable<Comment>{
+    return this._http.post<Comment>(`${this.apiUrl}posts/comments/`, {
+      id_post: postId,
+      id_comment_parent: parentId,
+      state: "published",
+      text: text
+    });
+  }
+
+  deleteComment(comment: Comment){
+    return this._http.delete(`${this.apiUrl}posts/${comment.id_post}/comments/${comment.id_comment}`)
   }
 }

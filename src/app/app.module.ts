@@ -17,6 +17,10 @@ import {TokenInterceptor} from "./services/token.interceptor";
 import { NavigationMenuComponent } from './components/navigation-menu/navigation-menu.component';
 import { FriendsListComponent } from './components/friends-list/friends-list.component';
 import { AddFriendComponent } from './components/add-friend/add-friend.component';
+import { CommentsComponent } from './components/comments/comments.component';
+import { CommentComponent } from './components/comment/comment.component';
+import { CommentFormComponent } from './components/comment-form/comment-form.component';
+import { PostComponent } from './components/post/post.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +33,10 @@ import { AddFriendComponent } from './components/add-friend/add-friend.component
     NavigationMenuComponent,
     FriendsListComponent,
     AddFriendComponent,
+    CommentsComponent,
+    CommentComponent,
+    CommentFormComponent,
+    PostComponent,
   ],
   imports: [
     BrowserModule,

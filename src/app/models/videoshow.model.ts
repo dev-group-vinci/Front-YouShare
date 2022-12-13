@@ -1,3 +1,5 @@
+import {Comment} from "./comment.model";
+
 export class VideoShow {
   [x: string]: any;
     id: number;

@@ -120,4 +120,43 @@ small {
     cursor: pointer;
 }
 
+.comments {
+  margin-top: 20px;
+}
+
+.comments-title {
+  font-size: 30px;
+  margin-bottom: 20px;
+}
+
+.comments-container {
+  margin-top: 40px;
+}
+
+.comment-form-title {
+  font-size: 22px;
+}
+
+.comment-form-cancel-button {
+  margin-left: 10px;
+}
+
+.comment-right-part {
+  width: 100%;
+}
+
+.comment-author {
+  margin-right: 8px;
+  font-size: 20px;
+  color: rgb(59, 130, 246);
+}
+
+.comment-text {
+  font-size: 18px;
+}
+
+.replies {
+  margin-top: 20px;
+}
+
 

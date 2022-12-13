@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
-import { DataService } from 'src/app/services/data.service';
 import { Router } from '@angular/router';
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {User} from "../../models/user.model";
+import {UserService} from "../../services/user.service";
 
 @Component({
   selector: 'app-friend-requests',
@@ -18,12 +18,12 @@ export class FriendRequestsComponent {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private data: DataService,
+    private userService: UserService,
     private auth: AuthService,
   ) {}
 
   ngOnInit(): void {
-    this.data.getUserLoggedIn().subscribe({
+    this.userService.getUserLoggedIn().subscribe({
       next: (res) => {
         this.user$ = new User(res);
       }

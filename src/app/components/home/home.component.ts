@@ -1,17 +1,15 @@
 import { Component } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { ObservableInput, Subscription, takeUntil } from 'rxjs';
+import { ObservableInput, Subscription } from 'rxjs';
 import { YoutubeService } from 'src/app/services/youtube.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { Message } from 'src/app/models/message.model';
-import { Video } from 'src/app/models/video.model';
 import { VideoShow } from 'src/app/models/videoshow.model';
 import { DataService } from 'src/app/services/data.service';
 import { PostService } from 'src/app/services/post.service';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgToastService } from 'ng-angular-popup';
 import ValidateForm from 'src/app/helpers/validateform';
-
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -20,7 +18,7 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
-
+  activePost: number|null = null;
   message$: Message = new Message();
   videos$: VideoShow[] = [
     { id: 1,
@@ -80,7 +78,6 @@ export class HomeComponent {
     // get the url of the picture
     this.userService.getPicture(1).subscribe(
       (picture) => {
-        console.log("PPPPPPPPPPPPPPPP  " + picture.url);
         this.pictureUrl = picture.url;
       }
     )
@@ -97,13 +94,11 @@ export class HomeComponent {
           v.title = item.snippet.title;
         }
       });
-      
-      console.log("OK")
+
       //Recover Number Likes
       this.posts.getNumberLikes(v.id).subscribe({
         next: (res) => {
-          v.likes = res,
-          console.log("Likes " + res)
+          v.likes = res
         },
         error: (err) => {
           console.log(err)
@@ -118,7 +113,6 @@ export class HomeComponent {
         }
       })
 
-      console.log(v);
 
       //Recover Number Shares
       this.currentPageSub = this.posts.getNumberShares(v.id).subscribe(
@@ -126,7 +120,7 @@ export class HomeComponent {
           v.shares=page;
         }
       )
-    });    
+    });
 
     //Load Youtube iframe
     if (!this.apiLoaded) {
@@ -153,7 +147,6 @@ export class HomeComponent {
     this.videos = [];
     this.youTubeService.getVideoById(id).subscribe(list => {
       for (let item of list['items']) {
-        console.log(item);
         this.videos.push(item);
       }
     });
@@ -190,5 +183,15 @@ export class HomeComponent {
         this.toast.error({detail:"ERROR", summary: "Il y a eu un problème avec le like !", duration: 5000});
       }
     })
+  }
+
+  setActivePost(idPost: number | null): void {
+    this.activePost = idPost;
+  }
+
+  displayComments(idPost: number){
+    if(this.activePost && this.activePost == idPost){
+      return true;
+    } else return false;
   }
 }

@@ -85,7 +85,7 @@
                   <span>{{ video.likes }}<i (click)="addLike(video.id)" class="fa fa-heart fa-clickable fa-interact"></i></span>
                 </div>
                 <div class="col-sm">
-                  <span>{{ video.numberComments }}<i class="fa fa-comment fa-clickable fa-interact"></i></span>
+                  <span>{{ video.numberComments }}<i class="fa fa-comment fa-clickable fa-interact" (click)="setActivePost(video.id)"></i></span>
                 </div>
                 <div class="col-sm">
                   <span
@@ -96,9 +96,7 @@
               </div>
             </div>
             <div class="form-inline fr mt-4">
-              <a id="forget" class="font-weight-blod"
-                >Cette vidéo est inapropriée ?
-              </a>
+              <app-comments postId="{{video.id}}" *ngIf="displayComments(video.id)"></app-comments>
             </div>
           </div>
         </div>
