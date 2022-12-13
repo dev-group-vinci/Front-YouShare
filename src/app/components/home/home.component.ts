@@ -42,7 +42,7 @@ export class HomeComponent {
 
   ngOnInit() {
 
-    // get the url of the picture of the user that posted this video
+    //Get the url of the picture of the user that posted this video
     this.userService.getPicture(1) // TODO HArdcode
     .subscribe({
       next: (picture) => {
@@ -53,10 +53,7 @@ export class HomeComponent {
           this.pictureUrl = "../../assets/images/default_user.png";
         }
       }
-  })
-
-
-    this.videos$.forEach( (v) => {
+    })
 
     //Get the news feed
     this.posts.getPosts().subscribe({
@@ -68,8 +65,6 @@ export class HomeComponent {
           newVideo.id_user = v.id_user;
           newVideo.state = v.state;
           newVideo.text = v.text;
-
-          console.log(newVideo);
 
           //Get the url of the picture
           this.userService.getPicture(v.id_user).subscribe(
@@ -115,10 +110,11 @@ export class HomeComponent {
 
           //Add to video list
           this.videos$.push(newVideo);
+    
         })
+      }
+    });
         
-      },
-    });    
 
     //Load Youtube iframe
     if (!this.apiLoaded) {
@@ -133,8 +129,9 @@ export class HomeComponent {
       url: ['', Validators.required],
       text: ['', Validators.required]
     })
-  }
 
+  }
+  
   getValues(val) {
     return val;
   }
