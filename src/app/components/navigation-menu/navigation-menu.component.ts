@@ -3,6 +3,8 @@ import {User} from "../../models/user.model";
 import {Router} from "@angular/router";
 import {DataService} from "../../services/data.service";
 import {AuthService} from "../../services/auth.service";
+import { UserService } from 'src/app/services/user.service';
+
 
 @Component({
   selector: 'app-navigation-menu',
@@ -11,10 +13,13 @@ import {AuthService} from "../../services/auth.service";
 })
 export class NavigationMenuComponent {
   user$: User;
+  pictureUrl: string;
+
   constructor(
     private router: Router,
     private data: DataService,
-    private auth: AuthService
+    private auth: AuthService,
+    private userService: UserService
   ) {
   }
 
@@ -24,6 +29,21 @@ export class NavigationMenuComponent {
         this.user$ = new User(res);
       }
     })
+
+    // get the url of the picture of the user
+    this.userService.getSelfPicture()
+    .subscribe({
+      next: (picture) => {
+        this.pictureUrl = picture.url;
+      },
+      error: (err) => {
+        if (err.status == 404){
+          this.pictureUrl = "../../assets/images/default_user.png";
+        }
+      }
+    })
+    
+
   }
 
   logout() {
