@@ -1,4 +1,4 @@
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:8989/'
+  apiUrl: 'https://back-youshare-dev.herokuapp.com/'
 };
