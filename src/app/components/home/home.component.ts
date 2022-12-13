@@ -60,7 +60,6 @@ export class HomeComponent {
             },
             error: (err) => {
               if (err.status == 404){
-                console.log("Test");
                 newVideo.user_picture = "../../assets/images/default_user.png";
               }
             }
@@ -85,6 +84,14 @@ export class HomeComponent {
           error: (err) => {console.log(err)}
           });
 
+          //Recover Is Liked
+          this.posts.isLiked(v.id_post).subscribe({
+            next: (res) => {
+              newVideo.liked = res;
+            },
+            error: (err) => {console.log(err)}
+          });
+
           //Recover Comments
           this.posts.getComments(v.id_post).subscribe({
             next: (res) =>{
@@ -99,6 +106,14 @@ export class HomeComponent {
               newVideo.shares = res
             },
             error: (err) => { console.log(err)}
+          });
+
+          //Recover Is Shared
+          this.posts.isShared(v.id_post).subscribe({
+            next: (res) => {
+              newVideo.shared = res;
+            },
+            error: (err) => {console.log(err)}
           });
 
           //Add to video list

@@ -54,4 +54,12 @@ export class PostService {
   getPosts() {
     return this._http.get<Video[]>(`${this.apiUrl}posts`);
   }
+
+  isLiked(id_post: number) {
+    return this._http.get<boolean>(`${this.apiUrl}posts/${id_post}/likes/is_liked`);
+  }
+
+  isShared(id_post: number) {
+    return this._http.get<boolean>(`${this.apiUrl}posts/${id_post}/likes/is_shared`);
+  }
 }
