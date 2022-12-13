@@ -42,6 +42,7 @@ export class CommentsComponent implements OnInit {
   deleteComment(comment: Comment){
     this.post.deleteComment(comment).subscribe(() => {
       this.comments.filter((c) => c.id_comment === comment.id_comment)[0].text = "Commentaire supprimé";
+      this.comments.filter((c) => c.id_comment === comment.id_comment)[0].state = "deleted";
     });
   }
 }

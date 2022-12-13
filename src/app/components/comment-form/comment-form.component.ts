@@ -28,6 +28,7 @@ export class CommentFormComponent implements OnInit{
 
   onSubmit(){
     this.handleSubmit.emit(this.commentForm.value.text);
+    this.commentForm.reset();
   }
 
 }

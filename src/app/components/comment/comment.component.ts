@@ -41,6 +41,18 @@ export class CommentComponent implements OnInit{
       next: (res) => {
         this.user = new User(res);
         this.canDelete = this.user.id_user == this.author.id_user && this.comment.state != 'deleted';
+        //Get the url of the picture
+        this.userService.getPicture(this.user.id_user).subscribe({
+          next: (picture) => {
+            this.user.picture_url = picture.url;
+            console.log(this.user.picture_url)
+          },
+          error: (err) => {
+            if (err.status == 404){
+              this.user.picture_url = "../../assets/images/default_user.png";
+            }
+          }
+        });
       }
     })
     this.replyId = (this.parentId ? this.parentId : this.comment.id_comment).toString();

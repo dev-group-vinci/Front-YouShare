@@ -55,7 +55,7 @@ export class PostService {
 
   createComment(text: string, parentId: string | null, postId: string) : Observable<Comment>{
     return this._http.post<Comment>(`${this.apiUrl}posts/comments/`, {
-      id_post: postId,
+      id_post: Number(postId),
       id_comment_parent: parentId,
       text: text
     });

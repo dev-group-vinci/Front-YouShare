@@ -3,7 +3,6 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ObservableInput, Subscription } from 'rxjs';
 import { YoutubeService } from 'src/app/services/youtube.service';
 import { AuthService } from 'src/app/services/auth.service';
-import { Message } from 'src/app/models/message.model';
 import { VideoShow } from 'src/app/models/videoshow.model';
 import { DataService } from 'src/app/services/data.service';
 import { PostService } from 'src/app/services/post.service';
@@ -60,7 +59,6 @@ export class HomeComponent {
             },
             error: (err) => {
               if (err.status == 404){
-                console.log("Test");
                 newVideo.user_picture = "../../assets/images/default_user.png";
               }
             }
