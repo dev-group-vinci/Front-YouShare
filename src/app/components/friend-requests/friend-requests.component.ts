@@ -5,6 +5,7 @@ import {FormBuilder, FormGroup} from "@angular/forms";
 import {User} from "../../models/user.model";
 import {UserService} from "../../services/user.service";
 import {DataService} from "../../services/data.service";
+import {FriendService} from "../../services/friend.service";
 
 @Component({
   selector: 'app-friend-requests',
@@ -21,8 +22,7 @@ export class FriendRequestsComponent {
     private fb: FormBuilder,
     private router: Router,
     private userService: UserService,
-    private auth: AuthService,
-    private data: DataService
+    private friendService: FriendService
   ) {}
 
   ngOnInit(): void {
@@ -31,17 +31,16 @@ export class FriendRequestsComponent {
         this.user$ = new User(res);
       }
     });
-    this.data.getFriendRequests().subscribe(response => {
+    this.friendService.getFriendRequests().subscribe(response => {
       this.friendRequests = response;
     });
   }
 
   accept(idUser){
-    console.log(idUser)
-    this.data.acceptFriendRequest(idUser);
+    this.friendService.acceptFriendRequest(idUser);
   }
 
   refuse(idUser){
-    this.data.refuseFriendRequest(idUser);
+    this.friendService.refuseFriendRequest(idUser);
   }
 }

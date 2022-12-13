@@ -11,16 +11,35 @@
             <h3 class="pt-3 font-weight-bold">Recherche un ami à ajouter</h3>
           </div>
           <div class="panel-body p-3">
-            add search bar
+
+            <form class="mb-2">
+              <div class="input-group rounded">
+                <input type="search" class="form-control rounded d-inline" placeholder="Rechercher" aria-label="Search" [formControl]="searchForm"/>
+                <button class="input-group-text border-0 d-inline" id="search-addon" type="submit" (click)="search()">
+                  <i class="fa fa-search"></i>
+                </button>
+              </div>
+            </form>
+
+            <div *ngFor="let user of users" class="mb-2 align-middle">
+              <table class="w-100">
+                <tr class="small-panel">
+                  <td class="col-sm-1 text-center"><img class="pp" src="../../assets/images/homme.jpg" alt="Photo utilisateur"></td>
+                  <td class="col-sm-5"><h5>{{user.username}}</h5>{{user.biography}}</td>
+                  <td class="col-sm-3 text-center float-right"><button type="submit" class="btn btn-primary btn-block w-100" (click)="sendFriendRequest(user.id_user)">Demander en ami</button></td>
+                  <td class="col-sm-3 text-center float-right"><button type="submit" class="btn btn-primary btn-block w-100">Voir le profil</button></td>
+                </tr>
+              </table>
+            </div>
+
           </div>
         </div>
       </div>
     </div>
-
-
-
     <div class="col-sm-3 margin-top mt-2">
       <app-friends-list></app-friends-list>
     </div>
   </div>
+
 </div>
+

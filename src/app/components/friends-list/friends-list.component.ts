@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {DataService} from "../../services/data.service";
 import {User} from "../../models/user.model";
 import {Observable} from "rxjs";
+import {FriendService} from "../../services/friend.service";
 
 @Component({
   selector: 'app-friends-list',
@@ -12,12 +13,12 @@ export class FriendsListComponent {
   friends: User[] = [];
 
   constructor(
-    private data: DataService
+    private friendService: FriendService,
   ) {
   }
 
   ngOnInit(){
-    this.data.getFriends().subscribe(response => {
+    this.friendService.getFriends().subscribe(response => {
       this.friends = response;
     });
     console.log("friends",this.friends)
