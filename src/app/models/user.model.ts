@@ -12,4 +12,5 @@ export class User {
     role: string;
     email: string;
     biography: string;
+    status: string;
 }

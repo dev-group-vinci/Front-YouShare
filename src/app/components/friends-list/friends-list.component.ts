@@ -1,7 +1,5 @@
-import { Component } from '@angular/core';
-import {DataService} from "../../services/data.service";
+import {Component, Input} from '@angular/core';
 import {User} from "../../models/user.model";
-import {Observable} from "rxjs";
 import {FriendService} from "../../services/friend.service";
 
 @Component({
@@ -11,6 +9,7 @@ import {FriendService} from "../../services/friend.service";
 })
 export class FriendsListComponent {
   friends: User[] = [];
+  @Input() someValueToGetChanges: string;
 
   constructor(
     private friendService: FriendService,
@@ -22,6 +21,10 @@ export class FriendsListComponent {
       this.friends = response;
     });
     console.log("friends",this.friends)
+  }
+
+  ngOnChanges() {
+    this.ngOnInit();
   }
 
 }

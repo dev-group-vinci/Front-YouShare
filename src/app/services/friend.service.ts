@@ -22,16 +22,24 @@ export class FriendService {
   }
 
   acceptFriendRequest(idUser) {
-    // @ts-ignore
-    this._http.post(`${this.apiUrl}friends/${idUser}/accept`);
+    return this._http.post(`${this.apiUrl}friends/${idUser}/accept`, null);
   }
 
   refuseFriendRequest(idUser) {
-    // @ts-ignore
-    this._http.post(`${this.apiUrl}friends/${idUser}/refuse`);
+    return this._http.post(`${this.apiUrl}friends/${idUser}/refuse`, null);
   }
 
   sendFriendRequest(id: number){
     return this._http.post(`${this.apiUrl}friends/${id}`,null);
   }
+
+  friendshipStatus(idUser: number) {
+    // pending, accepted, refused
+    return this._http.get<JSON>(`${this.apiUrl}friends/${idUser}`);
+  }
+
+  deleteFriend(idUser: number) {
+    return this._http.delete(`${this.apiUrl}friends/${idUser}`);
+  }
+
 }

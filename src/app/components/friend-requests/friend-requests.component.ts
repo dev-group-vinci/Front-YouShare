@@ -1,11 +1,9 @@
 import { Component } from '@angular/core';
-import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
-import {FormBuilder, FormGroup} from "@angular/forms";
 import {User} from "../../models/user.model";
 import {UserService} from "../../services/user.service";
-import {DataService} from "../../services/data.service";
 import {FriendService} from "../../services/friend.service";
+import {FormControl} from "@angular/forms";
 
 @Component({
   selector: 'app-friend-requests',
@@ -14,12 +12,12 @@ import {FriendService} from "../../services/friend.service";
 })
 export class FriendRequestsComponent {
 
-  friendsForm!: FormGroup;
+  friendsForm = new FormControl();
   user$: User;
   friendRequests: User[];
+  reload: string = "";
 
   constructor(
-    private fb: FormBuilder,
     private router: Router,
     private userService: UserService,
     private friendService: FriendService
@@ -38,9 +36,11 @@ export class FriendRequestsComponent {
 
   accept(idUser){
     this.friendService.acceptFriendRequest(idUser);
+    this.reload = "accept";
   }
 
   refuse(idUser){
     this.friendService.refuseFriendRequest(idUser);
+    this.reload = "refuse";
   }
 }
