@@ -13,3 +13,12 @@ app.get("/*", function (req, res) {
 
 // Start the app by listening on the default Heroku port
 app.listen(process.env.PORT || 8080);
+
+// This will stop you from getting any CORS errors.
+app.use("*", async (req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*" )
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, PUT, DELETE, OPTIONS")
+  res.setHeader("Access-Control-Allow-Headers", "Origin, Accept, Content-Type, Authorization")
+  res.setHeader("Access-Control-Allow-Credentials", true)
+  next()
+})

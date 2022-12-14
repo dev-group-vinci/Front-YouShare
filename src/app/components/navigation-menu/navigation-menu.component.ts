@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import {User} from "../../models/user.model";
 import {Router} from "@angular/router";
-import {AuthService} from "../../services/auth.service";
-import {UserService} from "../../services/user.service";
+import {AuthService} from "../../services/auth/auth.service";
+import {UserService} from "../../services/user/user.service";
 
 @Component({
   selector: 'app-navigation-menu',

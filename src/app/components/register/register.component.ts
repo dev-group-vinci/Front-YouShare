@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import ValidateForm from 'src/app/helpers/validateform';
 import { matchValidator } from 'src/app/helpers/validatePasswordMatch';
 import { createPasswordStrengthValidator } from 'src/app/helpers/validatePasswordStrength';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { NgToastService } from 'ng-angular-popup';
 
 @Component({

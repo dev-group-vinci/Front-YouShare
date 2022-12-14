@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import {environment} from "../../environments/environment.dev";
-import { Picture } from '../models/picture.model';
-import {User} from "../models/user.model";
+import {environment} from "../../../environments/environment.dev";
+import { Picture } from '../../models/picture.model';
+import {User} from "../../models/user.model";
 
 @Injectable({
   providedIn: 'root'
