@@ -26,7 +26,6 @@ export class HomeComponent {
   unsubscribe$: ObservableInput<any>;
   postsForm!: FormGroup;
   currentPageSub :Subscription;
-  pictureUrl: string;
 
   constructor(
     private auth: AuthService,

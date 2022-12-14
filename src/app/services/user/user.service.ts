@@ -30,7 +30,7 @@ export class UserService {
   }
 
   getUserById(id: number){
-    return this._http.get<User>(`${this.apiUrl}users/${id}`);
+    return this._http.get<JSON>(`${this.apiUrl}users/${id}`);
   }
 
   //********* POST FUNCTION *********
@@ -50,10 +50,10 @@ export class UserService {
   //********* PUT FUNCTION *********
 
   putInAdmin(id_user: number) {
-    return this._http.put<User>(`${this.apiUrl}users/${id_user}`, null);
+    return this._http.put<JSON>(`${this.apiUrl}users/${id_user}`, null);
   }
 
   search(username: string){
-    return this._http.get<User[]>(`${this.apiUrl}users/search/${username}`);
+    return this._http.get<JSON[]>(`${this.apiUrl}users/search/${username}`);
   }
 }

@@ -38,7 +38,7 @@ export class CommentComponent implements OnInit{
 
   ngOnInit(): void {
     this.userService.getUserById(this.comment.id_user).subscribe((user) => {
-      this.author = user;
+      this.author = new User(user);
     })
     this.userService.getUserLoggedIn().subscribe({
       next: (res) => {
@@ -48,7 +48,7 @@ export class CommentComponent implements OnInit{
     })
     this.replyId = (this.parentId ? this.parentId : this.comment.id_comment).toString();
     this.postService.getCommentById(this.comment.id_comment, this.comment.id_post).subscribe((comment) => {
-      this.userService.getUserById(comment.id_user).subscribe((user) => this.replyTo = user);
+      this.userService.getUserById(comment.id_user).subscribe((user) => this.replyTo = new User(user));
     });
   }
 

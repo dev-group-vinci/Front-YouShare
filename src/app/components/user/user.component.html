@@ -7,7 +7,7 @@
     <div class="col-sm-7 container mt-2">
       <div class="panel border bg-white margin-top mb-2" *ngIf="user != null">
         <div class="panel-heading">
-          <img class="pp mx-auto d-block w-50" src="{{ user.picture_url }}" alt="Photo de profil" />
+          <img class="pp mx-auto d-block w-50" src="{{ user.picture }}" alt="Photo de profil" />
           <h1>{{ user.username }}</h1>
         </div>
         <div class="panel-body text-center">
@@ -23,25 +23,13 @@
           <div><button *ngIf="userConnected.role === 'admin' && user.role !== 'admin'" (click)="changeInAdmin(user_id)" type="submit" class="btn btn-warning btn-block w-100 align-middle">Devenir Admin</button></div>
         </div>
       </div>
-<<<<<<< HEAD
-  
-      <div class="col-sm-7 container">
-        <div>
-          <div class="panel border bg-white margin-top">
-            <div class="panel-heading">
-              <img class="pp" src="{{ user.picture }}" alt="Photo de profil" />
-              <h1>{{ user.username }}</h1>
-              <p>{{ user.biography }}</p>
-              <p>ADD BOUTON AJOUTER / RETIRER</p>
-              <div><button *ngIf="userConnected.role === 'admin' && user.role !== 'admin'" (click)="changeInAdmin(user_id)" type="submit" class="btn btn-warning btn-block w-100 align-middle">Devenir Admin</button></div>
-=======
 
       <div *ngIf="videos.length > 0">
         <div class="panel border bg-white margin-top" *ngFor="let video of videos">
           <div class="panel-heading mt-3">
             <div class="row">
               <div class="col col-lg-2">
-                <img class="pp" src="{{ video.user_picture }}" alt="Photo de profil" />
+                <img class="pp" src="{{ video.user.picture }}" alt="Photo de profil" />
               </div>
               <div class="col-md-auto">
                 <h1>{{ video.text }}</h1>
@@ -49,7 +37,6 @@
               <div class="col-md-auto">
                 <h1>{{ video.title }}</h1>
               </div>
->>>>>>> a4a3386647666aa3109497cd806b85c8a5287246
             </div>
           </div>
           <div class="panel-body p-3">

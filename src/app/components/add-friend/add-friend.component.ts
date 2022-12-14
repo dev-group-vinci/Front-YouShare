@@ -31,8 +31,9 @@ export class AddFriendComponent {
       next: (res) => {
         this.userLoggedIn = new User(res);
         this.userService.search("").subscribe( {
-          next: (users) => {
-            for(let user of users){
+          next: (json_list) => {
+            let users = json_list.map((j: JSON) => new User(j))
+            for(let user of users){              
               if(user.id_user !== this.userLoggedIn.id_user){
                 this.friendService.friendshipStatus(user.id_user)
                 .subscribe({

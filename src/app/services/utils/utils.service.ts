@@ -35,7 +35,7 @@ export class UtilsService {
       // generate user
       this.userService.getUserById(v.id_user).subscribe({
         next: (res) =>{
-          newVideo.user = res;
+          newVideo.user = new User(res);
         },
         error: (err) => (console.log(err))
       })
