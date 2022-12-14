@@ -7,6 +7,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgToastService } from 'ng-angular-popup';
 import ValidateForm from 'src/app/helpers/validateform';
 import { UtilsService } from 'src/app/services/utils/utils.service';
+import { User } from 'src/app/models/user.model';
+import { UserService } from 'src/app/services/user/user.service';
 import {Router} from "express";
 
 @Component({
@@ -18,6 +20,7 @@ export class HomeComponent {
 
   activePost: number|null = null;
   videos$: VideoShow[] = [];
+  userConnected: User;
   apiLoaded = false;
   titles: string[];
   unsubscribe$: ObservableInput<any>;
@@ -27,6 +30,7 @@ export class HomeComponent {
 
   constructor(
     private auth: AuthService,
+    private userService: UserService,
     private posts: PostService,
     private fb: FormBuilder,
     private toast: NgToastService,
@@ -48,13 +52,20 @@ export class HomeComponent {
       tag.src = 'https://www.youtube.com/iframe_api';
       document.body.appendChild(tag);
       this.apiLoaded = true;
-    }
+    };
 
     //Create the form
     this.postsForm = this.fb.group({
       url: ['', Validators.required],
       text: ['', Validators.required]
-    })
+    });
+
+    //Recover the user connected
+    this.userService.getUserLoggedIn().subscribe({
+      next: (res) => {
+        this.userConnected = new User(res);
+      }
+    });
   };
 
   logout(){
@@ -168,6 +179,19 @@ export class HomeComponent {
       },
       error:(err)=>{
         this.toast.error({detail:"ERROR", summary: "Il y a eu un problème avec le share !", duration: 5000});
+      }
+    })
+  }
+
+  deletePost(id_post: number) {
+    this.posts.deletePost(id_post).subscribe({
+      next: () => {
+        this.toast.success({detail:"SUCCESS", summary: "Poste supprimé", duration: 5000});
+        this.ngOnInit();
+      },
+      error: (err) => {
+        this.toast.error({detail:"ERROR", summary: "Il y a eu un problème lors de la suppresion du post !", duration: 5000})
+        console.log(err)
       }
     })
   }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {environment} from "../../../environments/environment.dev";
+import {environment} from "../../../environment/environment";
 import { HttpClient } from '@angular/common/http';
 import { NewPost } from '../../models/newpost.model';
 import { Video } from '../../models/video.model';
@@ -55,6 +55,14 @@ export class PostService {
 
   deleteComment(comment: Comment){
     return this._http.delete(`${this.apiUrl}posts/${comment.id_post}/comments/${comment.id_comment}`)
+  }
+
+  deletePost(id_post: number) {
+    return this._http.delete<Video>(`${this.apiUrl}posts/${id_post}`);
+  }
+
+  deleteTheComment(id_post: number, id_comment: number) {
+    return this._http.delete<Comment>(`${this.apiUrl}posts/${id_post}/comments/${id_comment}`);
   }
 
   //************* GET FUNCTION *************

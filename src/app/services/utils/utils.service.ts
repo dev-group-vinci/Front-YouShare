@@ -104,9 +104,10 @@ export class UtilsService {
       
       
       //Add to video list
-      newVideos.push(newVideo);
+      if(newVideo.state !== 'deleted') {
+        newVideos.push(newVideo);
+      }
     })
-
     return newVideos;
   }
 }

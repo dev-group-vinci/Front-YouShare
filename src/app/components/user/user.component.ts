@@ -73,7 +73,6 @@ export class UserComponent {
       next: (res) => {
         if(res != null) {
           this.videos = this.utils.generateVideoShow(res);
-          console.log("videos",this.videos)
         }
       }
     });
@@ -162,6 +161,18 @@ export class UserComponent {
       },
       error:()=>{
         this.toast.error({detail:"ERROR", summary: "Il y a eu un problème avec le share !", duration: 5000});
+      }
+    })
+  }
+
+  deletePost(id_post: number) {
+    this.posts.deletePost(id_post).subscribe({
+      next: () => {
+        this.toast.success({detail:"SUCCESS", summary: "Poste supprimé", duration: 5000});
+        this.ngOnInit();
+      },
+      error: () => {
+        this.toast.error({detail:"ERROR", summary: "Il y a eu un problème lors de la suppresion du post !", duration: 5000})
       }
     })
   }

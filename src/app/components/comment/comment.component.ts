@@ -3,6 +3,7 @@ import {Comment} from "../../models/comment.model";
 import {User} from "../../models/user.model";
 import {UserService} from "../../services/user/user.service";
 import {PostService} from "../../services/post/post.service";
+import { NgToastService } from 'ng-angular-popup';
 
 @Component({
   selector: 'app-comment',
@@ -30,6 +31,8 @@ export class CommentComponent implements OnInit{
   constructor(
     private userService: UserService,
     private postService: PostService,
+    private posts: PostService,
+    private toast: NgToastService,
   ) {
   }
 
@@ -40,7 +43,7 @@ export class CommentComponent implements OnInit{
     this.userService.getUserLoggedIn().subscribe({
       next: (res) => {
         this.user = new User(res);
-        this.canDelete = this.user.id_user == this.author.id_user && this.comment.state != 'deleted';
+        this.canDelete = (this.user.id_user == this.author.id_user || this.user.role === 'admin') && this.comment.state != 'deleted' ;
         //Get the url of the picture
         this.userService.getPicture(this.user.id_user).subscribe({
           next: (picture) => {
@@ -66,4 +69,5 @@ export class CommentComponent implements OnInit{
       return true;
     } else return false;
   }
+
 }
