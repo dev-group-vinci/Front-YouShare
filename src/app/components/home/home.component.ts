@@ -9,6 +9,7 @@ import ValidateForm from 'src/app/helpers/validateform';
 import { UtilsService } from 'src/app/services/utils/utils.service';
 import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user/user.service';
+import {Router} from "express";
 
 @Component({
   selector: 'app-home',
@@ -16,7 +17,7 @@ import { UserService } from 'src/app/services/user/user.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
-  
+
   activePost: number|null = null;
   videos$: VideoShow[] = [];
   userConnected: User;
@@ -72,7 +73,6 @@ export class HomeComponent {
   }
 
   addPost(){
-
     if(this.postsForm.valid) {
       this.posts.addPost(this.postsForm.value)
       .subscribe({
@@ -81,7 +81,8 @@ export class HomeComponent {
           this.postsForm.reset();
         },
         error:(err)=>{
-          this.toast.error({detail:"ERROR", summary: "Il y a eu un problème !", duration: 5000});
+          if(err.status === 403) this.toast.error({detail:"ERROR", summary: "Les messages haineux ne sont pas acceptés !", duration: 5000});
+          else this.toast.error({detail:"ERROR", summary: "Il y a eu un problème !", duration: 5000});
         }
       })
     } else {

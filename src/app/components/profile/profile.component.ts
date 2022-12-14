@@ -27,7 +27,7 @@ export class ProfileComponent {
   eyeIcon: string = "fa-eye-slash";
   profileForm!: FormGroup;
 
-  user$: User;
+  user: User;
 
   constructor(
       private fb: FormBuilder,
@@ -52,11 +52,11 @@ export class ProfileComponent {
     })
     this.userService.getUserLoggedIn().subscribe({
       next: (res) => {
-        this.user$ = new User(res);
+        this.user = new User(res);
         this.profileForm.patchValue({
-          username: this.user$.username,
-          biography: this.user$.biography,
-          email: this.user$.email
+          username: this.user.username,
+          biography: this.user.biography,
+          email: this.user.email
         });
       }
     })

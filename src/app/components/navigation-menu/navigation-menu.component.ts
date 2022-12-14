@@ -10,7 +10,7 @@ import {UserService} from "../../services/user/user.service";
   styleUrls: ['./navigation-menu.component.css']
 })
 export class NavigationMenuComponent {
-  user$: User;
+  user: User;
   pictureUrl: string;
 
   constructor(
@@ -23,7 +23,7 @@ export class NavigationMenuComponent {
   ngOnInit(): void {
     this.userService.getUserLoggedIn().subscribe({
       next: (res) => {
-        this.user$ = new User(res);
+        this.user = new User(res);
       }
     })
 
@@ -39,12 +39,14 @@ export class NavigationMenuComponent {
         }
       }
     })
-
-
   }
 
   logout() {
     this.auth.logout();
+  }
+
+  goToUser(id_user: number) {
+    this.router.navigate(['/user'], { queryParams: { id: id_user }});
   }
 
 }

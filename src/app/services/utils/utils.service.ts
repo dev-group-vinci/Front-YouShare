@@ -5,6 +5,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { YoutubeService } from 'src/app/services/youtube/youtube.service';
 import { PostService } from 'src/app/services/post/post.service';
 import { UserService } from 'src/app/services/user/user.service';
+import { User } from 'src/app/models/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -30,14 +31,23 @@ export class UtilsService {
       newVideo.state = v.state;
       newVideo.text = v.text;
 
+
+      // generate user
+      this.userService.getUserById(v.id_user).subscribe({
+        next: (res) =>{
+          newVideo.user = res;
+        },
+        error: (err) => (console.log(err))
+      })
+      
       //Get the url of the picture
       this.userService.getPicture(v.id_user).subscribe({
         next: (picture) => {
-          newVideo.user_picture = picture.url;
+          newVideo.user.picture_url = picture.url;
         },
         error: (err) => {
           if (err.status == 404){
-            newVideo.user_picture = "../../assets/images/default_user.png";
+            newVideo.user.picture_url = "../../assets/images/default_user.png";
           }
         }
       })
@@ -90,6 +100,8 @@ export class UtilsService {
         },
         error: (err) => {console.log(err)}
       });
+
+      
       
       //Add to video list
       if(newVideo.state !== 'deleted') {
