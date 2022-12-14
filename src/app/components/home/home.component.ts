@@ -1,15 +1,11 @@
 import { Component } from '@angular/core';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { ObservableInput, Subscription } from 'rxjs';
-import { YoutubeService } from 'src/app/services/youtube/youtube.service';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { VideoShow } from 'src/app/models/videoshow.model';
-import { DataService } from 'src/app/services/data/data.service';
 import { PostService } from 'src/app/services/post/post.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgToastService } from 'ng-angular-popup';
 import ValidateForm from 'src/app/helpers/validateform';
-import { UserService } from 'src/app/services/user/user.service';
 import { UtilsService } from 'src/app/services/utils/utils.service';
 
 @Component({
@@ -29,14 +25,10 @@ export class HomeComponent {
   pictureUrl: string;
 
   constructor(
-    private spinner: NgxSpinnerService,
-    private youTubeService: YoutubeService,
-    private dataService: DataService,
     private auth: AuthService,
     private posts: PostService,
     private fb: FormBuilder,
     private toast: NgToastService,
-    private userService: UserService,
     private utils: UtilsService,
   ) {}
 
@@ -99,7 +91,12 @@ export class HomeComponent {
         });
       },
       error:(err)=>{
-        this.toast.error({detail:"ERROR", summary: "Il y a eu un problème avec le like !", duration: 5000});
+        if(err.status == 409) {
+          this.toast.error({detail:"ERROR", summary: "Poste déjà liké", duration: 5000});
+        }
+        else {
+          this.toast.error({detail:"ERROR", summary: "Erreur lors du like", duration: 5000});
+        }
       }
     })
   }
@@ -128,7 +125,12 @@ export class HomeComponent {
         });
       },
       error:(err)=>{
-        this.toast.error({detail:"ERROR", summary: "Il y a eu un problème avec le share !", duration: 5000});
+        if(err.status == 409) {
+          this.toast.error({detail:"ERROR", summary: "Poste déjà partagé", duration: 5000});
+        }
+        else {
+          this.toast.error({detail:"ERROR", summary: "Erreur lors du partage", duration: 5000});
+        }
       }
     })
   }

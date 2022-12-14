@@ -17,6 +17,7 @@ export class UserComponent {
 
   user_id: number;
   user: User;
+  userConnected: User;
   apiLoaded = false;
   videos: VideoShow[] = [];
   activePost: number|null = null;
@@ -31,12 +32,15 @@ export class UserComponent {
   ) {}
 
   ngOnInit() {
+
+    //Recover the id user of the profile
     this.router.queryParams.subscribe(
       params => {
         this.user_id = params['id'];
       }
     )
-
+    
+    //Recover the user from the id
     this.userService.getUserById(this.user_id).subscribe({
       next: (res) => {
         this.user = res;
@@ -51,13 +55,21 @@ export class UserComponent {
       this.apiLoaded = true;
     }
 
-    //TODO Changer la route quand elle sera finie
+    //Recover posts of the user
     this.posts.getPostsById(this.user_id).subscribe({
       next: (res) => {
         if(res != null) {
           this.videos = this.utils.generateVideoShow(res);
           this.hasPosts = true;
         } 
+      }
+    });
+
+    //Recover the user connected
+    this.userService.getUserLoggedIn().subscribe({
+      next: (res) => {
+        this.userConnected = new User(res);
+        console.log(this.userConnected);
       }
     });
   }
@@ -145,6 +157,23 @@ export class UserComponent {
       },
       error:(err)=>{
         this.toast.error({detail:"ERROR", summary: "Il y a eu un problème avec le share !", duration: 5000});
+      }
+    })
+  }
+
+  changeInAdmin(id_user: number) {
+    this.userService.putInAdmin(id_user).subscribe({
+      next:() => {
+        this.toast.success({detail:"SUCCESS", summary: "Utilisateur passé admin", duration: 5000});
+        this.ngOnInit();
+      },
+      error:(err) => {
+        if(err.status == 400) {
+          this.toast.success({detail:"ERROR", summary: "Utilisateur déjà admin", duration: 5000});
+        }
+        else {
+          this.toast.success({detail:"ERROR", summary: "Problème pour passer un utilisateur admin", duration: 5000});
+        }
       }
     })
   }
