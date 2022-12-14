@@ -7,6 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
+    "heroku-prebuild": "node install_npm.js && node pre-build.js",
     "heroku-postbuild": "ng build --configuration production"
   },
   "private": true,
@@ -22,6 +23,7 @@
     "@angular/platform-browser-dynamic": "^15.0.0",
     "@angular/router": "^15.0.0",
     "@angular/youtube-player": "^15.0.2",
+    "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "ng-angular-popup": "^0.2.0",
     "ngx-spinner": "^14.0.0",
