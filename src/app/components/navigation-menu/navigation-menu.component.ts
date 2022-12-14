@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {User} from "../../models/user.model";
 import {Router} from "@angular/router";
 import {AuthService} from "../../services/auth/auth.service";
@@ -12,6 +12,7 @@ import {UserService} from "../../services/user/user.service";
 export class NavigationMenuComponent {
   user: User;
   pictureUrl: string;
+  @Input() someValueToGetChanges: string;
 
   constructor(
     private router: Router,
@@ -23,9 +24,13 @@ export class NavigationMenuComponent {
   ngOnInit(): void {
     this.userService.getUserLoggedIn().subscribe({
       next: (res) => {
-        this.user = new User(res);        
+        this.user = new User(res);
       }
     })
+  }
+
+  ngOnChanges() {
+    this.ngOnInit();
   }
 
   logout() {

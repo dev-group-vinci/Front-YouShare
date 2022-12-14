@@ -1,25 +1,13 @@
 <div class="outer">
   <div class="row">
     <div class="col-sm-2">
-      <app-navigation-menu></app-navigation-menu>
+      <app-navigation-menu [someValueToGetChanges]="reload"></app-navigation-menu>
     </div>
 
     <div class="col-sm-7">
       <div class="panel border bg-white margin-top">
         <div class="panel-heading">
           <h3 class="pt-3 font-weight-bold">Modification du profil</h3>
-        </div>
-
-        <!-- TODO Eliott j'ai mis l'upload du fichier picture en dehors du form pour tester si ça fonctionne  -->
-        <div >
-          <input
-            type="file"
-            id="picture"
-            style="display:none"
-            accept="image/*"
-            (change)="uploadPicture($event)"
-          />
-          <label for="picture">Upload Image</label>
         </div>
 
 
@@ -54,6 +42,20 @@
             </div>
             <small *ngIf="profileForm.controls['email'].dirty && profileForm.hasError('required', 'email')" class="text-danger">* Email obligatoire</small>
             <small *ngIf="profileForm.controls['email'].dirty && profileForm.hasError('pattern', 'email')" class="text-danger">* Veuillez entrer une email valide</small>
+
+            <div class="form-group pt-3">
+              <span class="fa fa-at p-2"></span>
+              <label for="picture" class="form-label">Photo de profil : </label>
+              <input
+                type="file"
+                id="picture"
+                accept="image/*"
+                class="form-control"
+                formControlName="picture"
+                (change)="savePicture($event)"
+              />
+            </div>
+
 
             <!-- PASSWORD -->
             <div class="form-group pt-3">
