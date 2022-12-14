@@ -1,0 +1,83 @@
+<div class="outer">
+    <div class="row">
+      <div class="col-sm-2">
+        <app-navigation-menu></app-navigation-menu>
+      </div>
+  
+      <div class="col-sm-7 container">
+        <div>
+          <div class="panel border bg-white margin-top">
+            <div class="panel-heading">
+              <img class="pp" src="{{ user.picture_url }}" alt="Photo de profil" />
+              <h1>{{ user.username }}</h1>
+              <p>{{ user.biography }}</p>
+              <p>ADD BOUTON AJOUTER / RETIRER</p>
+              <div><button *ngIf="userConnected.role === 'admin' && user.role !== 'admin'" (click)="changeInAdmin(user_id)" type="submit" class="btn btn-warning btn-block w-100 align-middle">Devenir Admin</button></div>
+            </div>
+          </div>
+        </div>
+  
+        <div [attr.hidden]="hasPosts ? '' : null" *ngFor="let video of videos">
+          <div class="panel border bg-white margin-top">
+            <div class="panel-heading mt-3">
+              <div class="row">
+                <div class="col col-lg-2">
+                  <img class="pp" src="{{ video.user_picture }}" alt="Photo de profil" />
+                </div>
+                <div class="col-md-auto">
+                  <h1>{{ video.text }}</h1>
+                </div>
+                <div class="col-md-auto">
+                  <h1>{{ video.title }}</h1>
+                </div>
+              </div>
+            </div>
+            <div class="panel-body p-3">
+              <div class="form-group pt-3">
+                <youtube-player [videoId]="video.url"> </youtube-player>
+              </div>
+              <div class="form-group pt-3">
+                <div class="row">
+                  <div class="col-sm">
+                    <span>{{ video.likes }}
+                      <i [attr.hidden]="video.liked ? '' : null" (click)="addLike(video.id)" class="fa fa-heart-o fa-clickable fa-interact"></i>
+                      <i [attr.hidden]="!video.liked ? '' : null"(click)="deleteLike(video.id)" class="fa fa-heart fa-clickable fa-interact"></i>
+                    </span>
+                  </div>
+                  <div class="col-sm">
+                    <span>{{ video.numberComments }}<i class="fa fa-comment fa-clickable fa-interact" (click)="setActivePost(video.id)"></i></span>
+                  </div>
+                  <div class="col-sm">
+                    <span>{{ video.shares}}
+                      <i [attr.hidden]="video.shared ? '' : null" (click)="addShare(video.id)" class="fa fa-share fa-clickable fa-interact"></i>
+                      <i [attr.hidden]="!video.shared ? '' : null" (click)="deleteShare(video.id)" class="fa fa-share fa-clickable fa-interact" style='color: red'></i>
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="form-inline fr mt-4">
+                <app-comments postId="{{video.id}}" *ngIf="displayComments(video.id)"></app-comments>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div [attr.hidden]="!hasPosts ? '' : null">
+          <div class="panel border bg-white margin-top">
+            <div class="panel-heading">
+              <p>Cet utilisateur n'a pas partagé de vidéos</p>
+            </div>
+          </div>
+        </div>
+  
+      </div>
+  
+      <div class="col-sm-3 margin-top">
+        <app-friends-list></app-friends-list>
+      </div>
+    </div>
+  
+    <div class="position-fixed" style="right: 10px; bottom: 10px;">
+      <a class="fa fa-arrow-circle-up fa-10x text-decoration-none" href="/home"></a>
+    </div>
+  </div>
+  

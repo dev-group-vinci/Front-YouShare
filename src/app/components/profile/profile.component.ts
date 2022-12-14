@@ -5,16 +5,16 @@ import {
   Validators
 } from '@angular/forms';
 import {NgxSpinnerService} from 'ngx-spinner';
-import {AuthService} from 'src/app/services/auth.service';
-import {DataService} from 'src/app/services/data.service';
-import {YoutubeService} from 'src/app/services/youtube.service';
+import {AuthService} from 'src/app/services/auth/auth.service';
+import {DataService} from 'src/app/services/data/data.service';
+import {YoutubeService} from 'src/app/services/youtube/youtube.service';
 import {matchValidator} from 'src/app/helpers/validatePasswordMatch';
 import {createPasswordStrengthValidator} from 'src/app/helpers/validatePasswordStrength';
 import ValidateForm from 'src/app/helpers/validateform';
 import {Router} from '@angular/router';
 import {NgToastService} from "ng-angular-popup";
 import {User} from "../../models/user.model";
-import {UserService} from "../../services/user.service";
+import {UserService} from "../../services/user/user.service";
 import {AppComponent} from "../../app.component";
 
 @Component({
