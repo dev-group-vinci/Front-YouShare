@@ -43,4 +43,8 @@ export class FriendRequestsComponent {
     this.friendService.refuseFriendRequest(idUser);
     this.reload = "refuse";
   }
+
+  goToUser(id_user: number) {
+    this.router.navigate(['/user'], { queryParams: { id: id_user }});
+  }
 }

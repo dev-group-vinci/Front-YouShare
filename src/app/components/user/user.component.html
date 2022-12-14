@@ -13,10 +13,10 @@
         <div class="panel-body text-center">
           <div>{{ user.biography }}</div>
           <div>
-            <button *ngIf="user.status === 'unknown'" type="submit" class="btn btn-primary btn-block w-50 mt-1" (click)="sendFriendRequest(user.id_user)">Demander en ami</button>
-            <button *ngIf="user.status === 'accepted'" type="submit" class="btn btn-danger btn-block w-50 mt-1" (click)="delete(user.id_user)">Supprimer cet ami</button>
-            <button *ngIf="user.status === 'received'" type="submit" class="btn btn-success btn-block w-50 mt-1" (click)="accept(user.id_user)">Accepter</button>
-            <button *ngIf="user.status === 'received'" type="submit" class="btn btn-danger btn-block w-50 mt-1" (click)="refuse(user.id_user)">Refuser</button>
+            <button *ngIf="user.status === 'unknown'" type="submit" class="btn btn-primary btn-block w-25 mt-1" (click)="sendFriendRequest(user.id_user)">Demander en ami</button>
+            <button *ngIf="user.status === 'accepted'" type="submit" class="btn btn-danger btn-block w-25 mt-1" (click)="delete(user.id_user)">Supprimer cet ami</button>
+            <button *ngIf="user.status === 'received'" type="submit" class="btn btn-success btn-block w-25 mt-1 me-2" (click)="accept(user.id_user)">Accepter</button>
+            <button *ngIf="user.status === 'received'" type="submit" class="btn btn-danger btn-block w-25 mt-1" (click)="refuse(user.id_user)">Refuser</button>
             <button *ngIf="user.status === 'sended'" type="submit" class="btn btn-secondary btn-block w-50 mt-1" (click)="delete(user.id_user)">Annuler la demande</button>
             <a *ngIf="user.status === 'me'" type="submit" class="btn btn-primary btn-block w-50 mt-1" routerLink="/profile">Modifier mon profil</a>
           </div>

@@ -73,7 +73,6 @@ export class HomeComponent {
   }
 
   addPost(){
-
     if(this.postsForm.valid) {
       this.posts.addPost(this.postsForm.value)
       .subscribe({
@@ -82,7 +81,8 @@ export class HomeComponent {
           this.postsForm.reset();
         },
         error:(err)=>{
-          this.toast.error({detail:"ERROR", summary: "Il y a eu un problème !", duration: 5000});
+          if(err.status === 403) this.toast.error({detail:"ERROR", summary: "Les messages haineux ne sont pas acceptés !", duration: 5000});
+          else this.toast.error({detail:"ERROR", summary: "Il y a eu un problème !", duration: 5000});
         }
       })
     } else {

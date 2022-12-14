@@ -4,6 +4,7 @@ import {UserService} from "../../services/user/user.service";
 import {FormControl} from "@angular/forms";
 import {FriendService} from "../../services/friend.service";
 import {NgToastService} from "ng-angular-popup";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-add-friend',
@@ -21,6 +22,7 @@ export class AddFriendComponent {
     private userService: UserService,
     private friendService: FriendService,
     private toast: NgToastService,
+    private router: Router,
   ) {
   }
 
@@ -154,6 +156,10 @@ export class AddFriendComponent {
         });
       }
     });
+  }
+
+  goToUser(id_user: number) {
+    this.router.navigate(['/user'], { queryParams: { id: id_user }});
   }
 
 }
