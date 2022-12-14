@@ -20,11 +20,17 @@ export class PostService {
   //************* ADD FUNCTION *************
 
   addPost(postObj: any) {
-    var newForm = new NewPost();
-    newForm.id_url = postObj.url;
-    newForm.text = postObj.text;
+    var newPost = new NewPost();
+    newPost.id_url = postObj.url;
+    newPost.text = postObj.text;
 
-    return this._http.post<any>(`${this.apiUrl}posts`, newForm);
+    //Extract the ID Youtube of the URL
+    var regex = new RegExp(/(?:\?v=)([^&]+)(?:\&)*/);
+    var matches = regex.exec(newPost.id_url);
+    if(matches != null) {
+      newPost.id_url = matches[1];
+    }
+    return this._http.post<any>(`${this.apiUrl}posts`, newPost);
   }
 
   addLike(id_post: number) {
@@ -36,9 +42,13 @@ export class PostService {
   }
 
   createComment(text: string, parentId: string | null, postId: string) : Observable<Comment>{
+    let parent_id;
+    if(parentId == null) parent_id = null;
+    else parent_id = Number(parentId);
+    console.log(parent_id)
     return this._http.post<Comment>(`${this.apiUrl}posts/comments/`, {
       id_post: Number(postId),
-      id_comment_parent: parentId,
+      id_comment_parent: parent_id,
       text: text
     });
   }
