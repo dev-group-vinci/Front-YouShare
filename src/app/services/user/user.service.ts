@@ -38,12 +38,12 @@ export class UserService {
   uploadPicture(file: any){
     const payload = new FormData();
     payload.append("image", file, file.name);
-    return this._http.post(`${this.apiUrl}users/self/picture`, payload, { 
+    return this._http.post(`${this.apiUrl}users/self/picture`, payload, {
       responseType: 'json'}).subscribe(
         (object) => {
           console.log("QQQQQQQQQQQQQQQQQQQ"); //TODO Eliott
           console.log(object);
-        
+
     });
   }
 
@@ -51,5 +51,9 @@ export class UserService {
 
   putInAdmin(id_user: number) {
     return this._http.put<User>(`${this.apiUrl}users/${id_user}`, null);
+  }
+
+  search(username: string){
+    return this._http.get<User[]>(`${this.apiUrl}users/search/${username}`);
   }
 }

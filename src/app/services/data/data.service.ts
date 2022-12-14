@@ -1,7 +1,6 @@
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment.dev';
-import {AuthService} from "../auth/auth.service";
 
 const httpOptions : any    = {
   headers: new HttpHeaders({
@@ -20,7 +19,6 @@ export class DataService {
 
   constructor(
     private _http: HttpClient,
-    private auth: AuthService,
   ) { }
 
   getUserLoggedIn(){

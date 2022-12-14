@@ -15,7 +15,6 @@ import {Router} from '@angular/router';
 import {NgToastService} from "ng-angular-popup";
 import {User} from "../../models/user.model";
 import {UserService} from "../../services/user/user.service";
-import {AppComponent} from "../../app.component";
 
 @Component({
   selector: 'app-profile',
@@ -84,19 +83,13 @@ export class ProfileComponent {
       }
       this.dataService.updateUser(this.profileForm.value)
       .subscribe({
-        next: (res) => {
+        next: () => {
           this.toast.success({
             detail: "SUCCESS",
             summary: "Votre profil a été modifié !",
             duration: 5000
           });
-          this.profileForm.reset();
-          this.profileForm.patchValue({
-            username: this.user$.username,
-            biography: this.user$.biography,
-            email: this.user$.email
-          });
-          this.router.navigate(['profile']);
+          this.ngOnInit()
         },
         error: (err) => {
           if (err.statusText == 'Conflict') this.toast.error({

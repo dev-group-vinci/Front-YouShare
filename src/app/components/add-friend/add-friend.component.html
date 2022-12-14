@@ -11,16 +11,41 @@
             <h3 class="pt-3 font-weight-bold">Recherche un ami à ajouter</h3>
           </div>
           <div class="panel-body p-3">
-            add search bar
+
+            <form class="mb-2">
+              <div class="input-group rounded">
+                <input type="search" class="form-control rounded d-inline" placeholder="Rechercher" aria-label="Search" [formControl]="searchForm"/>
+                <button class="input-group-text border-0 d-inline" id="search-addon" type="submit" (click)="search()">
+                  <i class="fa fa-search"></i>
+                </button>
+              </div>
+            </form>
+
+            <div *ngFor="let user of users" class="mb-2 align-middle">
+              <table class="w-100">
+                <tr class="small-panel">
+                  <td class="col-sm-2 text-center"><img class="pp" src="{{user.picture_url}}" alt="Photo utilisateur"></td>
+                  <td class="col-sm-8"><h5>{{user.username}}</h5>{{user.biography}}</td>
+                  <td class="col-sm-2 text-center">
+                    <button *ngIf="user.status === 'unknown'" type="submit" class="btn btn-primary btn-block w-100 mt-1" (click)="sendFriendRequest(user.id_user)">Demander en ami</button>
+                    <button *ngIf="user.status === 'accepted'" type="submit" class="btn btn-danger btn-block w-100 mt-1" (click)="delete(user.id_user)">Supprimer cet ami</button>
+                    <button *ngIf="user.status === 'received'" type="submit" class="btn btn-success btn-block w-100 mt-1" (click)="accept(user.id_user)">Accepter</button>
+                    <button *ngIf="user.status === 'received'" type="submit" class="btn btn-danger btn-block w-100 mt-1" (click)="refuse(user.id_user)">Refuser</button>
+                    <button *ngIf="user.status === 'sended'" type="submit" class="btn btn-secondary btn-block w-100 mt-1" (click)="delete(user.id_user)">Annuler la demande</button>
+                    <button type="submit" class="btn btn-primary btn-block w-100 mt-1">Voir le profil</button>
+                  </td>
+                </tr>
+              </table>
+            </div>
+
           </div>
         </div>
       </div>
     </div>
-
-
-
     <div class="col-sm-3 margin-top mt-2">
-      <app-friends-list></app-friends-list>
+      <app-friends-list [someValueToGetChanges]="reload"></app-friends-list>
     </div>
   </div>
+
 </div>
+
