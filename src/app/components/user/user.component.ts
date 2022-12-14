@@ -1,51 +1,45 @@
 import { Component } from '@angular/core';
-import { NgxSpinnerService } from 'ngx-spinner';
-import { ObservableInput, Subscription } from 'rxjs';
-import { YoutubeService } from 'src/app/services/youtube/youtube.service';
-import { AuthService } from 'src/app/services/auth/auth.service';
-import { VideoShow } from 'src/app/models/videoshow.model';
-import { DataService } from 'src/app/services/data/data.service';
-import { PostService } from 'src/app/services/post/post.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
-import ValidateForm from 'src/app/helpers/validateform';
+import { User } from 'src/app/models/user.model';
+import { VideoShow } from 'src/app/models/videoshow.model';
+import { AuthService } from 'src/app/services/auth/auth.service';
+import { PostService } from 'src/app/services/post/post.service';
 import { UserService } from 'src/app/services/user/user.service';
 import { UtilsService } from 'src/app/services/utils/utils.service';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  selector: 'app-user',
+  templateUrl: './user.component.html',
+  styleUrls: ['./user.component.css']
 })
-export class HomeComponent {
-  
-  activePost: number|null = null;
-  videos$: VideoShow[] = [];
-  apiLoaded = false;
-  titles: string[];
-  unsubscribe$: ObservableInput<any>;
-  postsForm!: FormGroup;
-  currentPageSub :Subscription;
-  pictureUrl: string;
+export class UserComponent {
 
-  constructor(
-    private spinner: NgxSpinnerService,
-    private youTubeService: YoutubeService,
-    private dataService: DataService,
-    private auth: AuthService,
-    private posts: PostService,
-    private fb: FormBuilder,
-    private toast: NgToastService,
-    private userService: UserService,
-    private utils: UtilsService,
+  user_id: number;
+  user: User;
+  apiLoaded = false;
+  videos: VideoShow[] = [];
+  activePost: number|null = null;
+  hasPosts: boolean = false;
+
+  constructor(private router: ActivatedRoute, 
+              private userService: UserService, 
+              private posts: PostService,
+              private utils: UtilsService,
+              private auth: AuthService,
+              private toast: NgToastService,
   ) {}
 
   ngOnInit() {
+    this.router.queryParams.subscribe(
+      params => {
+        this.user_id = params['id'];
+      }
+    )
 
-    //Get the news feed
-    this.posts.getPosts().subscribe({
+    this.userService.getUserById(this.user_id).subscribe({
       next: (res) => {
-        this.videos$ = this.utils.generateVideoShow(res);
+        this.user = res;
       }
     });
 
@@ -57,33 +51,19 @@ export class HomeComponent {
       this.apiLoaded = true;
     }
 
-    //Create the form
-    this.postsForm = this.fb.group({
-      url: ['', Validators.required],
-      text: ['', Validators.required]
-    })
-  };
+    //TODO Changer la route quand elle sera finie
+    this.posts.getPostsById(this.user_id).subscribe({
+      next: (res) => {
+        if(res != null) {
+          this.videos = this.utils.generateVideoShow(res);
+          this.hasPosts = true;
+        } 
+      }
+    });
+  }
 
   logout(){
     this.auth.logout();
-  }
-
-  addPost(){
-
-    if(this.postsForm.valid) {
-      this.posts.addPost(this.postsForm.value)
-      .subscribe({
-        next:(res)=>{
-          this.toast.success({detail:"SUCCESS", summary: "Post ajouté", duration: 5000});
-          this.postsForm.reset();
-        },
-        error:(err)=>{
-          this.toast.error({detail:"ERROR", summary: "Il y a eu un problème !", duration: 5000});
-        }
-      })
-    } else {
-      ValidateForm.validateAllFormFields(this.postsForm)
-    }
   }
 
   addLike(id_post: number) {
@@ -91,7 +71,7 @@ export class HomeComponent {
       next:(res)=>{
         this.toast.success({detail:"SUCCESS", summary: "Like ajouté", duration: 5000});
         //Update Number Like & Logo
-        this.videos$.forEach((v) => {
+        this.videos.forEach((v) => {
           if(v.id == id_post) {
             v.likes = res;
             v.liked = true;
@@ -120,7 +100,7 @@ export class HomeComponent {
       next:(res)=>{
         this.toast.success({detail:"SUCCESS", summary: "Share ajouté", duration: 5000});
         //Update Number Share & Logo
-        this.videos$.forEach((v) => {
+        this.videos.forEach((v) => {
           if(v.id == id_post) {
             v.shares = res;
             v.shared = true;
@@ -138,7 +118,7 @@ export class HomeComponent {
       next:(res)=>{
         this.toast.success({detail:"SUCCESS", summary: "Like supprimé", duration: 5000});
         //Update Number Like & Logo
-        this.videos$.forEach((v) => {
+        this.videos.forEach((v) => {
           if(v.id == id_post) {
             v.likes = res;
             v.liked = false;
@@ -156,7 +136,7 @@ export class HomeComponent {
       next:(res)=>{
         this.toast.success({detail:"SUCCESS", summary: "Share supprimé", duration: 5000});
         //Update Number Share & Logo
-        this.videos$.forEach((v) => {
+        this.videos.forEach((v) => {
           if(v.id == id_post) {
             v.shares = res;
             v.shared = false;

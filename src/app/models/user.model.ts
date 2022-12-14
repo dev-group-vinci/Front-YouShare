@@ -1,7 +1,6 @@
 export class User {
 
   constructor(json: JSON) {
-    console.log(json)
     for (let prop in json) {
       this[prop] = json[prop];
     }

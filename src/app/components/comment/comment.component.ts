@@ -1,8 +1,8 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Comment} from "../../models/comment.model";
 import {User} from "../../models/user.model";
-import {UserService} from "../../services/user.service";
-import {PostService} from "../../services/post.service";
+import {UserService} from "../../services/user/user.service";
+import {PostService} from "../../services/post/post.service";
 
 @Component({
   selector: 'app-comment',

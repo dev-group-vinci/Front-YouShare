@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { Router } from '@angular/router';
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {User} from "../../models/user.model";
-import {UserService} from "../../services/user.service";
+import {UserService} from "../../services/user/user.service";
 
 @Component({
   selector: 'app-friend-requests',
