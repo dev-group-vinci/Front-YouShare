@@ -12,6 +12,7 @@
               <h1>{{ user.username }}</h1>
               <p>{{ user.biography }}</p>
               <p>ADD BOUTON AJOUTER / RETIRER</p>
+              <div><button *ngIf="userConnected.role === 'admin' && user.role !== 'admin'" (click)="changeInAdmin(user_id)" type="submit" class="btn btn-warning btn-block w-100 align-middle">Devenir Admin</button></div>
             </div>
           </div>
         </div>
