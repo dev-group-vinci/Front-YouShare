@@ -39,7 +39,7 @@
               <span class="fa fa-file-text-o p-2 icon"></span>
               <label for="biographyInput" class="form-label">Biographie : </label>
               <div class="input-field" [class.error]="profileForm.controls['biography'].dirty && profileForm.hasError('maxlength', 'biography')">
-                <input formControlName="biography" type="text" placeholder="Biographie" id="biographyInput" class="form-control" value="{{ user$.biography }}">
+                <input formControlName="biography" type="text" placeholder="Biographie" id="biographyInput" class="form-control" value="{{ user.biography }}">
               </div>
             </div>
             <small *ngIf="profileForm.controls['biography'].dirty && profileForm.hasError('maxlength', 'biography')" class="text-danger">* Longueur maximale de 200 caractères</small>
@@ -49,7 +49,7 @@
               <span class="fa fa-at p-2"></span>
               <label for="emailInput" class="form-label">Email : </label>
               <div class="input-field" [class.error]="profileForm.controls['email'].dirty && profileForm.hasError('required', 'email')">
-                <input formControlName="email" type="text" placeholder="Email" id="emailInput" class="form-control" value="{{ user$.email }}">
+                <input formControlName="email" type="text" placeholder="Email" id="emailInput" class="form-control" value="{{ user.email }}">
               </div>
             </div>
             <small *ngIf="profileForm.controls['email'].dirty && profileForm.hasError('required', 'email')" class="text-danger">* Email obligatoire</small>

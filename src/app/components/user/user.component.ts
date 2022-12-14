@@ -7,6 +7,7 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 import { PostService } from 'src/app/services/post/post.service';
 import { UserService } from 'src/app/services/user/user.service';
 import { UtilsService } from 'src/app/services/utils/utils.service';
+import {FriendService} from "../../services/friend.service";
 
 @Component({
   selector: 'app-user',
@@ -22,9 +23,11 @@ export class UserComponent {
   videos: VideoShow[] = [];
   activePost: number|null = null;
   hasPosts: boolean = false;
+  reload: string = "";
 
-  constructor(private router: ActivatedRoute, 
-              private userService: UserService, 
+  constructor(private router: ActivatedRoute,
+              private friendService: FriendService,
+              private userService: UserService,
               private posts: PostService,
               private utils: UtilsService,
               private auth: AuthService,
@@ -38,12 +41,23 @@ export class UserComponent {
       params => {
         this.user_id = params['id'];
       }
-    )
-    
-    //Recover the user from the id
-    this.userService.getUserById(this.user_id).subscribe({
+    );
+
+    //Recover the user connected
+    this.userService.getUserLoggedIn().subscribe({
       next: (res) => {
-        this.user = res;
+        this.userConnected = new User(res);
+        //Recover the user from the id
+        if(this.user_id == this.userConnected.id_user){
+          this.userConnected.status = "me";
+          this.user = this.userConnected;
+        } else {
+          this.friendService.friendshipStatus(this.user_id).subscribe({
+            next: (res) => {
+              this.user = new User(res);
+            }
+          });
+        }
       }
     });
 
@@ -61,15 +75,8 @@ export class UserComponent {
         if(res != null) {
           this.videos = this.utils.generateVideoShow(res);
           this.hasPosts = true;
-        } 
-      }
-    });
-
-    //Recover the user connected
-    this.userService.getUserLoggedIn().subscribe({
-      next: (res) => {
-        this.userConnected = new User(res);
-        console.log(this.userConnected);
+          console.log("videos",this.videos)
+        }
       }
     });
   }
@@ -176,5 +183,97 @@ export class UserComponent {
         }
       }
     })
+  }
+
+  sendFriendRequest(idUser: number) {
+    this.friendService.sendFriendRequest(idUser).subscribe({
+      next: () => {
+        this.toast.success({
+          detail: "SUCCESS",
+          summary: "Demande d'ami envoyé avec succès !",
+          duration: 5000
+        });
+      },
+      error: () => {
+        this.toast.error({
+          detail: "ERROR",
+          summary: "Il y a eu une erreur !",
+          duration: 5000
+        });
+      }
+    });
+  }
+
+  delete(idUser: any) {
+    this.friendService.deleteFriend(idUser).subscribe({
+      next: () => {
+        this.toast.success({
+          detail: "SUCCESS",
+          summary: "Ami supprimé avec succès !",
+          duration: 5000
+        });
+      },
+      error: (err) => {
+        if(err.title == "Forbidden"){
+          this.toast.error({
+            detail: "ERROR",
+            summary: "Vous ne pouvez pas vous ajouter en ami !",
+            duration: 5000
+          });
+        } else if (err.title == "Conflict"){
+          this.toast.error({
+            detail: "ERROR",
+            summary: "Vous avez déjà demandé cette personne en ami !",
+            duration: 5000
+          });
+        } else {
+          this.toast.error({
+            detail: "ERROR",
+            summary: "Il y a eu une erreur !",
+            duration: 5000
+          });
+        }
+      }
+    });
+    this.reload = "delete";
+  }
+
+  accept(idUser){
+    this.friendService.acceptFriendRequest(idUser).subscribe({
+      next: () => {
+        this.toast.success({
+          detail: "SUCCESS",
+          summary: "Ami accepté avec succès !",
+          duration: 5000
+        });
+        this.reload = "accept";
+      },
+      error: () => {
+        this.toast.error({
+          detail: "ERROR",
+          summary: "Il y a eu une erreur !",
+          duration: 5000
+        });
+      }
+    });
+  }
+
+  refuse(idUser){
+    this.friendService.refuseFriendRequest(idUser).subscribe({
+      next: () => {
+        this.toast.success({
+          detail: "SUCCESS",
+          summary: "Ami refusé avec succès !",
+          duration: 5000
+        });
+      },
+      error: () => {
+        this.toast.error({
+          detail: "ERROR",
+          summary: "Il y a eu une erreur !",
+          duration: 5000
+        });
+      }
+    });
   }
 }
