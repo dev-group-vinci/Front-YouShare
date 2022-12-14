@@ -148,3 +148,5 @@ Thumbs.db
 
 .vscode
 
+# ignore env file because it is created in prebuild
+/src/environments/environment.ts

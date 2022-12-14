@@ -7,6 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
+    "heroku-prebuild": "node install_npm.js && node pre-build.js",
     "heroku-postbuild": "ng build --configuration production"
   },
   "private": true,

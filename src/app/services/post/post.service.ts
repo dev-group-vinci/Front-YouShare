@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {environment} from "../../../environments/environment.dev";
+import {environment} from "../../../environments/environment";
 import { HttpClient } from '@angular/common/http';
 import { NewPost } from '../../models/newpost.model';
 import { Video } from '../../models/video.model';
