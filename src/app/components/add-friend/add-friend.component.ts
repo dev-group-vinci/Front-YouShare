@@ -4,6 +4,7 @@ import {UserService} from "../../services/user/user.service";
 import {FormControl} from "@angular/forms";
 import {FriendService} from "../../services/friend.service";
 import {NgToastService} from "ng-angular-popup";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-add-friend',
@@ -15,33 +16,45 @@ export class AddFriendComponent {
   users: User[] = [];
   searchForm = new FormControl();
   reload: string = "";
+  userLoggedIn: User;
 
   constructor(
     private userService: UserService,
     private friendService: FriendService,
     private toast: NgToastService,
+    private router: Router,
   ) {
   }
 
   ngOnInit(){
-    this.userService.search("").subscribe( {
-      next: (users) => {
-        for(let user of users){
-          this.friendService.friendshipStatus(user.id_user).subscribe({
-            next: (res) => {
-              this.users.push(new User(res));
-            },
-            error: () => {
-              user.status = "unknown";
-              this.users.push(user);
-            }
-          })
-        }
-      },
-      error: () => {
-        this.users = [];
+    this.userService.getUserLoggedIn().subscribe({
+      next: (res) => {
+        this.userLoggedIn = new User(res);
+        this.userService.search("").subscribe( {
+          next: (users) => {
+            for(let user of users){
+              if(user.id_user !== this.userLoggedIn.id_user){
+                this.friendService.friendshipStatus(user.id_user)
+                .subscribe({
+                  next: (res) => {
+                    this.users.push(new User(res));
+                  },
+                  error: () => {
+                    user.status = "unknown";
+                    this.users.push(user);
+                  }
+                })
+              }
+              }
+          },
+          error: () => {
+            this.users = [];
+          }
+        });
       }
-    });
+    })
+
+
   };
 
   search(){
@@ -143,6 +156,10 @@ export class AddFriendComponent {
         });
       }
     });
+  }
+
+  goToUser(id_user: number) {
+    this.router.navigate(['/user'], { queryParams: { id: id_user }});
   }
 
 }

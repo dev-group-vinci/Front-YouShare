@@ -1,4 +1,5 @@
 import {Comment} from "./comment.model";
+import { User } from "./user.model";
 
 export class VideoShow {
   [x: string]: any;
@@ -15,4 +16,5 @@ export class VideoShow {
     shared: boolean;
     comments: Comment[];
     user_picture: string;
+    user: User;
   }

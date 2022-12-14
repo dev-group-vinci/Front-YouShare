@@ -4,14 +4,23 @@
   </div>
   <div class="row ms-2">
     <div class="small-panel border bg-white">
+<<<<<<< HEAD
       <div class="row mt-4">
         <div class="col-sm-3">
           <img class="pp" src="{{ user$.picture }}" alt="Photo de profil">
+=======
+      <a (click)="goToUser(user.id_user)" class="cursor-pointer text-decoration-none">
+        <div class="row mt-4" *ngIf="user">
+          <div class="col-sm-3">
+            <img class="pp" src="{{ user.picture_url }}" alt="Photo de profil">
+          </div>
+          <div class="col-sm-6">
+            <h4>{{ user.username }}</h4>
+          </div>
+>>>>>>> a4a3386647666aa3109497cd806b85c8a5287246
         </div>
-        <div class="col-sm-6">
-          <h4 *ngIf="user$">{{ user$.username }}</h4>
-        </div>
-      </div>
+      </a>
+
     </div>
     <a routerLink="/profile" class="btn btn-primary btn-block mb-2 mt-3">Modifier mon profil</a>
     <a routerLink="/addfriend" class="btn btn-primary btn-block mb-2">Ajouter des amis</a>

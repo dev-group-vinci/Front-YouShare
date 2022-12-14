@@ -1,8 +1,29 @@
 <div class="outer">
-    <div class="row">
-      <div class="col-sm-2">
-        <app-navigation-menu></app-navigation-menu>
+  <div class="row">
+    <div class="col-sm-2">
+      <app-navigation-menu></app-navigation-menu>
+    </div>
+
+    <div class="col-sm-7 container mt-2">
+      <div class="panel border bg-white margin-top mb-2" *ngIf="user != null">
+        <div class="panel-heading">
+          <img class="pp mx-auto d-block w-50" src="{{ user.picture_url }}" alt="Photo de profil" />
+          <h1>{{ user.username }}</h1>
+        </div>
+        <div class="panel-body text-center">
+          <div>{{ user.biography }}</div>
+          <div>
+            <button *ngIf="user.status === 'unknown'" type="submit" class="btn btn-primary btn-block w-25 mt-1" (click)="sendFriendRequest(user.id_user)">Demander en ami</button>
+            <button *ngIf="user.status === 'accepted'" type="submit" class="btn btn-danger btn-block w-25 mt-1" (click)="delete(user.id_user)">Supprimer cet ami</button>
+            <button *ngIf="user.status === 'received'" type="submit" class="btn btn-success btn-block w-25 mt-1 me-2" (click)="accept(user.id_user)">Accepter</button>
+            <button *ngIf="user.status === 'received'" type="submit" class="btn btn-danger btn-block w-25 mt-1" (click)="refuse(user.id_user)">Refuser</button>
+            <button *ngIf="user.status === 'sended'" type="submit" class="btn btn-secondary btn-block w-50 mt-1" (click)="delete(user.id_user)">Annuler la demande</button>
+            <a *ngIf="user.status === 'me'" type="submit" class="btn btn-primary btn-block w-50 mt-1" routerLink="/profile">Modifier mon profil</a>
+          </div>
+          <div><button *ngIf="userConnected.role === 'admin' && user.role !== 'admin'" (click)="changeInAdmin(user_id)" type="submit" class="btn btn-warning btn-block w-100 align-middle">Devenir Admin</button></div>
+        </div>
       </div>
+<<<<<<< HEAD
   
       <div class="col-sm-7 container">
         <div>
@@ -13,76 +34,72 @@
               <p>{{ user.biography }}</p>
               <p>ADD BOUTON AJOUTER / RETIRER</p>
               <div><button *ngIf="userConnected.role === 'admin' && user.role !== 'admin'" (click)="changeInAdmin(user_id)" type="submit" class="btn btn-warning btn-block w-100 align-middle">Devenir Admin</button></div>
+=======
+
+      <div *ngIf="videos.length > 0">
+        <div class="panel border bg-white margin-top" *ngFor="let video of videos">
+          <div class="panel-heading mt-3">
+            <div class="row">
+              <div class="col col-lg-2">
+                <img class="pp" src="{{ video.user_picture }}" alt="Photo de profil" />
+              </div>
+              <div class="col-md-auto">
+                <h1>{{ video.text }}</h1>
+              </div>
+              <div class="col-md-auto">
+                <h1>{{ video.title }}</h1>
+              </div>
+>>>>>>> a4a3386647666aa3109497cd806b85c8a5287246
             </div>
           </div>
-        </div>
-  
-        <div *ngIf="hasPosts == true">
-          <div *ngFor="let video of videos">
-            <div class="panel border bg-white margin-top">
-              <div class="panel-heading mt-3">
-                <div class="row">
-                  <div class="col col-lg-2">
-                    <img class="pp" src="{{ video.user_picture }}" alt="Photo de profil" />
-                  </div>
-                  <div class="col-md-auto">
-                    <h1>{{ video.text }}</h1>
-                  </div>
-                  <div class="col-md-auto">
-                    <h1>{{ video.title }}</h1>
-                  </div>
+          <div class="panel-body p-3">
+            <div class="form-group pt-3">
+              <youtube-player [videoId]="video.url"> </youtube-player>
+            </div>
+            <div class="form-group pt-3">
+              <div class="row">
+                <div class="col-sm">
+                    <span>{{ video.likes }}
+                      <i [attr.hidden]="video.liked ? '' : null" (click)="addLike(video.id)" class="fa fa-heart-o fa-clickable fa-interact"></i>
+                      <i [attr.hidden]="!video.liked ? '' : null" (click)="deleteLike(video.id)" class="fa fa-heart fa-clickable fa-interact"></i>
+                    </span>
                 </div>
-              </div>
-              <div class="panel-body p-3">
-                <div class="form-group pt-3">
-                  <youtube-player [videoId]="video.url"> </youtube-player>
+                <div class="col-sm">
+                  <span>{{ video.numberComments }}<i class="fa fa-comment fa-clickable fa-interact" (click)="setActivePost(video.id)"></i></span>
                 </div>
-                <div class="form-group pt-3">
-                  <div class="row">
-                    <div class="col-sm">
-                      <span>{{ video.likes }}
-                        <i [attr.hidden]="video.liked ? '' : null" (click)="addLike(video.id)" class="fa fa-heart-o fa-clickable fa-interact"></i>
-                        <i [attr.hidden]="!video.liked ? '' : null"(click)="deleteLike(video.id)" class="fa fa-heart fa-clickable fa-interact"></i>
-                      </span>
-                    </div>
-                    <div class="col-sm">
-                      <span>{{ video.numberComments }}<i class="fa fa-comment fa-clickable fa-interact" (click)="setActivePost(video.id)"></i></span>
-                    </div>
-                    <div class="col-sm">
-                      <span>{{ video.shares}}
-                        <i [attr.hidden]="video.shared ? '' : null" (click)="addShare(video.id)" class="fa fa-share fa-clickable fa-interact"></i>
-                        <i [attr.hidden]="!video.shared ? '' : null" (click)="deleteShare(video.id)" class="fa fa-share fa-clickable fa-interact" style='color: red'></i>
-                      </span>
-                    </div>
-                    <div *ngIf="userConnected.role === 'admin' || video.id_user == userConnected.id_user" class="col-sm">
-                      <span><i (click)="deletePost(video.id)" class="fa fa-trash fa-clickable fa-interact"></i></span>
-                    </div>
-                  </div>
+                <div class="col-sm">
+                    <span>{{ video.shares}}
+                      <i [attr.hidden]="video.shared ? '' : null" (click)="addShare(video.id)" class="fa fa-share fa-clickable fa-interact"></i>
+                      <i [attr.hidden]="!video.shared ? '' : null" (click)="deleteShare(video.id)" class="fa fa-share fa-clickable fa-interact" style='color: red'></i>
+                    </span>
                 </div>
-                <div class="form-inline fr mt-4">
-                  <app-comments postId="{{video.id}}" *ngIf="displayComments(video.id)"></app-comments>
+                <div *ngIf="userConnected.role === 'admin' || video.id_user == userConnected.id_user" class="col-sm">
+                  <span><i (click)="deletePost(video.id)" class="fa fa-trash fa-clickable fa-interact"></i></span>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-        <div *ngIf="hasPosts == false">
-          <div class="panel border bg-white margin-top">
-            <div class="panel-heading">
-              <p>Cet utilisateur n'a pas partagé de vidéos</p>
+            <div class="form-inline fr mt-4">
+              <app-comments postId="{{video.id}}" *ngIf="displayComments(video.id)"></app-comments>
             </div>
           </div>
         </div>
-  
       </div>
-  
-      <div class="col-sm-3 margin-top">
-        <app-friends-list></app-friends-list>
+      <div *ngIf="videos.length == 0">
+        <div class="panel border bg-white margin-top">
+          <div class="panel-heading">
+            <p>Cet utilisateur n'a pas partagé de vidéos</p>
+          </div>
+        </div>
       </div>
+
     </div>
-  
-    <div class="position-fixed" style="right: 10px; bottom: 10px;">
-      <a class="fa fa-arrow-circle-up fa-10x text-decoration-none" href="/home"></a>
+
+    <div class="col-sm-3 margin-top mt-2">
+      <app-friends-list [someValueToGetChanges]="reload"></app-friends-list>
     </div>
   </div>
-  
+
+  <div class="position-fixed" style="right: 10px; bottom: 10px;">
+    <a class="fa fa-arrow-circle-up fa-10x text-decoration-none" href="/home"></a>
+  </div>
+</div>

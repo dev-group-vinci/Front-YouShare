@@ -11,13 +11,15 @@ import { NgToastService } from 'ng-angular-popup';
   styleUrls: ['./comments.component.css']
 })
 export class CommentsComponent implements OnInit {
-  
+
   @Input() postId!: string;
   comments: Comment[] = [];
   activeComment: Comment|null = null;
-  
-  constructor(private post: PostService,
-              private userService: UserService, 
+
+  constructor(
+    private post: PostService,
+    private userService: UserService,
+    private toast: NgToastService,
   ) {}
 
   ngOnInit(): void {
@@ -27,9 +29,23 @@ export class CommentsComponent implements OnInit {
   }
 
   addComment({text, parentId}: {text: string, parentId: null | string}): void {
-    this.post.createComment(text, parentId, this.postId).subscribe((createdComment) => {
-      this.comments = [...this.comments, createdComment];
-      this.activeComment = null;
+    this.post.createComment(text, parentId, this.postId).subscribe({
+      next: (createdComment) => {
+        this.comments = [...this.comments, createdComment];
+        this.activeComment = null;
+      },
+      error: (err) => {
+        if (err.status === 403) this.toast.error({
+          detail: "ERROR",
+          summary: "Les messages haineux ne sont pas acceptés !",
+          duration: 5000
+        });
+        else this.toast.error({
+          detail: "ERROR",
+          summary: "Il y a eu un problème !",
+          duration: 5000
+        });
+      }
     });
   }
 
