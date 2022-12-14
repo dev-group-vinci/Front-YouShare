@@ -54,6 +54,19 @@ export class UserComponent {
           this.friendService.friendshipStatus(this.user_id).subscribe({
             next: (res) => {
               this.user = new User(res);
+            },
+            error: (err) => {
+              if(err.status === '404'){
+                this.userService.getUserById(this.user_id).subscribe({
+                  next: (res) => {
+                    console.log("ici")
+                    let user = new User(res);
+                    user.status = "unknown";
+                    console.log(user)
+                    this.user = user;
+                  },
+                });
+              }
             }
           });
         }
@@ -202,6 +215,7 @@ export class UserComponent {
           summary: "Demande d'ami envoyé avec succès !",
           duration: 5000
         });
+        this.ngOnInit();
       },
       error: () => {
         this.toast.error({
@@ -221,6 +235,7 @@ export class UserComponent {
           summary: "Ami supprimé avec succès !",
           duration: 5000
         });
+        this.ngOnInit();
       },
       error: (err) => {
         if(err.title == "Forbidden"){
@@ -256,6 +271,7 @@ export class UserComponent {
           duration: 5000
         });
         this.reload = "accept";
+        this.ngOnInit();
       },
       error: () => {
         this.toast.error({
@@ -275,6 +291,7 @@ export class UserComponent {
           summary: "Ami refusé avec succès !",
           duration: 5000
         });
+        this.ngOnInit();
       },
       error: () => {
         this.toast.error({

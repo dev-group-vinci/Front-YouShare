@@ -14,11 +14,11 @@ export class FriendService {
   ) { }
 
   getFriends(){
-    return this._http.get<User[]>(`${this.apiUrl}friends`);
+    return this._http.get<JSON[]>(`${this.apiUrl}friends`);
   }
 
   getFriendRequests(){
-    return this._http.get<User[]>(`${this.apiUrl}friends/requests`);
+    return this._http.get<JSON[]>(`${this.apiUrl}friends/requests`);
   }
 
   acceptFriendRequest(idUser) {
