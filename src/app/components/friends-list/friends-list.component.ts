@@ -1,6 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {User} from "../../models/user.model";
 import {FriendService} from "../../services/friend.service";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-friends-list',
@@ -13,6 +14,7 @@ export class FriendsListComponent {
 
   constructor(
     private friendService: FriendService,
+    private router: Router
   ) {
   }
 
@@ -20,11 +22,14 @@ export class FriendsListComponent {
     this.friendService.getFriends().subscribe(response => {
       this.friends = response;
     });
-    console.log("friends",this.friends)
   }
 
   ngOnChanges() {
     this.ngOnInit();
+  }
+
+  goToUser(id_user: number) {
+    this.router.navigate(['/user'], { queryParams: { id: id_user }});
   }
 
 }
