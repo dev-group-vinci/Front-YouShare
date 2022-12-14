@@ -22,7 +22,6 @@ export class UserComponent {
   apiLoaded = false;
   videos: VideoShow[] = [];
   activePost: number|null = null;
-  hasPosts: boolean = false;
   reload: string = "";
 
   constructor(private router: ActivatedRoute,
@@ -74,7 +73,6 @@ export class UserComponent {
       next: (res) => {
         if(res != null) {
           this.videos = this.utils.generateVideoShow(res);
-          this.hasPosts = true;
           console.log("videos",this.videos)
         }
       }
@@ -97,7 +95,7 @@ export class UserComponent {
           }
         });
       },
-      error:(err)=>{
+      error:()=>{
         this.toast.error({detail:"ERROR", summary: "Il y a eu un problème avec le like !", duration: 5000});
       }
     })
@@ -126,7 +124,7 @@ export class UserComponent {
           }
         });
       },
-      error:(err)=>{
+      error:()=>{
         this.toast.error({detail:"ERROR", summary: "Il y a eu un problème avec le share !", duration: 5000});
       }
     })
@@ -144,7 +142,7 @@ export class UserComponent {
           }
         });
       },
-      error:(err)=>{
+      error:()=>{
         this.toast.error({detail:"ERROR", summary: "Le Like n'a pas pu être supprimé", duration: 5000});
       }
     })
@@ -162,7 +160,7 @@ export class UserComponent {
           }
         });
       },
-      error:(err)=>{
+      error:()=>{
         this.toast.error({detail:"ERROR", summary: "Il y a eu un problème avec le share !", duration: 5000});
       }
     })

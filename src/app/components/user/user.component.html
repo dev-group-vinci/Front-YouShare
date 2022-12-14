@@ -24,7 +24,7 @@
         </div>
       </div>
 
-      <div *ngIf="hasPosts">
+      <div *ngIf="videos.length > 0">
         <div class="panel border bg-white margin-top" *ngFor="let video of videos">
           <div class="panel-heading mt-3">
             <div class="row">
@@ -48,7 +48,7 @@
                 <div class="col-sm">
                     <span>{{ video.likes }}
                       <i [attr.hidden]="video.liked ? '' : null" (click)="addLike(video.id)" class="fa fa-heart-o fa-clickable fa-interact"></i>
-                      <i [attr.hidden]="!video.liked ? '' : null"(click)="deleteLike(video.id)" class="fa fa-heart fa-clickable fa-interact"></i>
+                      <i [attr.hidden]="!video.liked ? '' : null" (click)="deleteLike(video.id)" class="fa fa-heart fa-clickable fa-interact"></i>
                     </span>
                 </div>
                 <div class="col-sm">
@@ -68,7 +68,7 @@
           </div>
         </div>
       </div>
-      <div *ngIf="!hasPosts">
+      <div *ngIf="videos.length == 0">
         <div class="panel border bg-white margin-top">
           <div class="panel-heading">
             <p>Cet utilisateur n'a pas partagé de vidéos</p>

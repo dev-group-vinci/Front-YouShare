@@ -5,12 +5,12 @@
   <div class="row ms-2">
     <div class="small-panel border bg-white">
       <a (click)="goToUser(user.id_user)" class="cursor-pointer text-decoration-none">
-        <div class="row mt-4">
+        <div class="row mt-4" *ngIf="user">
           <div class="col-sm-3">
             <img class="pp" src="{{ user.picture_url }}" alt="Photo de profil">
           </div>
           <div class="col-sm-6">
-            <h4 *ngIf="user">{{ user.username }}</h4>
+            <h4>{{ user.username }}</h4>
           </div>
         </div>
       </a>
