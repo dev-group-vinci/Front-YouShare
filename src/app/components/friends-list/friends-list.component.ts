@@ -20,7 +20,7 @@ export class FriendsListComponent {
 
   ngOnInit(){
     this.friendService.getFriends().subscribe(response => {
-      this.friends = response;
+      this.friends = response
     });
   }
 
