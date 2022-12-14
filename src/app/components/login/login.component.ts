@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import ValidateForm from 'src/app/helpers/validateform';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { NgToastService } from 'ng-angular-popup';
-import {DataService} from "../../services/data.service";
+import {DataService} from "../../services/data/data.service";
 import { AppComponent} from "../../app.component";
 import {User} from "../../models/user.model";
 

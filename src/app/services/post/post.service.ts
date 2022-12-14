@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import {environment} from "../../environments/environment.dev";
+import {environment} from "../../../environments/environment.dev";
 import { HttpClient } from '@angular/common/http';
-import { NewPost } from '../models/newpost.model';
-import { Video } from '../models/video.model';
+import { NewPost } from '../../models/newpost.model';
+import { Video } from '../../models/video.model';
 
-import { Comment } from "../models/comment.model";
+import { Comment } from "../../models/comment.model";
 import {Observable} from "rxjs";
 
 @Injectable({
@@ -16,6 +16,8 @@ export class PostService {
   constructor(
     private _http: HttpClient,
   ) { }
+
+  //************* ADD FUNCTION *************
 
   addPost(postObj: any) {
     var newForm = new NewPost();
@@ -33,6 +35,16 @@ export class PostService {
     return this._http.post<number>(`${this.apiUrl}posts/${id_post}/shares`, null);
   }
 
+  createComment(text: string, parentId: string | null, postId: string) : Observable<Comment>{
+    return this._http.post<Comment>(`${this.apiUrl}posts/comments/`, {
+      id_post: Number(postId),
+      id_comment_parent: parentId,
+      text: text
+    });
+  }
+
+  //************* DELETE FUNCTION *************
+
   deleteLike(id_post: number) {
     return this._http.delete<number>(`${this.apiUrl}posts/${id_post}/likes`);
   }
@@ -40,6 +52,12 @@ export class PostService {
   deleteShare(id_post: number) {
     return this._http.delete<number>(`${this.apiUrl}posts/${id_post}/shares`);
   }
+
+  deleteComment(comment: Comment){
+    return this._http.delete(`${this.apiUrl}posts/${comment.id_post}/comments/${comment.id_comment}`)
+  }
+
+  //************* GET FUNCTION *************
 
   getNumberLikes(id_post: number) {
     return this._http.get<number>(`${this.apiUrl}posts/${id_post}/likes`);
@@ -53,18 +71,6 @@ export class PostService {
     return this._http.get<number>(`${this.apiUrl}posts/${id_post}/shares`);
   }
 
-  createComment(text: string, parentId: string | null, postId: string) : Observable<Comment>{
-    return this._http.post<Comment>(`${this.apiUrl}posts/comments/`, {
-      id_post: Number(postId),
-      id_comment_parent: parentId,
-      text: text
-    });
-  }
-
-  deleteComment(comment: Comment){
-    return this._http.delete(`${this.apiUrl}posts/${comment.id_post}/comments/${comment.id_comment}`)
-  }
-
   getCommentById(idComment: number, idPost: number){
     return this._http.get<Comment>(`${this.apiUrl}posts/${idPost}/comments/${idComment}`);
   }
@@ -72,6 +78,12 @@ export class PostService {
   getPosts() {
     return this._http.get<Video[]>(`${this.apiUrl}posts`);
   }
+
+  getPostsById(id_user: number) {
+    return this._http.get<Video[]>(`${this.apiUrl}posts/users/${id_user}`);
+  }
+
+  //************* IS FUNCTION *************
 
   isLiked(id_post: number) {
     return this._http.get<boolean>(`${this.apiUrl}posts/${id_post}/likes/is_liked`);
