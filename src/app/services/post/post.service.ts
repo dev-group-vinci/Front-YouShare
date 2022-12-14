@@ -61,6 +61,10 @@ export class PostService {
     return this._http.delete<Video>(`${this.apiUrl}posts/${id_post}`);
   }
 
+  deleteTheComment(id_post: number, id_comment: number) {
+    return this._http.delete<Comment>(`${this.apiUrl}posts/${id_post}/comments/${id_comment}`);
+  }
+
   //************* GET FUNCTION *************
 
   getNumberLikes(id_post: number) {
