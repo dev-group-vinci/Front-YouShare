@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {User} from "../../models/user.model";
-import {UserService} from "../../services/user.service";
+import { UserService } from 'src/app/services/user/user.service';
 import {FormControl} from "@angular/forms";
 import {FriendService} from "../../services/friend.service";
 import {NgToastService} from "ng-angular-popup";
