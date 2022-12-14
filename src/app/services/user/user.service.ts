@@ -15,6 +15,8 @@ export class UserService {
     private router: Router,
     ) { }
 
+  //********* GET FUNCTION *********
+
   getPicture(id: number) {
     return this._http.get<Picture>(`${this.apiUrl}users/${id}/picture`);
   }
@@ -22,6 +24,16 @@ export class UserService {
   getSelfPicture() {
     return this._http.get<Picture>(`${this.apiUrl}users/self/picture`);
   }
+
+  getUserLoggedIn(){
+    return this._http.get<JSON>(`${this.apiUrl}users`)
+  }
+
+  getUserById(id: number){
+    return this._http.get<User>(`${this.apiUrl}users/${id}`);
+  }
+
+  //********* POST FUNCTION *********
 
   uploadPicture(file: any){
     const payload = new FormData();
@@ -35,12 +47,10 @@ export class UserService {
     });
   }
 
-  getUserLoggedIn(){
-    return this._http.get<JSON>(`${this.apiUrl}users`)
-  }
+  //********* PUT FUNCTION *********
 
-  getUserById(id: number){
-    return this._http.get<User>(`${this.apiUrl}users/${id}`);
+  putInAdmin(id_user: number) {
+    return this._http.put<User>(`${this.apiUrl}users/${id_user}`, null);
   }
 
   search(username: string){
