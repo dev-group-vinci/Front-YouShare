@@ -3,9 +3,9 @@ const { exec } = require('child_process');
 let command;
 
 if (process.env.ENV === 'production') {
-    command = exec('ng build --aot --configuration=production');
+    command = exec('ng build --configuration production');
 } else if (process.env.ENV === 'staging') {
-    command = exec('ng build --aot --configuration=staging');
+    command = exec('ng build --configuration staging');
 }
 
 if (command != undefined) {
