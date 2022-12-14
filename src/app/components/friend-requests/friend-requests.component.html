@@ -15,7 +15,7 @@
               <div *ngIf="friendRequests.length > 0">
               <table [formControl]="friendsForm" ngDefaultControl class="w-100" *ngFor="let friendRequest of friendRequests">
                   <tr class="small-panel">
-                    <td class="col-sm-2"><img class="pp" src="{{friendRequest.picture_url}}" alt="Photo utilisateur"></td>
+                    <td class="col-sm-2"><img class="pp" src="{{friendRequest.picture}}" alt="Photo utilisateur"></td>
                     <td class="col-sm-8"><h5>{{friendRequest.username}}</h5><small>{{friendRequest.biography}}</small></td>
                     <td class="col-sm-2 text-center">
                       <button type="submit" class="btn btn-success btn-block mt-4 w-75" (click)="accept(friendRequest.id_user)">Accepter</button>

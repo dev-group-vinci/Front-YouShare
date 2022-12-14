@@ -35,23 +35,11 @@ export class UtilsService {
       // generate user
       this.userService.getUserById(v.id_user).subscribe({
         next: (res) =>{
-          newVideo.user = res;
+          newVideo.user = new User(res);
         },
         error: (err) => (console.log(err))
       })
       
-      //Get the url of the picture
-      this.userService.getPicture(v.id_user).subscribe({
-        next: (picture) => {
-          newVideo.user.picture_url = picture.url;
-        },
-        error: (err) => {
-          if (err.status == 404){
-            newVideo.user.picture_url = "../../assets/images/default_user.png";
-          }
-        }
-      })
-
       //Recover Title Youtube
       this.spinner.show()
       setTimeout(()=> {this.spinner.hide()},3000)

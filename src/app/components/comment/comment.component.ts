@@ -38,29 +38,17 @@ export class CommentComponent implements OnInit{
 
   ngOnInit(): void {
     this.userService.getUserById(this.comment.id_user).subscribe((user) => {
-      this.author = user;
+      this.author = new User(user);
     })
     this.userService.getUserLoggedIn().subscribe({
       next: (res) => {
         this.user = new User(res);
         this.canDelete = (this.user.id_user == this.author.id_user || this.user.role === 'admin') && this.comment.state != 'deleted' ;
-        //Get the url of the picture
-        this.userService.getPicture(this.user.id_user).subscribe({
-          next: (picture) => {
-            this.user.picture_url = picture.url;
-            console.log(this.user.picture_url)
-          },
-          error: (err) => {
-            if (err.status == 404){
-              this.user.picture_url = "../../assets/images/default_user.png";
-            }
-          }
-        });
       }
     })
     this.replyId = (this.parentId ? this.parentId : this.comment.id_comment).toString();
     this.postService.getCommentById(this.comment.id_comment, this.comment.id_post).subscribe((comment) => {
-      this.userService.getUserById(comment.id_user).subscribe((user) => this.replyTo = user);
+      this.userService.getUserById(comment.id_user).subscribe((user) => this.replyTo = new User(user));
     });
   }
 

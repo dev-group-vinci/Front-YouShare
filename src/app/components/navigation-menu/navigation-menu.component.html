@@ -7,7 +7,7 @@
       <a (click)="goToUser(user.id_user)" class="cursor-pointer text-decoration-none">
         <div class="row mt-4" *ngIf="user">
           <div class="col-sm-3">
-            <img class="pp" src="{{ user.picture_url }}" alt="Photo de profil">
+            <img class="pp" src="{{ user.picture }}" alt="Photo de profil">
           </div>
           <div class="col-sm-6">
             <h4>{{ user.username }}</h4>

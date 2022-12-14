@@ -23,20 +23,7 @@ export class NavigationMenuComponent {
   ngOnInit(): void {
     this.userService.getUserLoggedIn().subscribe({
       next: (res) => {
-        this.user = new User(res);
-      }
-    })
-
-    // get the url of the picture of the user
-    this.userService.getSelfPicture()
-    .subscribe({
-      next: (picture) => {
-        this.pictureUrl = picture.url;
-      },
-      error: (err) => {
-        if (err.status == 404){
-          this.pictureUrl = "../../assets/images/default_user.png";
-        }
+        this.user = new User(res);        
       }
     })
   }
