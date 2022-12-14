@@ -1,6 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {PostService} from "../../services/post/post.service";
 import { Comment } from "../../models/comment.model";
+import { User } from 'src/app/models/user.model';
+import { UserService } from 'src/app/services/user/user.service';
+import { NgToastService } from 'ng-angular-popup';
 
 @Component({
   selector: 'app-comments',
@@ -8,18 +11,19 @@ import { Comment } from "../../models/comment.model";
   styleUrls: ['./comments.component.css']
 })
 export class CommentsComponent implements OnInit {
+  
   @Input() postId!: string;
   comments: Comment[] = [];
   activeComment: Comment|null = null;
-  constructor(
-    private post: PostService,
-  ) {
-  }
+  
+  constructor(private post: PostService,
+              private userService: UserService, 
+  ) {}
 
   ngOnInit(): void {
     this.post.getComments(Number(this.postId)).subscribe((comments) => {
       this.comments = comments;
-    })
+    });
   }
 
   addComment({text, parentId}: {text: string, parentId: null | string}): void {
@@ -45,4 +49,5 @@ export class CommentsComponent implements OnInit {
       this.comments.filter((c) => c.id_comment === comment.id_comment)[0].state = "deleted";
     });
   }
+
 }
