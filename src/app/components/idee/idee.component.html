@@ -1,0 +1,52 @@
+<div class="outer">
+    <div class="row">
+      <div class="col-sm-2">
+        <app-navigation-menu></app-navigation-menu>
+      </div>
+  
+      <div class="col-sm-7 container">
+        <div class="panel border bg-white margin-top">
+            <div class="panel-heading">
+                <h3 class="pt-3 font-weight-bold">Rechercher des vidéos à partager</h3>
+            </div>
+            <div class="panel-body p-3">
+                <form [formGroup]="ideaForm" class="mb-2">
+                    <div class="input-group rounded">
+                    <input formControlName="entry" type="search" class="form-control rounded d-inline" placeholder="Rechercher" aria-label="Search"/>
+                    <button (click)="search()" class="input-group-text border-0 d-inline" id="search-addon" type="submit">
+                        <i class="fa fa-search"></i>
+                    </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+  
+        <div *ngFor="let video of videos">
+          <div class="panel border bg-white margin-top">
+            <div class="panel-heading mt-3">
+              <div class="row">
+                <div class="fs-1 alignCenter">
+                  <h1>{{ video.title }}</h1>
+                </div>
+                <div class="fs-4 mt-4 alignCenter">
+                  <p>{{ video.description }}</p>
+                </div>
+                <div class="form-group pt-3 alignCenter">
+                  <youtube-player [videoId]="video.id_youtube"> </youtube-player>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+  
+    <div class="col-sm-3 margin-top">
+        <app-friends-list></app-friends-list>
+    </div>
+    </div>
+  
+    <div class="position-fixed" style="right: 10px; bottom: 10px;">
+      <a class="fa fa-arrow-circle-up fa-10x text-decoration-none" href="/home"></a>
+    </div>
+  </div>
+  

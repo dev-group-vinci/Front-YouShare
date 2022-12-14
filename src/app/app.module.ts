@@ -21,6 +21,7 @@ import { CommentsComponent } from './components/comments/comments.component';
 import { CommentComponent } from './components/comment/comment.component';
 import { CommentFormComponent } from './components/comment-form/comment-form.component';
 import { UserComponent } from './components/user/user.component';
+import { IdeeComponent } from './components/idee/idee.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { UserComponent } from './components/user/user.component';
     CommentComponent,
     CommentFormComponent,
     UserComponent,
+    IdeeComponent,
   ],
   imports: [
     BrowserModule,
