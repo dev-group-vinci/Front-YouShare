@@ -27,9 +27,15 @@ export class PostService {
     //Extract the ID Youtube of the URL
     var regex = new RegExp(/(?:\?v=)([^&]+)(?:\&)*/);
     var matches = regex.exec(newPost.id_url);
+    
     if(matches != null) {
       newPost.id_url = matches[1];
     }
+    else {
+      let id_youtube = newPost.id_url.split("https://youtu.be/").splice(1);
+      newPost.id_url = id_youtube[0];
+    }
+    
     return this._http.post<any>(`${this.apiUrl}posts`, newPost);
   }
 
