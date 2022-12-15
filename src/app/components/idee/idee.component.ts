@@ -16,6 +16,7 @@ export class IdeeComponent {
   ideaForm!: FormGroup;
   postForm!: FormGroup;
   videos:VideoYoutube[] = [];
+  apiLoaded = false;
 
   constructor(
     private fb: FormBuilder,
@@ -25,6 +26,14 @@ export class IdeeComponent {
   ) {}
 
   ngOnInit() {
+    //Load Youtube iframe
+    if (!this.apiLoaded) {
+      const tag = document.createElement('script');
+      tag.src = 'https://www.youtube.com/iframe_api';
+      document.body.appendChild(tag);
+      this.apiLoaded = true;
+    };
+    
     //Create the idea form
     this.ideaForm = this.fb.group({
       entry: ['', Validators.required]
