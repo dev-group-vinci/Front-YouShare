@@ -20,8 +20,9 @@ export class YoutubeService {
       }))
     }
 
-    getVideoTheme(theme): Observable<Object> {
-      let url='https://youtube.googleapis.com/youtube/v3/search?part=snippet&key= ' + this.apiKey + '&type=video&q=' + theme
+    getVideoTheme(ideaSend: any): Observable<Object> {
+      var idea = ideaSend.entry;
+      let url='https://youtube.googleapis.com/youtube/v3/search?part=snippet&key= ' + this.apiKey + '&type=video&q=' + idea
       return this.http.get(url)
       .pipe(map((res) => {
         return res;
