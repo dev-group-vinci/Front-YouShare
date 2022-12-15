@@ -28,12 +28,19 @@
                 <div class="fs-1 alignCenter">
                   <h1>{{ video.title }}</h1>
                 </div>
-                <div class="fs-4 mt-4 alignCenter">
-                  <p>{{ video.description }}</p>
-                </div>
                 <div class="form-group pt-3 alignCenter">
                   <youtube-player [videoId]="video.id_youtube"> </youtube-player>
                 </div>
+                <div class="panel-body p-3">
+                  <form [formGroup]="postForm" class="mb-2">
+                      <div class="input-group rounded">
+                      <input formControlName="comment" type="search" class="form-control rounded d-inline" placeholder="Ton commmenaire ..." aria-label="Search"/>
+                      <div class="alignCenter">
+                        <button (click)="addPost(video.id_youtube)" type="button" class="btn btn-success">Ajouter</button>
+                      </div>
+                      </div>
+                  </form>
+              </div>
               </div>
             </div>
           </div>

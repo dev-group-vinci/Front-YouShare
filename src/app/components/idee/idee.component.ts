@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NgxSpinnerService } from 'ngx-spinner';
-import { VideoShow } from 'src/app/models/videoshow.model';
+import { NgToastService } from 'ng-angular-popup';
+import ValidateForm from 'src/app/helpers/validateform';
 import { VideoYoutube } from 'src/app/models/videoyoutube.model';
+import { PostService } from 'src/app/services/post/post.service';
 import { YoutubeService } from 'src/app/services/youtube/youtube.service';
 
 @Component({
@@ -13,18 +14,25 @@ import { YoutubeService } from 'src/app/services/youtube/youtube.service';
 export class IdeeComponent {
 
   ideaForm!: FormGroup;
+  postForm!: FormGroup;
   videos:VideoYoutube[] = [];
 
   constructor(
     private fb: FormBuilder,
-    private spinner: NgxSpinnerService,
     private youTubeService: YoutubeService,
+    private posts: PostService,
+    private toast: NgToastService,
   ) {}
 
   ngOnInit() {
-    //Create the form
+    //Create the idea form
     this.ideaForm = this.fb.group({
       entry: ['', Validators.required]
+    });
+
+    //Create the post form
+    this.postForm = this.fb.group({
+      comment: ['', Validators.required]
     });
   }
 
@@ -36,11 +44,29 @@ export class IdeeComponent {
           this.videos[i] = new VideoYoutube();
           this.videos[i].id_youtube = item.id.videoId;
           this.videos[i].title = item.snippet.title;
-          this.videos[i].description = item.snippet.description;
           i++;
         }
         console.log(this.videos);
       })
+    }
+  }
+
+  addPost(id_youtube: string) {
+    console.log("TEST");
+    if(this.postForm.valid) {
+      this.posts.addPostFromIdea(id_youtube, this.postForm.value)
+      .subscribe({
+        next:() => {
+          this.toast.success({detail:"SUCCESS", summary: "Post ajouté", duration: 5000});
+          this.postForm.reset();
+        },
+        error:(err)=>{
+          if(err.status === 403) this.toast.error({detail:"ERROR", summary: "Les messages haineux ne sont pas acceptés !", duration: 5000});
+          else this.toast.error({detail:"ERROR", summary: "Il y a eu un problème !", duration: 5000});
+        }
+      })
+    } else {
+      ValidateForm.validateAllFormFields(this.postForm)
     }
   }
 }

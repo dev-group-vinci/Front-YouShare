@@ -33,6 +33,14 @@ export class PostService {
     return this._http.post<any>(`${this.apiUrl}posts`, newPost);
   }
 
+  addPostFromIdea(id_youtube: string, postObj: any) {
+    var newPost = new NewPost();
+    newPost.text = postObj.comment;
+    newPost.id_url = id_youtube;
+
+    return this._http.post<any>(`${this.apiUrl}posts`, newPost);
+  }
+
   addLike(id_post: number) {
     return this._http.post<number>(`${this.apiUrl}posts/${id_post}/likes`, null);
   }
