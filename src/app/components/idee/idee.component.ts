@@ -54,10 +54,12 @@ export class IdeeComponent {
         for(let item of list['items']) {
           this.videos[i] = new VideoYoutube();
           this.videos[i].id_youtube = item.id.videoId;
-          this.videos[i].title = item.snippet.title;
+          
+          var parser = new DOMParser;
+          let finalResult = parser.parseFromString(item.snippet.title, "text/html")
+          this.videos[i].title = finalResult.body.innerHTML;
           i++;
         }
-        console.log(this.videos);
       })
     }
   }
