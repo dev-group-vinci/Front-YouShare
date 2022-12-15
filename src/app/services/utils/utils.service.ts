@@ -45,6 +45,7 @@ export class UtilsService {
       setTimeout(()=> {this.spinner.hide()},3000)
       this.youTubeService.getVideoById(v.id_url).subscribe(list => {
         for (let item of list['items']) {
+          console.log(item);
           newVideo.title = item.snippet.title;
         }
       });

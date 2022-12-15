@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
 import ValidateForm from 'src/app/helpers/validateform';
 import { VideoYoutube } from 'src/app/models/videoyoutube.model';
@@ -23,6 +24,7 @@ export class IdeeComponent {
     private youTubeService: YoutubeService,
     private posts: PostService,
     private toast: NgToastService,
+    private router: Router,
   ) {}
 
   ngOnInit() {
@@ -68,6 +70,7 @@ export class IdeeComponent {
         next:() => {
           this.toast.success({detail:"SUCCESS", summary: "Post ajouté", duration: 5000});
           this.postForm.reset();
+          this.router.navigate(['/home']);
         },
         error:(err)=>{
           if(err.status === 403) this.toast.error({detail:"ERROR", summary: "Les messages haineux ne sont pas acceptés !", duration: 5000});

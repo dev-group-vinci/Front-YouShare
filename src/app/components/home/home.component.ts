@@ -78,6 +78,7 @@ export class HomeComponent {
         next:(res)=>{
           this.toast.success({detail:"SUCCESS", summary: "Post ajouté", duration: 5000});
           this.postsForm.reset();
+          this.ngOnInit();
         },
         error:(err)=>{
           if(err.status === 403) this.toast.error({detail:"ERROR", summary: "Les messages haineux ne sont pas acceptés !", duration: 5000});

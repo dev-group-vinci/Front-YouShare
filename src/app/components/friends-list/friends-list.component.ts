@@ -16,6 +16,7 @@ export class FriendsListComponent {
     private friendService: FriendService,
     private router: Router
   ) {
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
   }
 
   ngOnInit(){
@@ -30,6 +31,7 @@ export class FriendsListComponent {
 
   goToUser(id_user: number) {
     this.router.navigate(['/user'], { queryParams: { id: id_user }});
+    this.ngOnInit();
   }
 
 }
