@@ -1,0 +1,59 @@
+<div class="outer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <div class="panel border bg-white">
+                    <div class="panel-heading">
+                        <h3 class="pt-3 font-weight-bold">Créez votre compte</h3>
+                    </div>
+                    <div class="panel-body p-3">
+                        <form [formGroup]="registerForm">
+                            <div class="form-group pt-3">
+                                <span class="fa fa-user p-2 icon"></span>
+                                <label for="usernameInput" class="form-label">Nom d'utilisateur :</label>
+                                <div class="input-field" [class.error]="registerForm.controls['username'].dirty && registerForm.hasError('required', 'username')">
+                                    <input formControlName="username" type="text" placeholder="Nom d'utilisateur" id="usernameInput" class="form-control">
+                                </div>
+                            </div>
+                            <small *ngIf="registerForm.controls['username'].dirty && registerForm.hasError('required', 'username')" class="text-danger">* Nom d'utilisteur obligatoire</small>
+                            <div class="form-group pt-3">
+                                <span class="fa fa-at p-2"></span>
+                                <label for="emailInput" class="form-label">Email :</label>
+                                <div class="input-field" [class.error]="registerForm.controls['email'].dirty && (registerForm.hasError('required', 'email') || registerForm.hasError('pattern', 'email'))">
+                                    <input formControlName="email" type="text" placeholder="Email" id="emailInput" class="form-control">
+                                </div>
+                            </div>
+                            <small *ngIf="registerForm.controls['email'].dirty && registerForm.hasError('required', 'email')" class="text-danger">* Email obligatoire</small>
+                            <small *ngIf="registerForm.controls['email'].dirty && registerForm.hasError('pattern', 'email')" class="text-danger">* Veuillez entrer une email valide</small>
+                            <div class="form-group pt-3">
+                                <span class="fa fa-lock p-2 icon"></span>
+                                <label for="passwordInput" class="form-label">Mot de passe :</label>
+                                <div class="input-field" [class.error]="registerForm.controls['password'].dirty && registerForm.hasError('required', 'password')">
+                                    <input formControlName="password" [type]="type" placeholder="Mot de passe" id="passwordInput" class="form-control">
+                                    <span (click)="hideShowPass()" class="fa {{eyeIcon}} fa-clickable" ></span>
+                                </div>
+                            </div>
+                            <small *ngIf="registerForm.controls['password'].dirty && registerForm.hasError('required', 'password')" class="text-danger">* Mot de passe obligatoire</small>
+                            <small *ngIf="registerForm.controls['password'].dirty && registerForm.hasError('minlength', 'password')" class="text-danger">* Votre mot de passe doit contenir 6 caractères minimum</small>
+                            <small *ngIf="registerForm.controls['password'].dirty && registerForm.hasError('passwordStrength', 'password')" class="text-danger">* Votre mot de passe doit contenir au minimum une minuscule, une majuscule, un chiffre et un caractère spécial</small>
+                            <div class="form-group pt-3">
+                                <span class="fa fa-lock p-2 icon"></span>
+                                <label for="passwordConfirmationInput" class="form-label">Confirmez votre mot de passe :</label>
+                                <div class="input-field" [class.error]="registerForm.controls['passwordConfirmation'].dirty && registerForm.hasError('required', 'passwordConfirmation')">
+                                    <input formControlName="passwordConfirmation" [type]="type" placeholder="Confirmez votre mot de passe" id="passwordConfirmationInput" class="form-control">
+                                    <span (click)="hideShowPass()" class="fa {{eyeIcon}} fa-clickable " ></span>
+                                </div>
+                            </div>
+                            <small *ngIf="registerForm.controls['passwordConfirmation'].dirty && registerForm.hasError('required', 'passwordConfirmation')" class="text-danger">* Confirmation de votre mot de passe obligatoire</small>
+                            <small *ngIf="registerForm.controls['passwordConfirmation'].dirty && registerForm.hasError('matching', 'passwordConfirmation')" class="text-danger">* Les mots de passe entr&eacute;s ne sont pas les m&ecirc;mes</small>
+                            <button (click)="onRegister()" type="submit" class="btn btn-primary btn-block mt-4 w-100">S'inscrire</button>
+                            <div class="text-center pt-4 text-muted">
+                                D&eacute;j&agrave; inscris ? <a id="forget" routerLink="/login"> Connectez-vous !</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

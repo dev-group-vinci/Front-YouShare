@@ -1,0 +1,48 @@
+<div class="small-panel mb-2" *ngIf="comment">
+  <div class="row mt-4 mb-2" *ngIf="comment.id_comment_parent != null">
+    <div class="col-sm-1" *ngIf="author">
+      <img class="pp" src="{{user.picture}}" alt="Photo de profil" *ngIf="user">
+    </div>
+    <div class="col-sm-7 comment-author align-middle" *ngIf="author">
+      {{author.username}}
+    </div>
+    <div class="col-sm-1">
+      {{comment.date_published}}
+    </div>
+  </div>
+  <div class="comment-text" >
+    <div *ngIf="comment.state == 'deleted'">
+      Ce commentaire a &eacute;t&eacute; supprim&eacute;
+    </div>
+    <div *ngIf="comment.state != 'deleted'">
+      <span *ngIf="replyTo" class="primary"> @{{replyTo.username}} </span>
+      {{comment.text}}
+    </div>
+  </div>
+  <div class="comment-actions mb-2">
+    <button class="btn btn-primary btn-block me-1" (click)="setActiveComment.emit(comment)" *ngIf="comment.state != 'deleted'">R&eacute;pondre</button>
+    <button *ngIf="canDelete || comment.state != 'delete'"
+            class="btn btn-danger btn-block"
+            (click)="deleteComment.emit(comment)"
+    >Supprimer</button>
+  </div>
+  <app-comment-form *ngIf="isReplying()"
+                    submitLabel="Répondre"
+                    (handleSubmit)="addComment.emit({text: $event, parentId: replyId})"
+                    [hasCancelButton]="true"
+                    (handleCancel)="setActiveComment.emit(null)"
+  ></app-comment-form>
+  <div class="replies small-panel ms-5 mb-1" *ngIf="replies.length > 0">
+    <app-comment
+      *ngFor="let reply of replies"
+      [comment]="reply"
+      (setActiveComment)="setActiveComment.emit($event)"
+      [activeComment]="activeComment"
+      (addComment)="addComment.emit($event)"
+      [parentId]="comment.id_comment"
+      [replies]="[]"
+      (deleteComment)="deleteComment.emit($event)"
+    ></app-comment>
+  </div>
+</div>
+

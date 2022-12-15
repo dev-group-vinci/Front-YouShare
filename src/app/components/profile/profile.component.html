@@ -1,0 +1,107 @@
+<div class="outer">
+  <div class="row">
+    <div class="col-sm-2">
+      <app-navigation-menu [someValueToGetChanges]="reload"></app-navigation-menu>
+    </div>
+
+    <div class="col-sm-7">
+      <div class="panel border bg-white margin-top">
+        <div class="panel-heading">
+          <h3 class="pt-3 font-weight-bold">Modification du profil</h3>
+        </div>
+
+
+        <div class="panel-body p-3" *ngIf="user">
+          <form [formGroup]="profileForm">
+            <!-- USERNAME -->
+            <div class="form-group pt-3">
+              <span class="fa fa-user p-2 icon"></span>
+              <label for="usernameInput" class="form-label">Nom d'utilisateur :</label>
+              <div id="modifyusername" class="input-field" [class.error]="profileForm.controls['username'].dirty && profileForm.hasError('required', 'username')">
+                <input formControlName="username" type="text" id="usernameInput" class="form-control" placeholder="Nom d'utilisateur">
+              </div>
+            </div>
+
+            <!-- BIOGRAPHY -->
+            <div class="form-group pt-3">
+              <span class="fa fa-file-text-o p-2 icon"></span>
+              <label for="biographyInput" class="form-label">Biographie : </label>
+              <div class="input-field" [class.error]="profileForm.controls['biography'].dirty && profileForm.hasError('maxlength', 'biography')">
+                <input formControlName="biography" type="text" placeholder="Biographie" id="biographyInput" class="form-control" value="{{ user.biography }}">
+              </div>
+            </div>
+            <small *ngIf="profileForm.controls['biography'].dirty && profileForm.hasError('maxlength', 'biography')" class="text-danger">* Longueur maximale de 200 caractères</small>
+
+            <!-- EMAIL -->
+            <div class="form-group pt-3">
+              <span class="fa fa-at p-2"></span>
+              <label for="emailInput" class="form-label">Email : </label>
+              <div class="input-field" [class.error]="profileForm.controls['email'].dirty && profileForm.hasError('required', 'email')">
+                <input formControlName="email" type="text" placeholder="Email" id="emailInput" class="form-control" value="{{ user.email }}">
+              </div>
+            </div>
+            <small *ngIf="profileForm.controls['email'].dirty && profileForm.hasError('required', 'email')" class="text-danger">* Email obligatoire</small>
+            <small *ngIf="profileForm.controls['email'].dirty && profileForm.hasError('pattern', 'email')" class="text-danger">* Veuillez entrer une email valide</small>
+
+            <div class="form-group pt-3">
+              <span class="fa fa-at p-2"></span>
+              <label for="picture" class="form-label">Photo de profil : </label>
+              <input
+                type="file"
+                id="picture"
+                accept="image/*"
+                class="form-control"
+                formControlName="picture"
+                (change)="savePicture($event)"
+              />
+            </div>
+
+
+            <!-- PASSWORD -->
+            <div class="form-group pt-3">
+              <span class="fa fa-lock p-2 icon"></span>
+              <label for="newPasswordInput" class="form-label">Nouveau mot de passe :</label>
+              <div class="input-field" [class.error]="profileForm.controls['new_password'].dirty && profileForm.hasError('required', 'new_password')">
+                <input formControlName="new_password" [type]="type" placeholder="Mot de passe" id="newPasswordInput" class="form-control">
+                <span (click)="hideShowPass()" class="fa {{eyeIcon}} fa-clickable" ></span>
+              </div>
+            </div>
+            <small *ngIf="profileForm.controls['new_password'].dirty && profileForm.hasError('required', 'new_password')" class="text-danger">* Mot de passe obligatoire</small>
+            <small *ngIf="profileForm.controls['new_password'].dirty && profileForm.hasError('minlength', 'new_password')" class="text-danger">* Votre mot de passe doit contenir 6 caractères minimum</small>
+            <small *ngIf="profileForm.controls['new_password'].dirty && profileForm.hasError('passwordStrength', 'new_password')" class="text-danger">* Votre mot de pase doit contenir au minimum une minuscule, une majuscule et un chiffre</small>
+
+            <div class="form-group pt-3">
+              <span class="fa fa-lock p-2 icon"></span>
+              <label for="newPasswordConfirmationInput" class="form-label">Confirmez votre mot de passe :</label>
+              <div class="input-field" [class.error]="profileForm.controls['new_password_confirmation'].dirty && profileForm.hasError('required', 'new_password_confirmation')">
+                <input formControlName="new_password_confirmation" [type]="type" placeholder="Confirmez votre mot de passe" id="newPasswordConfirmationInput" class="form-control">
+                <span (click)="hideShowPass()" class="fa {{eyeIcon}} fa-clickable " ></span>
+              </div>
+            </div>
+            <small *ngIf="profileForm.controls['new_password_confirmation'].dirty && profileForm.hasError('required', 'new_password_confirmation')" class="text-danger">* Confirmation de votre mot de passe obligatoire</small>
+            <small *ngIf="profileForm.controls['new_password_confirmation'].dirty && profileForm.hasError('matching', 'new_password_confirmation')" class="text-danger">* Les mots de passe entr&eacute;s ne sont pas les m&ecirc;mes</small>
+
+            <!-- PASSWORD REQUIRED -->
+            <div class="form-group pt-3">
+              <span class="fa fa-lock p-2 icon"></span>
+              <label for="passwordInput" class="form-label">Mot de passe actuel requis pour enregistrer les modifications :</label>
+              <div class="input-field" [class.error]="profileForm.controls['password'].dirty && profileForm.hasError('required', 'password')">
+                <input formControlName="password" [type]="type" placeholder="Mot de passe" id="passwordInput" class="form-control">
+                <span (click)="hideShowPass()" class="fa {{eyeIcon}} fa-clickable" ></span>
+              </div>
+            </div>
+            <small *ngIf="profileForm.controls['password'].dirty && profileForm.hasError('required', 'password')" class="text-danger">* Mot de passe obligatoire</small>
+
+            <button (click)="onModify()" type="submit" class="btn btn-primary btn-block mt-4 w-100">Modifier mon profil</button>
+          </form>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="col-sm-3 margin-top">
+      <app-friends-list></app-friends-list>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,174 @@
+.outer {
+    background: linear-gradient(to bottom, #fff, red) no-repeat;
+    min-height: 100vh;
+}
+
+.panel {
+    min-height: 380px;
+    box-shadow: 20px 20px 80px rgb(218, 218, 218);
+    border-radius: 12px;
+}
+
+.small-panel {
+    min-height: 100px;
+    box-shadow: 20px 20px 80px rgb(218, 218, 218);
+    border-radius: 12px;
+    margin-top: 0px;
+}
+
+.panel-heading {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+#forget {
+    min-width: 100px;
+    margin-left: auto;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+.fa {
+    color: #0d6efd;
+}
+
+.fa-clickable{
+    cursor: pointer;
+}
+
+.nb-interactions {
+    font-size: x-large;
+}
+
+.fa-interact {
+    margin-left: 2%;
+    font-size: x-large;
+}
+
+.fa-interact:hover {
+    color: red;
+}
+
+.input-field {
+    border-radius: 5px;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    cursor: text;
+    border: 1px solid;
+    color: #0d6efd;
+}
+
+.input-field.error {
+    border: 1px solid red;
+    color: red;
+}
+
+input[type='text'], input[type='password'] {
+    border: none;
+    outline: none;
+    box-shadow: none;
+    width: 100%;
+}
+
+.custom-file-upload {
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+}
+
+
+.input-file {
+    width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+
+.input-file + label {
+    border-radius: 5px;
+    padding: 5px;
+    margin-left: 5px;
+    display: inline-block;
+}
+
+small {
+    display: block;
+}
+
+/** PROFILE PICTURE **/
+.pp {
+    width: 75px;
+    height: 50px;
+    display: flex;
+    justify-content: left;
+    clip-path:ellipse(33% 50%);
+    margin-left: 5%;
+    margin-top: 5%;
+}
+
+/** LOGO **/
+.logo-img {
+    width: 85%;
+    cursor: pointer;
+}
+.scroll-top {
+  position: absolute; /* relative to its positioned <main> parent */
+  top: 120vh; /* starts below the bottom of the screen */
+  bottom: 3rem; /* stops scrolling before the end */
+  right: 2rem; /* offset from right hand side */
+}
+
+.scroll-top__link {
+  position: -webkit-sticky; /* for Safari */
+  position: sticky; /* 'relative' until element reaches... */
+  top: 90vh; /* 90% viewport height from the top, when it becomes 'fixed' - until its container toggles it back to 'relative' */
+}
+
+.comments {
+  margin-top: 20px;
+}
+
+.comments-title {
+  font-size: 30px;
+  margin-bottom: 20px;
+}
+
+.comments-container {
+  margin-top: 40px;
+}
+
+.comment-form-title {
+  font-size: 22px;
+}
+
+.comment-form-cancel-button {
+  margin-left: 10px;
+}
+
+.comment-right-part {
+  width: 100%;
+}
+
+.comment-author {
+  margin-right: 8px;
+  font-size: 20px;
+  color: rgb(59, 130, 246);
+}
+
+.comment-text {
+  font-size: 18px;
+}
+
+.replies {
+  margin-top: 20px;
+}
+
+
