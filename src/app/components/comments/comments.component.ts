@@ -15,6 +15,7 @@ export class CommentsComponent implements OnInit {
   @Input() postId!: string;
   comments: Comment[] = [];
   activeComment: Comment|null = null;
+  regex: RegExp = /(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})\.\d+/;
 
   constructor(
     private post: PostService,
@@ -25,12 +26,23 @@ export class CommentsComponent implements OnInit {
   ngOnInit(): void {
     this.post.getComments(Number(this.postId)).subscribe((comments) => {
       this.comments = comments;
+      for(let comment of comments){
+        this.comments.filter((c) => c.id_comment === comment.id_comment)[0].date_published.replace(this.regex, "$3-$2-$1 $4:$5");
+      }
     });
   }
 
   addComment({text, parentId}: {text: string, parentId: null | string}): void {
     this.post.createComment(text, parentId, this.postId).subscribe({
       next: (createdComment) => {
+
+        let match = this.regex.exec(createdComment.date_published);
+        if (match) {
+          // Construire la date formatée à partir des groupes capturés
+          createdComment.date_published = `${match[3]}/${match[2]}/${match[1].slice(2)} ${match[4]}:${match[5]}:${match[6]}`;
+        } else {
+          createdComment.date_published = "Inconnue";
+        }
         this.comments = [...this.comments, createdComment];
         this.activeComment = null;
       },
@@ -57,6 +69,10 @@ export class CommentsComponent implements OnInit {
 
   setActiveComment(activeComment: Comment | null): void {
     this.activeComment = activeComment;
+  }
+
+  getRootComments(): Comment[] {
+    return this.comments.filter((comment) => comment.id_comment_parent === null);
   }
 
   deleteComment(comment: Comment){

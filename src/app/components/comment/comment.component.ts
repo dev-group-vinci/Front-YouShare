@@ -31,8 +31,6 @@ export class CommentComponent implements OnInit{
   constructor(
     private userService: UserService,
     private postService: PostService,
-    private posts: PostService,
-    private toast: NgToastService,
   ) {
   }
 

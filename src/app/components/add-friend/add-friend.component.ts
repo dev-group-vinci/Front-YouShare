@@ -33,7 +33,7 @@ export class AddFriendComponent {
         this.userService.search("").subscribe( {
           next: (json_list) => {
             let users = json_list.map((j: JSON) => new User(j))
-            for(let user of users){              
+            for(let user of users){
               if(user.id_user !== this.userLoggedIn.id_user){
                 this.friendService.friendshipStatus(user.id_user)
                 .subscribe({
@@ -54,13 +54,17 @@ export class AddFriendComponent {
         });
       }
     })
-
-
   };
 
   search(){
-    this.users = [];
-    this.ngOnInit();
+    this.userService.search(this.searchForm.value).subscribe({
+      next: (json_list) => {
+        this.users = json_list.map((j: JSON) => new User(j));;
+      },
+      error: (err) => {
+        this.users = [];
+      }
+    });
   };
 
   sendFriendRequest(idUser: number) {

@@ -7,4 +7,4 @@ export class Comment {
     state: string;
     date_published: string;
     date_deleted: string;
-}
+  }

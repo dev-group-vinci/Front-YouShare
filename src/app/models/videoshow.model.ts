@@ -16,4 +16,5 @@ export class VideoShow {
     shared: boolean;
     comments: Comment[];
     user: User;
+    date: string;
   }
