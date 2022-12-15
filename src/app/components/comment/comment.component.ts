@@ -35,6 +35,14 @@ export class CommentComponent implements OnInit{
   }
 
   ngOnInit(): void {
+    let regex = /(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})\.\d+/;
+    let match = regex.exec(this.comment.date_published);
+    if (match) {
+      // Construire la date formatée à partir des groupes capturés
+      this.comment.date_published = `${match[3]}/${match[2]}/${match[1].slice(2)} ${match[4]}:${match[5]}:${match[6]}`;
+    } else {
+      this.comment.date_published = "Inconnue";
+    }
     this.userService.getUserById(this.comment.id_user).subscribe((user) => {
       this.author = new User(user);
     })
