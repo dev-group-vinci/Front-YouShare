@@ -5,13 +5,13 @@
     </div>
 
     <div class="col-sm-7 container mt-2">
-      <div class="panel border bg-white margin-top mb-2" *ngIf="user != null">
-        <div class="panel-heading">
+      <div class="panel border bg-white margin-top mb-2">
+        <div class="panel-heading" *ngIf="user != null">
           <img class=" mx-auto d-block w-25 h-25" src="{{ user.picture }}" alt="Photo de profil" />
           <h1>{{ user.username }}</h1>
           <h5 *ngIf="user.role === 'admin'" class="text-primary">ADMIN</h5>
         </div>
-        <div class="panel-body text-center">
+        <div class="panel-body text-center" *ngIf="user != null">
           <div>{{ user.biography }}</div>
           <div>
             <button *ngIf="user.status === 'unknown'" type="submit" class="btn btn-primary btn-block w-25 mt-1" (click)="sendFriendRequest(user.id_user)">Demander en ami</button>
