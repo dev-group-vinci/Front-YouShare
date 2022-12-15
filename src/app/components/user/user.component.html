@@ -7,7 +7,7 @@
     <div class="col-sm-7 container mt-2">
       <div class="panel border bg-white margin-top mb-2" *ngIf="user != null">
         <div class="panel-heading">
-          <img class=" mx-auto d-block w-25 h-25" src="{{ user.picture }}" alt="Photo de profil"/>
+          <img class=" mx-auto d-block w-25 h-25" src="{{ user.picture }}" alt="Photo de profil" />
           <h1>{{ user.username }}</h1>
           <h5 *ngIf="user.role === 'admin'" class="text-primary">ADMIN</h5>
         </div>
