@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, ɵ_sanitizeHtml } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
 import ValidateForm from 'src/app/helpers/validateform';
@@ -25,6 +26,8 @@ export class IdeeComponent {
     private posts: PostService,
     private toast: NgToastService,
     private router: Router,
+    private sanitizer: DomSanitizer,
+
   ) {}
 
   ngOnInit() {
@@ -54,10 +57,13 @@ export class IdeeComponent {
         for(let item of list['items']) {
           this.videos[i] = new VideoYoutube();
           this.videos[i].id_youtube = item.id.videoId;
-          this.videos[i].title = item.snippet.title;
+          
+          var parser = new DOMParser;
+          let finalResult = parser.parseFromString(item.snippet.title, "text/html")
+          this.videos[i].title = finalResult.body.innerHTML;
           i++;
         }
-        console.log(this.videos);
+        
       })
     }
   }
