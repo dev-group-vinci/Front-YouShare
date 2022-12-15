@@ -26,8 +26,9 @@ export class ProfileComponent {
   show: boolean = false;
   eyeIcon: string = "fa-eye-slash";
   profileForm!: FormGroup;
-
+  picture: File;
   user: User;
+  reload: "";
 
   constructor(
       private fb: FormBuilder,
@@ -46,6 +47,7 @@ export class ProfileComponent {
       username: [''],
       biography: ['', Validators.maxLength(200)],
       email: ['', Validators.pattern("^\\S+@\\S+\\.\\S+$")],
+      picture: [null],
       password: ['', Validators.required],
       new_password: ['', [matchValidator('passwordConfirmation', true), Validators.minLength(6), createPasswordStrengthValidator()]],
       new_password_confirmation: ['', Validators.compose([matchValidator('password')])],
@@ -71,7 +73,7 @@ export class ProfileComponent {
   onModify() {
     if (this.profileForm.valid) {
       // Modify user
-
+      if(this.picture) this.uploadPicture(this.picture);
       if(this.profileForm.value['new_password'] == '') {
         this.profileForm.patchValue({
           new_password: this.profileForm.value['password'],
@@ -115,20 +117,21 @@ export class ProfileComponent {
     this.auth.logout();
   }
 
-  uploadPicture(event) {
-    console.log("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF");
-    let file = event.target.files[0]
-    console.log(file);
+  uploadPicture(file) {
+    console.log(file)
     let fileType = file.type;
     console.log(fileType);
     if (fileType.match(/image\/*/)) {
       let answer = this.userService.uploadPicture(file);
       console.log("answerrrrrrrrrrrr");
       console.log(answer);
-
-
     } else {
       window.alert('Please select correct image format');
     }
+    this.reload = file.name;
+  }
+
+  savePicture(event) {
+    this.picture = event.target.files[0];
   }
 }

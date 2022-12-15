@@ -39,12 +39,7 @@ export class UserService {
     const payload = new FormData();
     payload.append("image", file, file.name);
     return this._http.post(`${this.apiUrl}users/self/picture`, payload, {
-      responseType: 'json'}).subscribe(
-        (object) => {
-          console.log("QQQQQQQQQQQQQQQQQQQ"); //TODO Eliott
-          console.log(object);
-
-    });
+      responseType: 'json'}).subscribe();
   }
 
   //********* PUT FUNCTION *********

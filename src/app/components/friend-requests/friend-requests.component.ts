@@ -29,18 +29,27 @@ export class FriendRequestsComponent {
         this.user$ = new User(res);
       }
     });
-    this.friendService.getFriendRequests().subscribe(response => {
-      this.friendRequests = response;
+    this.friendService.getFriendRequests().subscribe(json_list => {
+      this.friendRequests = json_list.map((j: JSON) => new User(j));
     });
   }
 
   accept(idUser){
-    this.friendService.acceptFriendRequest(idUser);
+    console.log("accept")
+    this.friendService.acceptFriendRequest(idUser).subscribe({
+      next: () => {
+        this.ngOnInit();
+      }
+    });
     this.reload = "accept";
   }
 
   refuse(idUser){
-    this.friendService.refuseFriendRequest(idUser);
+    this.friendService.refuseFriendRequest(idUser).subscribe({
+      next: () => {
+        this.ngOnInit();
+      }
+    });
     this.reload = "refuse";
   }
 

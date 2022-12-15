@@ -19,8 +19,8 @@ export class FriendsListComponent {
   }
 
   ngOnInit(){
-    this.friendService.getFriends().subscribe(response => {
-      this.friends = response
+    this.friendService.getFriends().subscribe(json_list => {
+      this.friends = json_list.map((j: JSON) => new User(j));
     });
   }
 
