@@ -3,9 +3,9 @@
       <div class="col-sm-2">
         <app-navigation-menu></app-navigation-menu>
       </div>
-  
-      <div class="col-sm-7 container">
-        <div class="panel border bg-white margin-top">
+
+      <div class="col-sm-7 container mt-2 mb-2">
+        <div class="panel border bg-white margin-top mb-2">
             <div class="panel-heading">
                 <h3 class="pt-3 font-weight-bold">Rechercher des vidéos à partager</h3>
             </div>
@@ -20,9 +20,9 @@
                 </form>
             </div>
         </div>
-  
+
         <div *ngFor="let video of videos">
-          <div class="panel border bg-white margin-top">
+          <div class="panel border bg-white margin-top mb-2">
             <div class="panel-heading mt-3">
               <div class="row">
                 <div class="fs-1 alignCenter">
@@ -46,14 +46,13 @@
           </div>
         </div>
     </div>
-  
-    <div class="col-sm-3 margin-top">
+
+    <div class="col-sm-3 margin-top mt-2">
         <app-friends-list></app-friends-list>
     </div>
     </div>
-  
+
     <div class="position-fixed" style="right: 10px; bottom: 10px;">
-      <a class="fa fa-arrow-circle-up fa-10x text-decoration-none" href="/home"></a>
+      <a class="fa fa-arrow-circle-up fa-10x text-decoration-none" href="/idee"></a>
     </div>
   </div>
-  
