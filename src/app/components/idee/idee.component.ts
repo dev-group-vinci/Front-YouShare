@@ -65,7 +65,6 @@ export class IdeeComponent {
   }
 
   addPost(id_youtube: string) {
-    console.log("TEST");
     if(this.postForm.valid) {
       this.posts.addPostFromIdea(id_youtube, this.postForm.value)
       .subscribe({
@@ -76,7 +75,9 @@ export class IdeeComponent {
         },
         error:(err)=>{
           if(err.status === 403) this.toast.error({detail:"ERROR", summary: "Les messages haineux ne sont pas acceptés !", duration: 5000});
-          else this.toast.error({detail:"ERROR", summary: "Il y a eu un problème !", duration: 5000});
+          else {
+            this.toast.error({detail:"ERROR", summary: "Il y a eu un problème !", duration: 5000});
+          }
         }
       })
     } else {

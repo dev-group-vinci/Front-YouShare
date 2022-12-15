@@ -1,7 +1,7 @@
 <div class="small-panel mb-2" *ngIf="comment">
-  <div class="row mt-4 mb-2" *ngIf="comment.id_comment_parent != null">
-    <div class="col-sm-1" *ngIf="author">
-      <img class="pp" src="{{user.picture}}" alt="Photo de profil" *ngIf="user">
+  <div class="row mt-4 mb-2">
+    <div class="col-sm-1">
+      <img class="pp" src="{{author.picture}}" alt="Photo de profil" *ngIf="author">
     </div>
     <div class="col-sm-7 comment-author align-middle" *ngIf="author">
       {{author.username}}
