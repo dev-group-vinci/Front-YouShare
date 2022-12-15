@@ -9,6 +9,7 @@
         <div class="panel-heading">
           <img class=" mx-auto d-block w-25 h-25" src="{{ user.picture }}" alt="Photo de profil" />
           <h1>{{ user.username }}</h1>
+          <h5 *ngIf="user.role === 'admin'" class="text-primary">ADMIN</h5>
         </div>
         <div class="panel-body text-center">
           <div>{{ user.biography }}</div>
@@ -20,7 +21,9 @@
             <button *ngIf="user.status === 'sended'" type="submit" class="btn btn-secondary btn-block w-50 mt-1" (click)="delete(user.id_user)">Annuler la demande</button>
             <a *ngIf="user.status === 'me'" type="submit" class="btn btn-primary btn-block w-50 mt-1" routerLink="/profile">Modifier mon profil</a>
           </div>
-          <div><button *ngIf="userConnected.role === 'admin' && user.role !== 'admin'" (click)="changeInAdmin(user_id)" type="submit" class="btn btn-warning btn-block w-100 align-middle">Devenir Admin</button></div>
+          <div class="mt-2 mb-2">
+            <button *ngIf="userConnected.role === 'admin' && user.role !== 'admin'" (click)="changeInAdmin(user_id)" type="submit" class="btn btn-warning btn-block w-50 align-middle">Devenir Admin</button>
+          </div>
         </div>
       </div>
 
@@ -31,16 +34,19 @@
               <div class="col col-lg-2" *ngIf="video.user">
                 <img class="pp" src="{{ video.user.picture }}" alt="Photo de profil" />
               </div>
-              <div class="col-md-auto">
-                <h1>{{ video.text }}</h1>
+              <div class="col-md-auto text-center text-primary">
+                <h1>{{ video.user.username }}</h1>
               </div>
-              <div class="col-md-auto">
-                <h1>{{ video.title }}</h1>
-              </div>
+            </div>
+            <div class=" text-center">
+              <h1>{{ video.title }}</h1>
+            </div>
+            <div class="fs-2 text-center">
+              <p>{{ video.text }}</p>
             </div>
           </div>
           <div class="panel-body p-3">
-            <div class="form-group pt-3">
+            <div class="form-group pt-3 text-center">
               <youtube-player [videoId]="video.url"> </youtube-player>
             </div>
             <div class="form-group pt-3">
