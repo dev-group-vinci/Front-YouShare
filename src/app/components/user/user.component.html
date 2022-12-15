@@ -28,20 +28,23 @@
       </div>
 
       <div *ngIf="videos.length > 0">
-        <div class="panel border bg-white margin-top" *ngFor="let video of videos">
-          <div class="panel-heading mt-3">
+        <div class="panel border bg-white margin-top mb-2" *ngFor="let video of videos">
+          <div class="panel-heading mt-3" *ngIf="video.user">
             <div class="row">
-              <div class="col col-lg-2" *ngIf="video.user">
+              <div class="col col-sm-1" >
                 <img class="pp" src="{{ video.user.picture }}" alt="Photo de profil" />
               </div>
-              <div class="col-md-auto text-center text-primary">
-                <h1>{{ video.user.username }}</h1>
+              <div class="col col-sm-9 text-center text-primary fs-2">
+                <span class="pull-left">{{ video.user.username }}</span>
               </div>
+            <div class="col col-sm-2">
+              <span>{{ video.date }}</span>
             </div>
-            <div class=" text-center">
+            </div>
+            <div class="fs-1 alignCenter">
               <h1>{{ video.title }}</h1>
             </div>
-            <div class="fs-2 text-center">
+            <div class="fs-4 mt-4 alignCenter">
               <p>{{ video.text }}</p>
             </div>
           </div>
@@ -84,7 +87,6 @@
           </div>
         </div>
       </div>
-
     </div>
 
     <div class="col-sm-3 margin-top mt-2">

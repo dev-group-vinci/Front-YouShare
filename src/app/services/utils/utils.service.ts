@@ -20,7 +20,7 @@ export class UtilsService {
   ) { }
 
   generateVideoShow(videos: Video[]) {
-    
+
     let newVideos: VideoShow[] = [];
 
     videos.forEach( (v) => {
@@ -31,6 +31,14 @@ export class UtilsService {
       newVideo.state = v.state;
       newVideo.text = v.text;
 
+      let regex = /(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})\.\d+/;
+      let match = regex.exec(v.date_published);
+      if (match) {
+        // Construire la date formatée à partir des groupes capturés
+        newVideo.date = `${match[3]}/${match[2]}/${match[1].slice(2)} ${match[4]}:${match[5]}:${match[6]}`;
+      } else {
+        newVideo.date = "Inconnue";
+      }
 
       // generate user
       this.userService.getUserById(v.id_user).subscribe({
@@ -39,7 +47,7 @@ export class UtilsService {
         },
         error: (err) => (console.log(err))
       })
-      
+
       //Recover Title Youtube
       this.spinner.show()
       setTimeout(()=> {this.spinner.hide()},3000)
@@ -90,8 +98,8 @@ export class UtilsService {
         error: (err) => {console.log(err)}
       });
 
-      
-      
+
+
       //Add to video list
       if(newVideo.state !== 'deleted') {
         newVideos.push(newVideo);
